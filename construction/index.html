@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yantra AI Labs — Construction AI</title>
+  <link rel="icon" type="image/png" href="../security/assets/Logo/yantrai_favicon_new.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #ffffff;
+      --bg-alt:   #f5f5f5;
+      --dark:     #0a0a0a;
+      --gray:     #666;
+      --gray-dim: #999;
+      --border:   #e5e5e5;
+      --red:      #e63030;
+      --amber:    #d97706;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--dark);
+      background: var(--bg);
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 60px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo img { height: 32px; display: block; }
+    .nav-domain {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gray-dim);
+    }
+    .nav-cta {
+      display: inline-block;
+      padding: 10px 24px;
+      background: var(--dark);
+      color: white;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      border-radius: 50px;
+      transition: opacity 0.2s;
+    }
+    .nav-cta:hover { opacity: 0.8; }
+
+    /* ─── SHARED ─── */
+    .section-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gray-dim);
+      margin-bottom: 20px;
+    }
+    .section-heading {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(2.4rem, 4.5vw, 4.2rem);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -0.025em;
+      color: var(--dark);
+      margin-bottom: 20px;
+    }
+    .section-sub {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: var(--gray);
+    }
+    .reactive {
+      color: var(--red);
+      text-decoration: line-through;
+      text-decoration-thickness: 4px;
+    }
+
+    /* ─── SECTION 1: HERO ─── */
+    #hero {
+      background: var(--bg);
+      padding: 120px 60px 100px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 32px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      width: 24px;
+      height: 2px;
+      background: var(--amber);
+      flex-shrink: 0;
+    }
+    #hero h1 {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(3rem, 6.5vw, 6.5rem);
+      font-weight: 800;
+      line-height: 1.04;
+      letter-spacing: -0.035em;
+      color: var(--dark);
+      max-width: 960px;
+      margin-bottom: 36px;
+    }
+    .hero-sub {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: var(--gray);
+      max-width: 620px;
+      margin-bottom: 56px;
+    }
+    .hero-case-study {
+      display: flex;
+      gap: 0;
+      max-width: 820px;
+      border: 1px solid var(--border);
+      margin-bottom: 56px;
+    }
+    .case-bar {
+      width: 4px;
+      background: var(--amber);
+      flex-shrink: 0;
+    }
+    .case-body {
+      padding: 28px 32px;
+    }
+    .case-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 10px;
+    }
+    .case-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--dark);
+    }
+    .case-stats {
+      display: flex;
+      gap: 40px;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+    .case-stat strong {
+      display: block;
+      font-family: 'Sora', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--dark);
+      letter-spacing: -0.02em;
+    }
+    .case-stat span {
+      font-size: 0.78rem;
+      color: var(--gray-dim);
+      letter-spacing: 0.04em;
+    }
+    .hero-cta {
+      display: inline-block;
+      padding: 16px 40px;
+      background: var(--dark);
+      color: white;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      border-radius: 50px;
+      transition: opacity 0.2s;
+    }
+    .hero-cta:hover { opacity: 0.8; }
+
+    /* ─── SECTION 2: BENEFITS ─── */
+    #benefits {
+      background: var(--bg-alt);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .benefits-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 100px 60px;
+    }
+    .video-frame {
+      margin-top: 56px;
+      border: 1px solid var(--border);
+      background: #000;
+      overflow: hidden;
+      position: relative;
+    }
+    .video-frame video {
+      width: 100%;
+      display: block;
+      max-height: 72vh;
+      object-fit: cover;
+    }
+    .video-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 20px 28px;
+      background: linear-gradient(transparent, rgba(0,0,0,0.7));
+      color: white;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+    .uc-grid-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gray-dim);
+      margin: 72px 0 28px;
+    }
+    .uc-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+    .uc-card {
+      background: var(--bg);
+      padding: 28px 28px 28px 24px;
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+      transition: background 0.2s;
+    }
+    .uc-card:hover { background: #fafafa; }
+    .uc-icon {
+      font-size: 1.4rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .uc-info {}
+    .uc-cat {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 6px;
+    }
+    .uc-title {
+      font-family: 'Sora', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 6px;
+    }
+    .uc-desc {
+      font-size: 0.82rem;
+      line-height: 1.65;
+      color: var(--gray);
+    }
+
+    /* ─── SECTION 3: INTELLIGENCE LAYER ─── */
+    #intelligence {
+      background: var(--bg);
+    }
+    .intel-intro {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 100px 60px 64px;
+    }
+    .intel-intro .section-sub {
+      max-width: 680px;
+      margin-bottom: 32px;
+    }
+    .analogy-box {
+      display: flex;
+      gap: 0;
+      max-width: 780px;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      margin-top: 36px;
+    }
+    .analogy-box .bar { width: 4px; background: var(--dark); flex-shrink: 0; }
+    .analogy-box .analogy-text {
+      padding: 24px 28px;
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: var(--dark);
+    }
+    .analogy-box .analogy-text strong { font-weight: 600; }
+    .intel-visual {
+      width: 100%;
+      height: 88vh;
+      border: none;
+      display: block;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ─── SECTION 4: USE CASES ─── */
+    .workflow-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 75vh;
+      background: #0a0a0a;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .workflow-section.flip { direction: rtl; }
+    .workflow-section.flip > * { direction: ltr; }
+    .workflow-media {
+      overflow: hidden;
+      position: relative;
+      background: #111;
+    }
+    .workflow-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 40px;
+    }
+    .workflow-placeholder .ph-icon {
+      font-size: 3rem;
+      opacity: 0.2;
+    }
+    .workflow-placeholder .ph-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.15);
+    }
+    .workflow-text {
+      padding: 80px 64px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .wf-num {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+      margin-bottom: 16px;
+    }
+    .wf-tag {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--amber);
+      border: 1px solid rgba(217,119,6,0.35);
+      padding: 5px 12px;
+      margin-bottom: 24px;
+      width: fit-content;
+    }
+    .workflow-text h2 {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      font-weight: 800;
+      color: white;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+    }
+    .workflow-text p {
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.6);
+      max-width: 460px;
+      margin-bottom: 32px;
+    }
+    .wf-before-after {
+      display: flex;
+      gap: 0;
+      margin-top: 8px;
+    }
+    .wf-col {
+      flex: 1;
+      padding: 20px 20px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .wf-col + .wf-col { border-left: none; }
+    .wf-col-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .wf-col.before .wf-col-label { color: rgba(255,255,255,0.25); }
+    .wf-col.after .wf-col-label { color: var(--amber); }
+    .wf-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .wf-col ul li {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.5;
+      padding-left: 14px;
+      position: relative;
+    }
+    .wf-col ul li::before {
+      content: '–';
+      position: absolute;
+      left: 0;
+      color: rgba(255,255,255,0.2);
+    }
+    .wf-col.after ul li { color: rgba(255,255,255,0.75); }
+    .wf-col.after ul li::before { content: '✓'; color: var(--amber); }
+
+    /* ─── SECTION 5: SOCIAL PROOF ─── */
+    #results {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+    }
+    .results-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 100px 60px;
+    }
+    .results-inner .section-sub { max-width: 560px; margin-bottom: 72px; }
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+    .result-card {
+      background: var(--bg);
+      padding: 48px 44px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: background 0.2s;
+    }
+    .result-card:hover { background: #fafafa; }
+    .result-num {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(3.5rem, 6vw, 5.5rem);
+      font-weight: 800;
+      color: var(--dark);
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+    .result-num sup {
+      font-size: 0.4em;
+      vertical-align: super;
+      letter-spacing: 0;
+    }
+    .result-label {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--dark);
+      line-height: 1.3;
+    }
+    .result-desc {
+      font-size: 0.88rem;
+      line-height: 1.65;
+      color: var(--gray);
+      max-width: 380px;
+    }
+    .result-source {
+      margin-top: auto;
+      padding-top: 20px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--border);
+      border-top: 1px solid var(--border);
+      color: var(--gray-dim);
+    }
+
+    /* ─── SECTION 6: TEAM ─── */
+    #team {
+      background: var(--bg-alt);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .team-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 100px 72px;
+    }
+    .team-inner .section-sub { max-width: 540px; margin-bottom: 60px; }
+    .team-img { width: 100%; height: auto; display: block; border-radius: 2px; }
+
+    /* ─── SECTION 7: FOOTER ─── */
+    #contact {
+      background: var(--dark);
+      color: white;
+    }
+    .footer-top {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 80px 60px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .footer-brand {}
+    .footer-logo { height: 28px; margin-bottom: 24px; filter: brightness(0) invert(1); display: block; }
+    .footer-tagline {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 20px;
+      line-height: 1.4;
+    }
+    .footer-details {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer-detail {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.5;
+    }
+    .footer-detail .di {
+      font-size: 0.95rem;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .footer-detail a { color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.2s; }
+    .footer-detail a:hover { color: white; }
+
+    /* Contact Form */
+    .footer-form {}
+    .footer-form-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 28px;
+      display: block;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+    .form-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+    .form-field label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.35);
+      text-transform: uppercase;
+    }
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: white;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      padding: 12px 16px;
+      outline: none;
+      transition: border-color 0.2s;
+      border-radius: 0;
+      -webkit-appearance: none;
+    }
+    .form-field input::placeholder,
+    .form-field textarea::placeholder { color: rgba(255,255,255,0.2); }
+    .form-field input:focus,
+    .form-field select:focus,
+    .form-field textarea:focus { border-color: rgba(255,255,255,0.4); }
+    .form-field textarea { resize: none; min-height: 90px; }
+    .form-field select option { background: #1a1a1a; color: white; }
+    .form-submit {
+      width: 100%;
+      padding: 14px 24px;
+      background: white;
+      color: var(--dark);
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      margin-top: 8px;
+    }
+    .form-submit:hover { opacity: 0.88; }
+    .form-success {
+      display: none;
+      padding: 20px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      text-align: center;
+      color: rgba(255,255,255,0.7);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    /* Footer Bottom */
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-bottom p {
+      font-size: 12px;
+      color: rgba(255,255,255,0.2);
+    }
+    .footer-bottom nav-links { display: flex; gap: 24px; }
+    .footer-bottom a {
+      font-size: 12px;
+      color: rgba(255,255,255,0.25);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-bottom a:hover { color: rgba(255,255,255,0.6); }
+
+    /* ─── MOBILE ─── */
+    @media (max-width: 768px) {
+      nav { padding: 16px 24px; }
+      .nav-domain { display: none; }
+      #hero { padding: 80px 24px 64px; }
+      #hero h1 { font-size: 2.8rem; }
+      .case-stats { flex-direction: column; gap: 20px; }
+      .benefits-inner, .intel-intro, .results-inner, .team-inner { padding: 64px 24px; }
+      .uc-grid { grid-template-columns: 1fr; }
+      .workflow-section { grid-template-columns: 1fr; min-height: auto; }
+      .workflow-section.flip { direction: ltr; }
+      .workflow-media { min-height: 240px; }
+      .workflow-text { padding: 48px 24px; }
+      .wf-before-after { flex-direction: column; }
+      .wf-col + .wf-col { border-left: 1px solid rgba(255,255,255,0.08); border-top: none; }
+      .results-grid { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr; gap: 56px; padding: 56px 24px; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; padding: 20px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="../">
+      <img src="../security/assets/Logo/yantrai_logo_main.png" alt="Yantra AI Labs">
+    </a>
+    <span class="nav-domain">Construction AI</span>
+    <a href="#contact" class="nav-cta">Book a Demo</a>
+  </nav>
+
+  <!-- ─── SECTION 1: HERO ─── -->
+  <section id="hero">
+    <div class="hero-eyebrow">For Construction Companies</div>
+
+    <h1>Make your decisions<br>proactive, not <span class="reactive">reactive.</span></h1>
+
+    <p class="hero-sub">
+      A site officer who spots risks before they become incidents. A project head who reviews 12 live sites without leaving his desk. A CEO whose entire portfolio is visible in one dashboard — not next week's report. This is what AI integration delivers: a 10× leap in how construction organisations sense, decide, and act.
+    </p>
+
+    <div class="hero-case-study">
+      <div class="case-bar"></div>
+      <div class="case-body">
+        <div class="case-label">Real-World Case Study — Infrastructure Sector</div>
+        <p class="case-text">
+          A leading Indian infrastructure conglomerate deployed Vision AI across 12 active construction sites — monitoring safety compliance, equipment utilisation, and project progress in real time. Within six months, management had near-instant visibility into every site without expanding the safety team.
+        </p>
+        <div class="case-stats">
+          <div class="case-stat">
+            <strong>41%</strong>
+            <span>Reduction in safety violations</span>
+          </div>
+          <div class="case-stat">
+            <strong>65%</strong>
+            <span>Faster daily reporting</span>
+          </div>
+          <div class="case-stat">
+            <strong>3.2×</strong>
+            <span>ROI in first year</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <a href="#contact" class="hero-cta">See How It Works →</a>
+  </section>
+
+  <!-- ─── SECTION 2: BENEFITS ─── -->
+  <section id="benefits">
+    <div class="benefits-inner">
+      <div class="section-label">Platform Benefits</div>
+      <h2 class="section-heading">Where Vision AI<br>Creates Real Value.</h2>
+      <p class="section-sub">From the moment a worker steps on site to the boardroom reporting — every layer of your construction operation becomes measurable, manageable, and predictable.</p>
+
+      <!-- Video -->
+      <div class="video-frame">
+        <video autoplay muted loop playsinline>
+          <source src="../security/assets/video/Security_VAI (1).mp4" type="video/mp4">
+        </video>
+        <div class="video-caption">Vision AI — live safety &amp; security monitoring across construction sites</div>
+      </div>
+
+      <!-- 10 Use Cases -->
+      <div class="uc-grid-label">10 Ways The Platform Works On Your Site</div>
+      <div class="uc-grid">
+
+        <div class="uc-card">
+          <div class="uc-icon">🦺</div>
+          <div class="uc-info">
+            <div class="uc-cat">Safety</div>
+            <div class="uc-title">PPE Compliance Monitoring</div>
+            <div class="uc-desc">Auto-detect workers without hard hats, safety vests, or steel-toed boots. Instant supervisor alert — no manual patrol needed.</div>
+          </div>
+        </div>
+
+        <div class="uc-card">
+          <div class="uc-icon">🚧</div>
+          <div class="uc-info">
+            <div class="uc-cat">Safety</div>
+            <div class="uc-title">Restricted Zone Enforcement</div>
+            <div class="uc-desc">AI flags any person entering crane radii, excavation edges, or live electrical zones — before an incident, not after.</div>
+          </div>
+        </div>
+
+        <div class="uc-card">
+          <div class="uc-icon">🔒</div>
+          <div class="uc-info">
+            <div class="uc-cat">Security</div>
+            <div class="uc-title">After-Hours Intrusion Detection</div>
+            <div class="uc-desc">Perimeter cameras detect unauthorised access after shift hours. Real-time alerts to the site security team, with clip evidence.</div>
+          </div>
+        </div>
+
+        <div class="uc-card">
+          <div class="uc-icon">🚛</div>
+          <div class="uc-info">
+            <div class="uc-cat">Security</div>
+            <div class="uc-title">Equipment &amp; Vehicle Tracking</div>
+            <div class="uc-desc">Monitor excavator movements, detect idle machinery, and prevent unauthorised use or theft of high-value equipment 24/7.</div>
+          </div>
+        </div>
+
+        <div class="uc-card">
+          <div class="uc-icon">👷</div>
+          <div class="uc-info">
+            <div class="uc-cat">Operations</div>
+            <div class="uc-title">Worker Attendance &amp; Productivity</div>
+            <div class="uc-desc">Automated headcounts, shift-level attendance, and idle-time detection replace manual mustering across multi-zone sites.</div>
+          </div>
+        </div>
+
+        <div class="uc-card">
+          <div class="uc-icon">📊</div>
+          <div class="uc-info">
+            <div class="uc-cat">Operations</div>
+            <div class="uc-title">Real-time Progress Tracking</div>
+            <div class="uc-desc">AI compares live site footage against project timelines. Project heads get a daily completion percentage — no site visit required.</div>
+          </div>
+        </div>
+
+        <div class="uc-card">
+          <div class="uc-icon">🔧</div>
+          <div class="uc-info">
+            <div class="uc-cat">Maintenance</div>
+            <div class="uc-title">Predictive Equipment Health</div>
+            <div class="uc-desc">Anomaly detection on heavy machinery flags early signs of failure — averting costly breakdowns and project stoppages.</div>
+          </div>
+        </div>
+
+        <div class="uc-card">
+          <div class="uc-icon">🏗️</div>
+          <div class="uc-info">
+            <div class="uc-cat">Maintenance</div>
+            <div class="uc-title">Structural Defect Detection</div>
+            <div class="uc-desc">Visual AI identifies cracks, voids, and deviations from structural drawings — catching defects before they become expensive rework.</div>
+          </div>
+        </div>
+
+        <div class="uc-card">
+          <div class="uc-icon">📦</div>
+          <div class="uc-info">
+            <div class="uc-cat">Efficiency</div>
+            <div class="uc-title">Material Flow &amp; Inventory</div>
+            <div class="uc-desc">Track incoming deliveries, monitor stockpile levels in real time, and flag material wastage before it impacts your margin.</div>
+          </div>
+        </div>
+
+        <div class="uc-card">
+          <div class="uc-icon">⚡</div>
+          <div class="uc-info">
+            <div class="uc-cat">Speed</div>
+            <div class="uc-title">Automated Incident Response</div>
+            <div class="uc-desc">Fall detection, collapse alerts, and SOS triggers activate the response chain instantly — cutting emergency response time by 70%.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SECTION 3: INTELLIGENCE LAYER ─── -->
+  <section id="intelligence">
+    <div class="intel-intro">
+      <div class="section-label">How It Works</div>
+      <h2 class="section-heading">The Intelligence<br>Layer Explained.</h2>
+      <p class="section-sub">
+        Traditional software waits to be told what to do. AI agents watch, learn, and act — continuously. Think of it less like a dashboard and more like hiring a team of tireless, hyper-observant analysts who never sleep, never blink, and escalate the right thing to the right person in seconds.
+      </p>
+      <div class="analogy-box">
+        <div class="bar"></div>
+        <div class="analogy-text">
+          <strong>A simple analogy:</strong> A spreadsheet is a tool — it needs a human to enter data, interpret it, and decide. An AI agent is more like a seasoned site manager who <em>watches everything at once</em>, flags anomalies the moment they appear, and hands you a decision — not a data dump. The difference isn't incremental. It's structural.
+        </div>
+      </div>
+    </div>
+    <iframe
+      src="../security/assets/IAAS/yantrai-brain-v2.html"
+      class="intel-visual"
+      title="Yantra AI — Intelligence Layer"
+      loading="lazy">
+    </iframe>
+  </section>
+
+  <!-- ─── SECTION 4: USE CASES (3) ─── -->
+
+  <!-- UC 1: Data Collection -->
+  <div class="workflow-section">
+    <div class="workflow-media">
+      <div class="workflow-placeholder">
+        <div class="ph-icon">📷</div>
+        <div class="ph-label"><!-- ADD: data-collection.gif --></div>
+      </div>
+    </div>
+    <div class="workflow-text">
+      <div class="wf-num">Workflow 01 of 03</div>
+      <div class="wf-tag">Data Collection</div>
+      <h2>From clipboards<br>to real-time intelligence.</h2>
+      <p>Every shift, thousands of events unfold across your site. With manual systems, most are never captured — and the ones that are arrive days late. Vision AI captures everything, automatically, the moment it happens.</p>
+      <div class="wf-before-after">
+        <div class="wf-col before">
+          <div class="wf-col-label">Before AI</div>
+          <ul>
+            <li>Manual forms filled once per shift</li>
+            <li>Photo evidence on personal phones</li>
+            <li>Safety walks every 4–6 hours</li>
+            <li>Attendance via biometric + manual log</li>
+          </ul>
+        </div>
+        <div class="wf-col after">
+          <div class="wf-col-label">With Yantra AI</div>
+          <ul>
+            <li>Every event captured in real time</li>
+            <li>Timestamped video clips, auto-archived</li>
+            <li>Continuous 24/7 site coverage</li>
+            <li>Instant headcount via camera AI</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- UC 2: Decision Making -->
+  <div class="workflow-section flip">
+    <div class="workflow-media">
+      <div class="workflow-placeholder">
+        <div class="ph-icon">🧠</div>
+        <div class="ph-label"><!-- ADD: decision-making.gif --></div>
+      </div>
+    </div>
+    <div class="workflow-text">
+      <div class="wf-num">Workflow 02 of 03</div>
+      <div class="wf-tag">Decision Making</div>
+      <h2>From weekly reports<br>to instant clarity.</h2>
+      <p>Project heads currently make decisions on data that's 3–7 days old. By the time a risk surfaces in a report, it has already escalated. AI compresses that gap from days to seconds.</p>
+      <div class="wf-before-after">
+        <div class="wf-col before">
+          <div class="wf-col-label">Before AI</div>
+          <ul>
+            <li>Weekly site reports, manually compiled</li>
+            <li>3–7 day lag between event and awareness</li>
+            <li>Decisions made on incomplete data</li>
+            <li>Site visits needed to verify ground truth</li>
+          </ul>
+        </div>
+        <div class="wf-col after">
+          <div class="wf-col-label">With Yantra AI</div>
+          <ul>
+            <li>Live dashboards updated every 60 seconds</li>
+            <li>Instant alerts on critical deviations</li>
+            <li>AI recommends action — not just data</li>
+            <li>Full site visibility from any device</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- UC 3: Profitability -->
+  <div class="workflow-section">
+    <div class="workflow-media">
+      <div class="workflow-placeholder">
+        <div class="ph-icon">📈</div>
+        <div class="ph-label"><!-- ADD: profitability.gif --></div>
+      </div>
+    </div>
+    <div class="workflow-text">
+      <div class="wf-num">Workflow 03 of 03</div>
+      <div class="wf-tag">Efficiency &amp; Profitability</div>
+      <h2>From cost overruns<br>to measured outcomes.</h2>
+      <p>The average Indian construction project runs 15–22% over budget. The root causes — safety delays, rework, idle machinery, manual reporting overhead — are all measurable and preventable with AI.</p>
+      <div class="wf-before-after">
+        <div class="wf-col before">
+          <div class="wf-col-label">Before AI</div>
+          <ul>
+            <li>15–22% cost overrun on average</li>
+            <li>Rework discovered late in project</li>
+            <li>Equipment idle 30–40% of shift time</li>
+            <li>Safety incident → week-long stoppage</li>
+          </ul>
+        </div>
+        <div class="wf-col after">
+          <div class="wf-col-label">With Yantra AI</div>
+          <ul>
+            <li>Early defect catch → 28% less rework cost</li>
+            <li>Equipment utilisation up 35–45%</li>
+            <li>Incident response time cut by 70%</li>
+            <li>3.2× documented ROI in year one</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── SECTION 5: SOCIAL PROOF ─── -->
+  <section id="results">
+    <div class="results-inner">
+      <div class="section-label">Industry Results</div>
+      <h2 class="section-heading">What AI Adoption<br>Actually Delivers.</h2>
+      <p class="section-sub">Across infrastructure, real estate, and heavy construction — organisations that have deployed AI agents are reporting consistent, measurable improvements within the first 6–12 months.</p>
+
+      <div class="results-grid">
+
+        <div class="result-card">
+          <div class="result-num">38<sup>%</sup></div>
+          <div class="result-label">Reduction in on-site safety incidents</div>
+          <div class="result-desc">Construction firms deploying Vision AI for PPE and restricted-zone monitoring report a 38–45% drop in recordable safety incidents within 6 months of go-live.</div>
+          <div class="result-source">Source — McKinsey Global Infrastructure Report, 2023</div>
+        </div>
+
+        <div class="result-card">
+          <div class="result-num">42<sup>%</sup></div>
+          <div class="result-label">Improvement in on-time project delivery</div>
+          <div class="result-desc">AI-powered scheduling and progress monitoring — combined with real-time deviation alerts — reduced project delays by up to 42% in documented pilots across 3 continents.</div>
+          <div class="result-source">Source — Dodge Data &amp; Analytics, Smart Market Report 2023</div>
+        </div>
+
+        <div class="result-card">
+          <div class="result-num">28<sup>%</sup></div>
+          <div class="result-label">Lower rework costs per project</div>
+          <div class="result-desc">AI visual inspection catches structural defects and quality deviations before handover, dramatically reducing costly late-stage rework across commercial and infrastructure projects.</div>
+          <div class="result-source">Source — Autodesk Construction IQ Study, 2023</div>
+        </div>
+
+        <div class="result-card">
+          <div class="result-num">4<sup>×</sup></div>
+          <div class="result-label">Faster daily reporting for site officers</div>
+          <div class="result-desc">Automated data capture replaces manual documentation. Site officers using AI dashboards complete end-of-day reporting in under 15 minutes, freeing 4+ hours for higher-value work.</div>
+          <div class="result-source">Source — PwC AI in Construction Analysis, 2022</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SECTION 6: TEAM ─── -->
+  <section id="team">
+    <div class="team-inner">
+      <div class="section-label">Our Core Team</div>
+      <h2 class="section-heading">The Minds Behind<br>the Platform.</h2>
+      <p class="section-sub">Engineers, operators, and founders who have built and scaled deep-tech AI products across security, enterprise software, and industrial operations.</p>
+      <img
+        src="../security/assets/Team/Untitled design (1).png"
+        alt="Yantra AI Labs — Rakesh, Rohit, Mohit"
+        class="team-img">
+    </div>
+  </section>
+
+  <!-- ─── SECTION 7: FOOTER / CONTACT ─── -->
+  <footer id="contact">
+    <div class="footer-top">
+
+      <!-- Brand & Address -->
+      <div class="footer-brand">
+        <img src="../security/assets/Logo/yantrai_logo_main.png" alt="Yantra AI Labs" class="footer-logo">
+        <div class="footer-tagline">AI that works on your site.<br>Not just in a demo.</div>
+        <div class="footer-details" style="margin-top: 32px;">
+          <div class="footer-detail">
+            <span class="di">📍</span>
+            <span>Yantra AI Labs, HSR Layout,<br>Bengaluru, Karnataka — 560102, India</span>
+          </div>
+          <div class="footer-detail">
+            <span class="di">📱</span>
+            <a href="tel:+919123102267">+91 91231 02267</a>
+          </div>
+          <div class="footer-detail">
+            <span class="di">✉️</span>
+            <a href="mailto:rohit@yantrailabs.com">rohit@yantrailabs.com</a>
+          </div>
+          <div class="footer-detail">
+            <span class="di">🌐</span>
+            <a href="https://rohitwa.github.io/Yantrai_newpages/" target="_blank">yantrailabs.com</a>
+          </div>
+        </div>
+
+        <div style="margin-top: 40px; padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.08);">
+          <div style="font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.2); margin-bottom: 16px;">Explore Other Domains</div>
+          <a href="../security/" style="display:inline-block; font-size:12px; color:rgba(255,255,255,0.4); text-decoration:none; border:1px solid rgba(255,255,255,0.12); padding:8px 16px; margin-right:8px; transition: border-color 0.2s, color 0.2s;" onmouseover="this.style.color='white';this.style.borderColor='rgba(255,255,255,0.4)'" onmouseout="this.style.color='rgba(255,255,255,0.4)';this.style.borderColor='rgba(255,255,255,0.12)'">
+            🔒 Physical Security
+          </a>
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <div class="footer-form">
+        <span class="footer-form-label">Book a Demo — Response within 2 hours</span>
+        <form id="demoForm" onsubmit="submitForm(event)">
+          <div class="form-row">
+            <div class="form-field">
+              <label>Full Name *</label>
+              <input type="text" placeholder="Arjun Sharma" required>
+            </div>
+            <div class="form-field">
+              <label>Company *</label>
+              <input type="text" placeholder="L&T Construction" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-field">
+              <label>Your Role *</label>
+              <select required>
+                <option value="" disabled selected>Select role</option>
+                <option>CEO / MD</option>
+                <option>Project Head / Director</option>
+                <option>Site Officer / Manager</option>
+                <option>Safety Head / EHS</option>
+                <option>IT / Digital Head</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label>Mobile *</label>
+              <input type="tel" placeholder="+91 98765 43210" required>
+            </div>
+          </div>
+          <div class="form-field">
+            <label>Email</label>
+            <input type="email" placeholder="arjun@company.com">
+          </div>
+          <div class="form-field">
+            <label>What challenge can we solve?</label>
+            <textarea placeholder="Tell us about your site — number of locations, current pain points, what you'd like to automate..."></textarea>
+          </div>
+          <button type="submit" class="form-submit">Request a Demo →</button>
+        </form>
+        <div class="form-success" id="formSuccess">
+          <strong style="color:white; font-size:1rem;">Thank you!</strong><br>
+          Rohit will reach out within 2 hours.<br>
+          <span style="font-size:0.82rem; color:rgba(255,255,255,0.4);">+91 91231 02267 · rohit@yantrailabs.com</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2025 Yantra AI Labs. All rights reserved.</p>
+      <div style="display:flex; gap:24px;">
+        <a href="../">All Domains</a>
+        <a href="../security/">Security AI</a>
+        <a href="#hero">Back to Top ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function submitForm(e) {
+      e.preventDefault();
+      document.getElementById('demoForm').style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+    }
+  </script>
+
+</body>
+</html>
