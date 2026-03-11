@@ -191,7 +191,7 @@
     /* ─── SECTION 4: IAAS ─── */
     .iaas-section {
       background: var(--bg);
-      padding: 80px 60px;
+      padding: 80px 0;
       text-align: center;
     }
     .iaas-heading {
@@ -202,9 +202,10 @@
       letter-spacing: -0.025em;
       color: var(--dark);
       margin-bottom: 48px;
+      padding: 0 60px;
     }
     .iaas-frame-wrap {
-      width: 80%;
+      width: 60%;
       margin: 0 auto;
       overflow: hidden;
       border-radius: 12px;
@@ -215,6 +216,9 @@
       min-height: 64vh;
       border: none;
       display: block;
+    }
+    @media (max-width: 768px) {
+      .iaas-frame-wrap { width: 90%; }
     }
 
     /* ─── SECTION 5: IMPLEMENTATION ─── */

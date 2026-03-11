@@ -383,12 +383,22 @@
       color: var(--dark);
     }
     .analogy-box .analogy-text strong { font-weight: 600; }
-    .intel-visual {
+    .intel-visual { display: none; } /* replaced by .intel-frame-wrap */
+    .intel-frame-wrap {
+      width: 60%;
+      margin: 0 auto;
+      overflow: hidden;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+    .intel-frame-wrap iframe {
       width: 100%;
       height: 88vh;
       border: none;
       display: block;
-      border-top: 1px solid var(--border);
+    }
+    @media (max-width: 768px) {
+      .intel-frame-wrap { width: 90%; }
     }
 
     /* ─── SECTION 4: USE CASES ─── */
@@ -921,12 +931,13 @@
         </div>
       </div>
     </div>
-    <iframe
-      src="../security/assets/IAAS/yantrai-brain-v2.html"
-      class="intel-visual"
-      title="Yantra AI — Intelligence Layer"
-      loading="lazy">
-    </iframe>
+    <div class="intel-frame-wrap">
+      <iframe
+        src="../assets/IAAS/yantrai-brain-v2.html"
+        title="Yantra AI — Intelligence Layer"
+        loading="lazy">
+      </iframe>
+    </div>
   </section>
 
   <!-- ─── SECTION 4: USE CASES (3) ─── -->
