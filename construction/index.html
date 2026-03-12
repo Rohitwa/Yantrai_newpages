@@ -599,10 +599,38 @@
       background: #111;
     }
     .workflow-media video {
+      position: absolute;
+      top: 0; left: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
+    }
+    /* ── WF3 Chart Panel ── */
+    .wf3-chart-outer {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      background: #0a0c14;
+      padding: 24px 18px 16px;
+      gap: 10px;
+    }
+    .wf3-chart-canvas-wrap {
+      flex: 1;
+      min-height: 0;
+      position: relative;
+    }
+    .wf3-caption {
+      font-family: 'Inter', sans-serif;
+      font-size: 11.5px;
+      color: rgba(255,255,255,0.35);
+      line-height: 1.65;
+      text-align: center;
+      margin: 0;
+      padding: 10px 12px 0;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      flex-shrink: 0;
     }
     .workflow-placeholder {
       width: 100%;
@@ -966,6 +994,8 @@
       .footer-bottom { flex-direction: column; gap: 12px; text-align: center; padding: 20px 24px; }
     }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
 </head>
 <body>
 
@@ -1303,10 +1333,12 @@
 
   <!-- UC 3: Profitability -->
   <div class="workflow-section">
-    <div class="workflow-media">
-      <div class="workflow-placeholder">
-        <div class="ph-icon">📈</div>
-        <div class="ph-label"><!-- ADD: profitability.gif --></div>
+    <div class="workflow-media" style="background:#0a0c14;">
+      <div class="wf3-chart-outer">
+        <div class="wf3-chart-canvas-wrap">
+          <canvas id="wf3Chart"></canvas>
+        </div>
+        <p class="wf3-caption">Using Yantrai Agents, Owners can identify potential delays early and adjust plans to minimize delays</p>
       </div>
     </div>
     <div class="workflow-text">
@@ -1509,6 +1541,118 @@
     function closeModalOnOverlay(e) {
       if (e.target === document.getElementById('chartModal')) closeModal();
     }
+  </script>
+
+  <!-- ── WF3: Project Progress Chart ───────────────────────────────────── -->
+  <script>
+  (function () {
+    const weeks = [];
+    for (let w = 9; w <= 65; w++) weeks.push(w);
+
+    const aiRaw = {9:8,10:10,11:12,12:13,13:14,14:15,15:16,16:18,17:20,18:23};
+    const aaRaw = {18:28,19:31,20:35,21:37,22:42,23:47};
+    const aiDotWeeks = [9,11,13,15,17,18];
+    const aaDotWeeks = [18,19,20,21,22,23];
+    const aiDotLabels = {9:'8%',11:'12%',13:'14%',15:'16%',17:'20%',18:'23%'};
+    const aaDotLabels = {19:'31%',20:'35%',21:'37%',22:'42%',23:'47%'};
+
+    function p1(w){ return +(8+(92/56)*(w-9)).toFixed(1); }
+    function p2(w){ return +(23+(77/31)*(w-18)).toFixed(1); }
+
+    const datasets = [
+      {
+        label:'Initial Projection',
+        data: weeks.map(w => p1(w)),
+        borderColor:'rgba(255,255,255,0.2)',
+        borderWidth:1.5, borderDash:[5,4],
+        pointRadius:0, tension:0, spanGaps:true, order:4
+      },
+      {
+        label:'Adjusted Projection',
+        data: weeks.map(w => (w>=18&&w<=49) ? p2(w) : null),
+        borderColor:'rgba(245,166,35,0.6)',
+        borderWidth:1.5, borderDash:[5,4],
+        pointRadius:0, tension:0, spanGaps:false, order:3
+      },
+      {
+        label:'Actual — Initial Pace',
+        data: weeks.map(w => aiRaw[w]??null),
+        borderColor:'#c8c8c8', borderWidth:2.5,
+        pointRadius: weeks.map(w => aiDotWeeks.includes(w)?3.5:0),
+        pointBackgroundColor:'#c8c8c8',
+        pointBorderColor:'#0a0c14', pointBorderWidth:1.5,
+        tension:0, spanGaps:false, order:2
+      },
+      {
+        label:'Actual — Adjusted Pace',
+        data: weeks.map(w => aaRaw[w]??null),
+        borderColor:'#f5a623', borderWidth:3,
+        pointRadius: weeks.map(w => aaDotWeeks.includes(w) ? (w===18?5.5:3.5) : 0),
+        pointBackgroundColor:'#f5a623',
+        pointBorderColor:'#0a0c14', pointBorderWidth:1.5,
+        tension:0, spanGaps:false, order:1
+      }
+    ];
+
+    const annotations = {
+      avoidedZone:{type:'box',xMin:49,xMax:65,yMin:0,yMax:100,backgroundColor:'rgba(220,60,60,0.07)',borderWidth:0},
+      dueLine:{type:'line',xMin:49,xMax:49,borderColor:'rgba(255,255,255,0.15)',borderWidth:1.5,borderDash:[6,4]},
+      riskLine:{type:'line',xMin:18,xMax:18,borderColor:'rgba(245,166,35,0.18)',borderWidth:1,borderDash:[4,3]},
+      lbInitPace:{type:'label',xValue:12.5,yValue:50,content:['Initial','pace'],color:'rgba(255,255,255,0.45)',font:{size:10,weight:'bold',family:'Inter,sans-serif'},textAlign:'center'},
+      lbAdjPace:{type:'label',xValue:21,yValue:63,content:['Adjusted','pace'],color:'#f5a623',font:{size:10,weight:'bold',family:'Inter,sans-serif'},textAlign:'center'},
+      lbRisk:{type:'label',xValue:18,yValue:12,content:'⚠ Risk of Delay',color:'#f5a623',font:{size:9,family:'monospace'},backgroundColor:'rgba(245,166,35,0.08)',borderColor:'rgba(245,166,35,0.3)',borderWidth:1,borderRadius:4,padding:{x:5,y:3}},
+      lbAdjProj:{type:'label',xValue:33,yValue:84,content:['Adjusted projected','completion'],color:'rgba(245,166,35,0.65)',font:{size:9.5,weight:'bold',family:'Inter,sans-serif'},textAlign:'center'},
+      lbInitProj:{type:'label',xValue:56,yValue:74,content:['Initial projected','completion'],color:'rgba(255,255,255,0.28)',font:{size:9.5,weight:'bold',family:'Inter,sans-serif'},textAlign:'center'},
+      lbAvoided:{type:'label',xValue:57,yValue:42,content:'Avoided delay',color:'rgba(220,80,80,0.65)',font:{size:9.5,weight:'bold',family:'Inter,sans-serif'},textAlign:'center'}
+    };
+
+    // Point value labels
+    Object.entries(aiDotLabels).forEach(([w,lbl])=>{
+      annotations['aiL'+w]={type:'label',xValue:+w,yValue:(aiRaw[+w]||0)+7,content:lbl,color:'rgba(200,200,200,0.6)',font:{size:8.5,family:'monospace'}};
+    });
+    Object.entries(aaDotLabels).forEach(([w,lbl])=>{
+      annotations['aaL'+w]={type:'label',xValue:+w,yValue:(aaRaw[+w]||0)+7,content:lbl,color:'#f5a623',font:{size:8.5,family:'monospace'}};
+    });
+
+    const ctx = document.getElementById('wf3Chart');
+    new Chart(ctx, {
+      type:'line',
+      data:{ labels:weeks, datasets },
+      options:{
+        responsive:true,
+        maintainAspectRatio:false,
+        animation:false,
+        interaction:{ mode:'index', intersect:false },
+        scales:{
+          x:{
+            type:'linear', min:9, max:65,
+            ticks:{ color:'#555', font:{size:9,family:'monospace'}, stepSize:4,
+              callback: v => (v%4===1||v===9) ? v : null },
+            grid:{ color:'rgba(255,255,255,0.04)' },
+            border:{ color:'rgba(255,255,255,0.08)' },
+            title:{ display:true, text:'WORK WEEK', color:'#3d3d3d', font:{size:8.5,family:'monospace'} }
+          },
+          y:{
+            min:0, max:100,
+            ticks:{ callback:v=>v+'%', color:'#555', font:{size:9,family:'monospace'}, stepSize:20 },
+            grid:{ color:'rgba(255,255,255,0.04)' },
+            border:{ display:false },
+            title:{ display:true, text:'COMPLETION RATE', color:'#3d3d3d', font:{size:8.5,family:'monospace'} }
+          }
+        },
+        plugins:{
+          legend:{ display:false },
+          tooltip:{
+            backgroundColor:'#0f1117',
+            borderColor:'rgba(255,255,255,0.1)', borderWidth:1,
+            titleColor:'#888', bodyColor:'#ccc',
+            callbacks:{ label: c => c.parsed.y!=null ? `${c.dataset.label}: ${c.parsed.y}%` : '' }
+          },
+          annotation:{ annotations }
+        }
+      }
+    });
+  })();
   </script>
 
 </body>
