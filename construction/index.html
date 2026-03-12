@@ -609,32 +609,137 @@
     /* WF2: wide 16:9 video — contain so full frame is always visible */
     .wf2-video { object-fit: contain !important; background: #000; }
     /* ── WF3 Chart Panel ── */
-    .wf3-chart-outer {
+    .wf3-outer {
       position: absolute;
       inset: 0;
       display: flex;
       flex-direction: column;
       background: #ffffff;
-      padding: 24px 20px 16px;
-      gap: 10px;
+      padding: 14px 16px 10px;
+      gap: 5px;
+      overflow: hidden;
     }
+    .wf3-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .wf3-tracker-label {
+      margin: 0 0 2px;
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #f59e0b;
+      font-family: 'Courier New', monospace;
+    }
+    .wf3-title {
+      margin: 0;
+      font-size: 13px;
+      font-weight: 700;
+      color: #1e293b;
+      font-family: 'Sora', sans-serif;
+      letter-spacing: -0.02em;
+    }
+    .wf3-subtitle {
+      margin: 2px 0 0;
+      font-size: 9.5px;
+      color: #94a3b8;
+      font-family: 'Inter', sans-serif;
+    }
+    .wf3-badges {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+    }
+    .wf3-badge {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 7px;
+      padding: 4px 9px;
+      text-align: center;
+    }
+    .wf3-badge-lbl {
+      display: block;
+      font-size: 8px;
+      color: #94a3b8;
+      font-family: 'Courier New', monospace;
+      letter-spacing: 0.04em;
+    }
+    .wf3-badge-val {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      margin-top: 1px;
+    }
+    .wf3-badge-val.amber { color: #f59e0b; }
+    .wf3-badge-val.slate { color: #475569; }
+    .wf3-badge-val.green { color: #10b981; }
     .wf3-chart-canvas-wrap {
       flex: 1;
       min-height: 0;
       position: relative;
     }
+    .wf3-legend {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding-top: 6px;
+      border-top: 1px solid #e2e8f0;
+      flex-shrink: 0;
+    }
+    .wf3-legend-items {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .wf3-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 9.5px;
+      color: #64748b;
+      font-family: 'Inter', sans-serif;
+    }
+    .wf3-delay-badge {
+      background: rgba(16,185,129,0.07);
+      border: 1px solid rgba(16,185,129,0.2);
+      border-radius: 6px;
+      padding: 3px 9px;
+      font-size: 9.5px;
+      color: #10b981;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+    }
+    .wf3-insight {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-radius: 7px;
+      padding: 7px 10px;
+      font-size: 9.5px;
+      color: #78716c;
+      line-height: 1.6;
+      font-family: 'Inter', sans-serif;
+      flex-shrink: 0;
+    }
+    .wf3-insight strong { color: #d97706; }
+    .wf3-insight strong.dark { color: #1e293b; }
+    .wf3-insight strong.green { color: #10b981; }
     .wf3-caption {
       font-family: 'Inter', sans-serif;
-      font-size: 12px;
+      font-size: 9.5px;
       font-weight: 600;
       color: #92400e;
-      line-height: 1.6;
+      line-height: 1.5;
       text-align: center;
       margin: 0;
-      padding: 10px 14px 10px;
-      background: rgba(217,119,6,0.09);
-      border-top: 2px solid rgba(217,119,6,0.3);
-      border-radius: 0 0 4px 4px;
+      padding: 5px 12px;
+      background: rgba(217,119,6,0.08);
+      border-top: 1.5px solid rgba(217,119,6,0.22);
       flex-shrink: 0;
     }
     .workflow-placeholder {
@@ -1339,9 +1444,58 @@
   <!-- UC 3: Profitability -->
   <div class="workflow-section">
     <div class="workflow-media" style="background:#ffffff;">
-      <div class="wf3-chart-outer">
+      <div class="wf3-outer">
+        <!-- Header -->
+        <div class="wf3-header">
+          <div>
+            <p class="wf3-tracker-label">PROJECT TRACKER</p>
+            <h3 class="wf3-title">Completion Rate Progress</h3>
+            <p class="wf3-subtitle">Risk detected at Wk 18 · Pace adjusted · Delay avoided</p>
+          </div>
+          <div class="wf3-badges">
+            <div class="wf3-badge">
+              <span class="wf3-badge-lbl">Risk Detected</span>
+              <span class="wf3-badge-val amber">Wk 18</span>
+            </div>
+            <div class="wf3-badge">
+              <span class="wf3-badge-lbl">Original Due</span>
+              <span class="wf3-badge-val slate">Wk 49</span>
+            </div>
+            <div class="wf3-badge">
+              <span class="wf3-badge-lbl">Delay Avoided</span>
+              <span class="wf3-badge-val green">~16 wks</span>
+            </div>
+          </div>
+        </div>
+        <!-- Chart -->
         <div class="wf3-chart-canvas-wrap">
           <canvas id="wf3Chart"></canvas>
+        </div>
+        <!-- Legend -->
+        <div class="wf3-legend">
+          <div class="wf3-legend-items">
+            <div class="wf3-legend-item">
+              <svg width="26" height="12"><line x1="0" y1="6" x2="26" y2="6" stroke="#64748b" stroke-width="3"/></svg>
+              <span>Actual — initial pace</span>
+            </div>
+            <div class="wf3-legend-item">
+              <svg width="26" height="12"><line x1="0" y1="6" x2="26" y2="6" stroke="#f59e0b" stroke-width="3"/></svg>
+              <span>Actual — adjusted pace</span>
+            </div>
+            <div class="wf3-legend-item">
+              <svg width="26" height="12"><line x1="0" y1="6" x2="26" y2="6" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5 4"/></svg>
+              <span>Initial projection</span>
+            </div>
+            <div class="wf3-legend-item">
+              <svg width="26" height="12"><line x1="0" y1="6" x2="26" y2="6" stroke="#fcd34d" stroke-width="2" stroke-dasharray="5 4"/></svg>
+              <span>Adjusted projection</span>
+            </div>
+          </div>
+          <div class="wf3-delay-badge">✓ ~16 weeks of delay avoided</div>
+        </div>
+        <!-- Insight strip -->
+        <div class="wf3-insight">
+          💡 <strong>Risk of delay detected at Week 18</strong> — at 23% while projection expected ~28%. After adjusting pace, project completes by <strong class="dark">Week 49</strong>, avoiding a slip to <strong class="dark">Week 65</strong> — saving <strong class="green">16 weeks</strong>.
         </div>
         <p class="wf3-caption">Using Yantrai Agents, Owners can identify potential delays early and adjust plans to minimize delays</p>
       </div>
@@ -1564,20 +1718,20 @@
     function p1(w){ return +(8+(92/56)*(w-9)).toFixed(1); }
     function p2(w){ return +(23+(77/31)*(w-18)).toFixed(1); }
 
-    // ── White-background colour palette ──────────────────────────────────
+    // ── New colour palette (matches JSX design) ───────────────────────────
     const C = {
-      initPaceLine  : '#a0aec0',          // muted blue-gray
-      adjPaceLine   : '#d97706',          // rich amber
-      initProjLine  : 'rgba(0,0,0,0.18)', // subtle dark dashed
-      adjProjLine   : 'rgba(217,119,6,0.65)', // amber dashed
-      pointBg       : '#ffffff',
-      gridLine      : 'rgba(0,0,0,0.06)',
-      axisBorder    : 'rgba(0,0,0,0.1)',
-      tickColor     : '#aaa',
-      axisTitle     : '#ccc',
-      avoidedFill   : 'rgba(239,68,68,0.07)',
-      dueLine       : 'rgba(0,0,0,0.18)',
-      riskLine      : 'rgba(217,119,6,0.3)',
+      initPaceLine  : '#64748b',          // slate-500
+      adjPaceLine   : '#f59e0b',          // amber-500
+      initProjLine  : '#cbd5e1',          // slate-200 dashed
+      adjProjLine   : '#fcd34d',          // amber-300 dashed
+      pointBg       : '#ffffff',          // hollow dots
+      gridLine      : '#f1f5f9',          // very light grid
+      axisBorder    : '#e2e8f0',
+      tickColor     : '#94a3b8',
+      axisTitle     : '#cbd5e1',
+      avoidedFill   : 'rgba(239,68,68,0.05)',
+      dueLine       : '#cbd5e1',
+      riskLine      : 'rgba(245,158,11,0.25)',
     };
 
     const datasets = [
@@ -1600,8 +1754,8 @@
         data: weeks.map(w => aiRaw[w]??null),
         borderColor: C.initPaceLine, borderWidth:2.5,
         pointRadius: weeks.map(w => aiDotWeeks.includes(w)?3.5:0),
-        pointBackgroundColor: C.initPaceLine,
-        pointBorderColor: C.pointBg, pointBorderWidth:1.5,
+        pointBackgroundColor: C.pointBg,
+        pointBorderColor: C.initPaceLine, pointBorderWidth:2,
         tension:0, spanGaps:false, order:2
       },
       {
@@ -1609,8 +1763,8 @@
         data: weeks.map(w => aaRaw[w]??null),
         borderColor: C.adjPaceLine, borderWidth:3,
         pointRadius: weeks.map(w => aaDotWeeks.includes(w) ? (w===18?5.5:3.5) : 0),
-        pointBackgroundColor: C.adjPaceLine,
-        pointBorderColor: C.pointBg, pointBorderWidth:1.5,
+        pointBackgroundColor: C.pointBg,
+        pointBorderColor: C.adjPaceLine, pointBorderWidth:2,
         tension:0, spanGaps:false, order:1
       }
     ];
@@ -1621,41 +1775,41 @@
       riskLine    :{ type:'line', xMin:18, xMax:18, borderColor:C.riskLine, borderWidth:1, borderDash:[4,3] },
 
       lbInitPace :{ type:'label', xValue:12.5, yValue:50,
-        content:['Initial','pace'], color:'#555',
+        content:['Initial','pace'], color:'#64748b',
         font:{size:10,weight:'bold',family:'Inter,sans-serif'}, textAlign:'center' },
 
       lbAdjPace  :{ type:'label', xValue:21, yValue:64,
-        content:['Adjusted','pace'], color:C.adjPaceLine,
+        content:['Adjusted','pace'], color:'#d97706',
         font:{size:10,weight:'bold',family:'Inter,sans-serif'}, textAlign:'center' },
 
-      lbRisk     :{ type:'label', xValue:18, yValue:12,
-        content:'⚠ Risk of Delay', color:'#d97706',
+      lbRisk     :{ type:'label', xValue:18, yValue:11,
+        content:'▲ Risk of Delay', color:'#f59e0b',
         font:{size:9,family:'monospace'},
-        backgroundColor:'rgba(217,119,6,0.07)',
-        borderColor:'rgba(217,119,6,0.35)', borderWidth:1, borderRadius:4,
+        backgroundColor:'rgba(245,158,11,0.08)',
+        borderColor:'rgba(245,158,11,0.35)', borderWidth:1, borderRadius:4,
         padding:{x:5,y:3} },
 
       lbAdjProj  :{ type:'label', xValue:33, yValue:84,
-        content:['Adjusted projected','completion'], color:'rgba(180,100,0,0.8)',
+        content:['Adjusted projected','completion'], color:'#d97706',
         font:{size:9.5,weight:'bold',family:'Inter,sans-serif'}, textAlign:'center' },
 
-      lbInitProj :{ type:'label', xValue:56, yValue:74,
-        content:['Initial projected','completion'], color:'rgba(0,0,0,0.32)',
+      lbInitProj :{ type:'label', xValue:57, yValue:74,
+        content:['Initial projected','completion'], color:'#94a3b8',
         font:{size:9.5,weight:'bold',family:'Inter,sans-serif'}, textAlign:'center' },
 
       lbAvoided  :{ type:'label', xValue:57, yValue:42,
-        content:'Avoided delay', color:'rgba(200,50,50,0.7)',
+        content:'Avoided delay', color:'rgba(239,68,68,0.7)',
         font:{size:9.5,weight:'bold',family:'Inter,sans-serif'}, textAlign:'center' }
     };
 
     // Per-point value labels
     Object.entries(aiDotLabels).forEach(([w,lbl])=>{
       annotations['aiL'+w]={ type:'label', xValue:+w, yValue:(aiRaw[+w]||0)+7,
-        content:lbl, color:'rgba(0,0,0,0.35)', font:{size:8.5,family:'monospace'} };
+        content:lbl, color:'#64748b', font:{size:8.5,family:'monospace'} };
     });
     Object.entries(aaDotLabels).forEach(([w,lbl])=>{
       annotations['aaL'+w]={ type:'label', xValue:+w, yValue:(aaRaw[+w]||0)+7,
-        content:lbl, color:'#c27a05', font:{size:8.5,family:'monospace'} };
+        content:lbl, color:'#d97706', font:{size:8.5,family:'monospace'} };
     });
 
     const ctx = document.getElementById('wf3Chart');
@@ -1672,7 +1826,7 @@
             type:'linear', min:9, max:65,
             ticks:{ color:C.tickColor, font:{size:9,family:'monospace'}, stepSize:4,
               callback: v => (v%4===1||v===9) ? v : null },
-            grid:{ color:C.gridLine },
+            grid:{ color:C.gridLine, drawOnChartArea:true },
             border:{ color:C.axisBorder },
             title:{ display:true, text:'WORK WEEK', color:C.axisTitle,
               font:{size:8.5,family:'monospace'} }
@@ -1691,8 +1845,9 @@
           legend:{ display:false },
           tooltip:{
             backgroundColor:'#fff',
-            borderColor:'rgba(0,0,0,0.1)', borderWidth:1,
-            titleColor:'#666', bodyColor:'#333',
+            borderColor:'#e2e8f0', borderWidth:1,
+            titleColor:'#94a3b8', bodyColor:'#475569',
+            boxShadow:'0 4px 20px rgba(0,0,0,0.08)',
             callbacks:{ label: c => c.parsed.y!=null ? `${c.dataset.label}: ${c.parsed.y}%` : '' }
           },
           annotation:{ annotations }
