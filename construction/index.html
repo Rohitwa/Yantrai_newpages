@@ -704,6 +704,28 @@
     .wf-col.after ul li { color: rgba(255,255,255,0.75); }
     .wf-col.after ul li::before { content: '✓'; color: var(--amber); }
 
+    .wf-source-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px dashed rgba(255,255,255,0.12);
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.35);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: color 0.2s;
+    }
+    .wf-source-link:hover { color: var(--amber); }
+    .wf-source-icon {
+      font-size: 13px;
+      opacity: 0.6;
+      flex-shrink: 0;
+    }
+
     /* ─── SECTION 5: SOCIAL PROOF ─── */
     #results {
       background: var(--bg);
@@ -1206,28 +1228,32 @@
     <div class="workflow-text">
       <div class="wf-num">Workflow 01 of 03</div>
       <div class="wf-tag">Data Collection</div>
-      <h2>From clipboards<br>to real-time intelligence.</h2>
-      <p>Every shift, thousands of events unfold across your site. With manual systems, most are never captured — and the ones that are arrive days late. Vision AI captures everything, automatically, the moment it happens.</p>
+      <h2>Capture everything.<br>Act instantly.</h2>
+      <p>Vision AI records every site event in real time. Agents process and deploy that data — no manual effort, no delay.</p>
       <div class="wf-before-after">
         <div class="wf-col before">
           <div class="wf-col-label">Before AI</div>
           <ul>
-            <li>Manual forms filled once per shift</li>
-            <li>Photo evidence on personal phones</li>
-            <li>Safety walks every 4–6 hours</li>
-            <li>Attendance via biometric + manual log</li>
+            <li>Manual forms, once per shift</li>
+            <li>Photos on personal phones</li>
+            <li>Safety checks every 4–6 hrs</li>
+            <li>Data siloed, never actioned</li>
           </ul>
         </div>
         <div class="wf-col after">
           <div class="wf-col-label">With Yantra AI</div>
           <ul>
-            <li>Every event captured in real time</li>
-            <li>Timestamped video clips, auto-archived</li>
-            <li>Continuous 24/7 site coverage</li>
-            <li>Instant headcount via camera AI</li>
+            <li>Every event, captured live</li>
+            <li>Auto-archived video clips</li>
+            <li>24/7 continuous coverage</li>
+            <li>Agents act — no human needed</li>
           </ul>
         </div>
       </div>
+      <a href="https://www.mckinsey.com/capabilities/mckinsey-digital/our-insights/the-economic-potential-of-generative-ai" target="_blank" rel="noopener" class="wf-source-link">
+        <span class="wf-source-icon">↗</span>
+        McKinsey — The Economic Potential of Generative AI
+      </a>
     </div>
   </div>
 
@@ -1242,28 +1268,32 @@
     <div class="workflow-text">
       <div class="wf-num">Workflow 02 of 03</div>
       <div class="wf-tag">Decision Making</div>
-      <h2>From weekly reports<br>to instant clarity.</h2>
-      <p>Project heads currently make decisions on data that's 3–7 days old. By the time a risk surfaces in a report, it has already escalated. AI compresses that gap from days to seconds.</p>
+      <h2>See it now.<br>Decide faster.</h2>
+      <p>Decisions made on 3–7 day old data are already too late. AI closes that gap to seconds.</p>
       <div class="wf-before-after">
         <div class="wf-col before">
           <div class="wf-col-label">Before AI</div>
           <ul>
-            <li>Weekly site reports, manually compiled</li>
-            <li>3–7 day lag between event and awareness</li>
-            <li>Decisions made on incomplete data</li>
-            <li>Site visits needed to verify ground truth</li>
+            <li>Weekly reports, manually compiled</li>
+            <li>3–7 day lag on ground truth</li>
+            <li>Incomplete data, reactive calls</li>
+            <li>Site visits to verify facts</li>
           </ul>
         </div>
         <div class="wf-col after">
           <div class="wf-col-label">With Yantra AI</div>
           <ul>
-            <li>Live dashboards updated every 60 seconds</li>
-            <li>Instant alerts on critical deviations</li>
-            <li>AI recommends action — not just data</li>
-            <li>Full site visibility from any device</li>
+            <li>Live dashboards, 60s refresh</li>
+            <li>Instant alerts on deviations</li>
+            <li>AI recommends action, not just data</li>
+            <li>Full visibility from any device</li>
           </ul>
         </div>
       </div>
+      <a href="https://hbr.org/2023/09/how-companies-are-already-using-ai" target="_blank" rel="noopener" class="wf-source-link">
+        <span class="wf-source-icon">↗</span>
+        HBR — Companies Are Making Better Decisions Faster Thanks to AI
+      </a>
     </div>
   </div>
 
