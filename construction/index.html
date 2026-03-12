@@ -289,7 +289,7 @@
       padding: 100px 60px;
     }
     .video-frame {
-      margin-top: 56px;
+      margin: 56px 10% 0; /* 10% side margins = ~20% smaller frame */
       border: 1px solid var(--border);
       background: #000;
       overflow: hidden;
@@ -298,8 +298,8 @@
     .video-frame video {
       width: 100%;
       display: block;
-      max-height: 72vh;
-      object-fit: cover;
+      max-height: 58vh; /* reduced from 72vh */
+      object-fit: contain; /* no cropping */
     }
     .video-caption {
       position: absolute;
@@ -314,54 +314,60 @@
       letter-spacing: 0.02em;
     }
     .uc-grid-label {
+      font-family: 'Inter', sans-serif;
       font-size: 11px;
       font-weight: 600;
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--gray-dim);
-      margin: 72px 0 28px;
+      margin: 72px 0 0;
     }
-    .uc-grid {
+    .problems-list {
+      border-top: 1px solid rgba(0,0,0,0.1);
+      margin-top: 24px;
+    }
+    .problem-item {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
+      grid-template-columns: 80px 1fr;
+      gap: 24px;
+      padding: 44px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+      align-items: start;
     }
-    .uc-card {
-      background: var(--bg);
-      padding: 28px 28px 28px 24px;
+    .problem-num {
+      font-family: 'Inter', monospace;
+      font-size: 13px;
+      color: #c4bab1;
+      letter-spacing: 0.05em;
+      padding-top: 6px;
+    }
+    .problem-body {
       display: flex;
-      gap: 18px;
-      align-items: flex-start;
-      transition: background 0.2s;
+      flex-direction: column;
+      gap: 10px;
     }
-    .uc-card:hover { background: #fafafa; }
-    .uc-icon {
-      font-size: 1.4rem;
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-    .uc-info {}
-    .uc-cat {
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: 0.16em;
+    .problem-tag {
+      display: inline-block;
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--amber);
-      margin-bottom: 6px;
+      color: #999;
     }
-    .uc-title {
+    .problem-tag.active {
+      background: #c2522b;
+      color: #ffffff;
+      padding: 4px 12px;
+      border-radius: 3px;
+    }
+    .problem-title {
       font-family: 'Sora', sans-serif;
-      font-size: 0.95rem;
+      font-size: clamp(1.5rem, 2.2vw, 2rem);
       font-weight: 700;
       color: var(--dark);
-      margin-bottom: 6px;
-    }
-    .uc-desc {
-      font-size: 0.82rem;
-      line-height: 1.65;
-      color: var(--gray);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
     }
 
     /* ─── SECTION 3: INTELLIGENCE LAYER ─── */
@@ -983,7 +989,7 @@
   <section id="benefits">
     <div class="benefits-inner">
       <div class="section-label">Platform Benefits</div>
-      <h2 class="section-heading">Where Vision AI<br>Creates Real Value.</h2>
+      <h2 class="section-heading">Multi-use cases,<br>One platform</h2>
       <p class="section-sub">From the moment a worker steps on site to the boardroom reporting — every layer of your construction operation becomes measurable, manageable, and predictable.</p>
 
       <!-- Video -->
@@ -991,100 +997,90 @@
         <video autoplay muted loop playsinline>
           <source src="../assets/video/Construction.mp4" type="video/mp4">
         </video>
-        <div class="video-caption">Vision AI — live safety &amp; security monitoring across construction sites</div>
+        <div class="video-caption">How we leverage vision AI to monitor and maintain security &amp; safety across your construction sites</div>
       </div>
 
-      <!-- 10 Use Cases -->
-      <div class="uc-grid-label">10 Ways The Platform Works On Your Site</div>
-      <div class="uc-grid">
+      <!-- 10 Problem Areas -->
+      <div class="uc-grid-label">Problems Yantrai Labs solves for your business</div>
+      <div class="problems-list">
 
-        <div class="uc-card">
-          <div class="uc-icon">🦺</div>
-          <div class="uc-info">
-            <div class="uc-cat">Safety</div>
-            <div class="uc-title">PPE Compliance Monitoring</div>
-            <div class="uc-desc">Auto-detect workers without hard hats, safety vests, or steel-toed boots. Instant supervisor alert — no manual patrol needed.</div>
+        <div class="problem-item">
+          <div class="problem-num">01</div>
+          <div class="problem-body">
+            <div class="problem-tag active">Project Management</div>
+            <div class="problem-title">Cost Overruns &amp; Schedule Collapse</div>
           </div>
         </div>
 
-        <div class="uc-card">
-          <div class="uc-icon">🚧</div>
-          <div class="uc-info">
-            <div class="uc-cat">Safety</div>
-            <div class="uc-title">Restricted Zone Enforcement</div>
-            <div class="uc-desc">AI flags any person entering crane radii, excavation edges, or live electrical zones — before an incident, not after.</div>
+        <div class="problem-item">
+          <div class="problem-num">02</div>
+          <div class="problem-body">
+            <div class="problem-tag">Safety</div>
+            <div class="problem-title">Worksite Fatalities &amp; Hazard Blindness</div>
           </div>
         </div>
 
-        <div class="uc-card">
-          <div class="uc-icon">🔒</div>
-          <div class="uc-info">
-            <div class="uc-cat">Security</div>
-            <div class="uc-title">After-Hours Intrusion Detection</div>
-            <div class="uc-desc">Perimeter cameras detect unauthorised access after shift hours. Real-time alerts to the site security team, with clip evidence.</div>
+        <div class="problem-item">
+          <div class="problem-num">03</div>
+          <div class="problem-body">
+            <div class="problem-tag">Architecture &amp; Design</div>
+            <div class="problem-title">Design Errors &amp; Rework Cascades</div>
           </div>
         </div>
 
-        <div class="uc-card">
-          <div class="uc-icon">🚛</div>
-          <div class="uc-info">
-            <div class="uc-cat">Security</div>
-            <div class="uc-title">Equipment &amp; Vehicle Tracking</div>
-            <div class="uc-desc">Monitor excavator movements, detect idle machinery, and prevent unauthorised use or theft of high-value equipment 24/7.</div>
+        <div class="problem-item">
+          <div class="problem-num">04</div>
+          <div class="problem-body">
+            <div class="problem-tag">Workforce Management</div>
+            <div class="problem-title">Labour Shortage &amp; Skills Gap</div>
           </div>
         </div>
 
-        <div class="uc-card">
-          <div class="uc-icon">👷</div>
-          <div class="uc-info">
-            <div class="uc-cat">Operations</div>
-            <div class="uc-title">Worker Attendance &amp; Productivity</div>
-            <div class="uc-desc">Automated headcounts, shift-level attendance, and idle-time detection replace manual mustering across multi-zone sites.</div>
+        <div class="problem-item">
+          <div class="problem-num">05</div>
+          <div class="problem-body">
+            <div class="problem-tag">Compliance &amp; Legal</div>
+            <div class="problem-title">Permitting Delays &amp; Regulatory Risk</div>
           </div>
         </div>
 
-        <div class="uc-card">
-          <div class="uc-icon">📊</div>
-          <div class="uc-info">
-            <div class="uc-cat">Operations</div>
-            <div class="uc-title">Real-time Progress Tracking</div>
-            <div class="uc-desc">AI compares live site footage against project timelines. Project heads get a daily completion percentage — no site visit required.</div>
+        <div class="problem-item">
+          <div class="problem-num">06</div>
+          <div class="problem-body">
+            <div class="problem-tag">Supply Chain &amp; Ops</div>
+            <div class="problem-title">Material Procurement &amp; Supply Chain Failure</div>
           </div>
         </div>
 
-        <div class="uc-card">
-          <div class="uc-icon">🔧</div>
-          <div class="uc-info">
-            <div class="uc-cat">Maintenance</div>
-            <div class="uc-title">Predictive Equipment Health</div>
-            <div class="uc-desc">Anomaly detection on heavy machinery flags early signs of failure — averting costly breakdowns and project stoppages.</div>
+        <div class="problem-item">
+          <div class="problem-num">07</div>
+          <div class="problem-body">
+            <div class="problem-tag">Legal &amp; Contracts</div>
+            <div class="problem-title">Dispute Management &amp; Contract Risk</div>
           </div>
         </div>
 
-        <div class="uc-card">
-          <div class="uc-icon">🏗️</div>
-          <div class="uc-info">
-            <div class="uc-cat">Maintenance</div>
-            <div class="uc-title">Structural Defect Detection</div>
-            <div class="uc-desc">Visual AI identifies cracks, voids, and deviations from structural drawings — catching defects before they become expensive rework.</div>
+        <div class="problem-item">
+          <div class="problem-num">08</div>
+          <div class="problem-body">
+            <div class="problem-tag">Security &amp; Site</div>
+            <div class="problem-title">Site Security, Theft &amp; Unauthorized Access</div>
           </div>
         </div>
 
-        <div class="uc-card">
-          <div class="uc-icon">📦</div>
-          <div class="uc-info">
-            <div class="uc-cat">Efficiency</div>
-            <div class="uc-title">Material Flow &amp; Inventory</div>
-            <div class="uc-desc">Track incoming deliveries, monitor stockpile levels in real time, and flag material wastage before it impacts your margin.</div>
+        <div class="problem-item">
+          <div class="problem-num">09</div>
+          <div class="problem-body">
+            <div class="problem-tag">Quality Control</div>
+            <div class="problem-title">Quality Defects &amp; Inspection Gaps</div>
           </div>
         </div>
 
-        <div class="uc-card">
-          <div class="uc-icon">⚡</div>
-          <div class="uc-info">
-            <div class="uc-cat">Speed</div>
-            <div class="uc-title">Automated Incident Response</div>
-            <div class="uc-desc">Fall detection, collapse alerts, and SOS triggers activate the response chain instantly — cutting emergency response time by 70%.</div>
+        <div class="problem-item">
+          <div class="problem-num">10</div>
+          <div class="problem-body">
+            <div class="problem-tag">Sustainability</div>
+            <div class="problem-title">Carbon Waste &amp; Sustainability Reporting</div>
           </div>
         </div>
 
