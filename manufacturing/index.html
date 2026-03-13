@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="expires" content="0">
+  <title>Yantra AI Labs — Manufacturing AI</title>
+  <link rel="icon" type="image/png" href="../security/assets/Logo/yantrai_favicon_new.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #ffffff;
+      --bg-alt:   #f5f5f5;
+      --dark:     #0a0a0a;
+      --gray:     #666;
+      --gray-dim: #999;
+      --border:   #e5e5e5;
+      --red:      #e63030;
+      --amber:    #d97706;
+      --blue:     #2563EB;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--dark);
+      background: var(--bg);
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 60px;
+      background: rgba(255,255,255,0.92); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo img { height: 32px; display: block; }
+    .nav-domain {
+      font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600;
+      letter-spacing: 0.16em; text-transform: uppercase; color: var(--gray-dim);
+    }
+    .nav-cta {
+      display: inline-block; padding: 10px 24px; background: var(--dark); color: white;
+      font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600;
+      letter-spacing: 0.04em; text-decoration: none; border-radius: 50px; transition: opacity 0.2s;
+    }
+    .nav-cta:hover { opacity: 0.8; }
+
+    /* ─── SHARED ─── */
+    .section-label {
+      font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase; color: var(--gray-dim); margin-bottom: 20px;
+    }
+    .section-heading {
+      font-family: 'Sora', sans-serif; font-size: clamp(2.4rem, 4.5vw, 4.2rem);
+      font-weight: 800; line-height: 1.08; letter-spacing: -0.025em;
+      color: var(--dark); margin-bottom: 20px;
+    }
+    .section-sub {
+      font-family: 'Inter', sans-serif; font-size: 1.05rem; line-height: 1.75; color: var(--gray);
+    }
+    .reactive { color: var(--red); text-decoration: line-through; text-decoration-thickness: 4px; }
+
+    /* ─── SECTION 1: HERO ─── */
+    #hero {
+      background: var(--bg); padding: 120px 60px 100px;
+      max-width: 1200px; margin: 0 auto; text-align: center;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--amber); margin-bottom: 32px;
+    }
+    .hero-eyebrow::before {
+      content: ''; width: 24px; height: 2px; background: var(--amber); flex-shrink: 0;
+    }
+    #hero h1 {
+      font-family: 'Sora', sans-serif; font-size: clamp(3rem, 6.5vw, 6.5rem);
+      font-weight: 800; line-height: 1.04; letter-spacing: -0.035em; color: var(--dark);
+      max-width: 960px; margin-left: auto; margin-right: auto; margin-bottom: 36px;
+    }
+    .hero-sub {
+      font-family: 'Inter', sans-serif; font-size: 1.1rem; line-height: 1.8; color: var(--gray);
+      max-width: 620px; margin-left: auto; margin-right: auto; margin-bottom: 56px;
+    }
+    .hero-insight {
+      font-family: 'Inter', sans-serif; font-size: 0.95rem; line-height: 1.75; color: var(--gray);
+      max-width: 620px; margin-left: auto; margin-right: auto; margin-bottom: 48px;
+    }
+    .insight-link {
+      color: var(--dark); font-weight: 600; text-decoration: underline;
+      text-underline-offset: 3px; text-decoration-thickness: 1px; cursor: pointer;
+      background: none; border: none; padding: 0; font-family: inherit;
+      font-size: inherit; transition: color 0.15s;
+    }
+    .insight-link:hover { color: var(--amber); }
+    .hero-cta {
+      display: inline-block; padding: 16px 40px; background: var(--dark); color: white;
+      font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600;
+      letter-spacing: 0.06em; text-decoration: none; border-radius: 50px; transition: opacity 0.2s;
+    }
+    .hero-cta:hover { opacity: 0.8; }
+
+    /* ─── SECTION 2: PLATFORM OVERVIEW ─── */
+    #benefits {
+      background: var(--bg-alt); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    }
+    .benefits-inner { max-width: 1200px; margin: 0 auto; padding: 100px 60px; }
+    .video-frame {
+      margin: 56px 10% 0; border: 1px solid var(--border); background: #000;
+      overflow: hidden; position: relative;
+    }
+    .video-frame video { width: 100%; display: block; max-height: 58vh; object-fit: contain; }
+    .video-caption {
+      position: absolute; bottom: 0; left: 0; right: 0; padding: 20px 28px;
+      background: linear-gradient(transparent, rgba(0,0,0,0.7));
+      color: white; font-size: 13px; font-weight: 500; letter-spacing: 0.02em;
+    }
+    .video-placeholder {
+      margin: 56px 10% 0; background: #111; height: 380px;
+      display: flex; align-items: center; justify-content: center;
+      border: 1px dashed rgba(255,255,255,0.15);
+    }
+    .video-placeholder p {
+      color: rgba(255,255,255,0.25); font-size: 11px; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase;
+    }
+    .uc-grid-label {
+      font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase; color: var(--gray-dim); margin: 72px 0 0;
+    }
+    .problems-list {
+      margin-top: 32px; display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 1px; background: var(--border); border: 1px solid var(--border);
+    }
+    .problem-item {
+      background: var(--bg); padding: 36px 32px; display: flex;
+      flex-direction: column; gap: 14px; transition: background 0.2s;
+    }
+    .problem-item:hover { background: #fafafa; }
+    .problem-icon { font-size: 2rem; line-height: 1; }
+    .problem-tag {
+      display: inline-block; font-family: 'Inter', sans-serif;
+      font-size: 10px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #999;
+    }
+    .problem-title {
+      font-family: 'Sora', sans-serif; font-size: 1.15rem; font-weight: 700;
+      color: var(--dark); line-height: 1.3; letter-spacing: -0.01em;
+    }
+
+    /* ─── SECTION 3: INTELLIGENCE LAYER ─── */
+    #intelligence { background: var(--bg); padding-bottom: 100px; }
+    .intel-intro { max-width: 1200px; margin: 0 auto; padding: 100px 60px 64px; }
+    .intel-intro .section-sub { max-width: 680px; margin-bottom: 32px; }
+    .analogy-box {
+      display: flex; gap: 0; max-width: 780px;
+      background: var(--bg-alt); border: 1px solid var(--border); margin-top: 36px;
+    }
+    .analogy-box .bar { width: 4px; background: var(--dark); flex-shrink: 0; }
+    .analogy-box .analogy-text {
+      padding: 24px 28px; font-size: 0.95rem; line-height: 1.75; color: var(--gray);
+    }
+    .analogy-box .analogy-text strong { color: var(--dark); }
+    .intel-frame-wrap {
+      width: 72%; margin: 0 auto; border: 1px solid var(--border);
+      background: #000; overflow: hidden; position: relative;
+    }
+    .intel-frame-wrap iframe {
+      width: 100%; height: 560px; border: none; display: block;
+    }
+    .intel-placeholder {
+      width: 72%; margin: 0 auto; background: #111; height: 480px;
+      display: flex; align-items: center; justify-content: center;
+      border: 1px dashed rgba(255,255,255,0.15);
+    }
+    .intel-placeholder p {
+      color: rgba(255,255,255,0.25); font-size: 11px; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase;
+    }
+
+    /* ─── DEPLOYMENT & SCALE ─── */
+    .implementation-wrap { background: var(--bg-alt); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .implementation { max-width: 1200px; margin: 0 auto; padding: 100px 60px; }
+    .section-subtext {
+      font-family: 'Inter', sans-serif; font-size: 1.05rem; line-height: 1.75;
+      color: var(--gray); max-width: 600px; margin-bottom: 64px;
+    }
+    .timeline { display: flex; flex-direction: row; align-items: stretch; }
+    .timeline-item {
+      flex: 1; display: flex; flex-direction: column; padding: 48px 40px;
+      border-right: 1px solid var(--border);
+    }
+    .timeline-item:last-child { border-right: none; }
+    .timeline-num {
+      font-family: 'Sora', sans-serif; font-size: 64px; font-weight: 800;
+      color: #ebebeb; line-height: 1; margin-bottom: 24px; letter-spacing: -0.03em;
+    }
+    .timeline-content h3 {
+      font-family: 'Sora', sans-serif; font-size: 1.25rem; font-weight: 700;
+      color: var(--dark); margin-bottom: 12px; letter-spacing: -0.01em;
+    }
+    .timeline-content p {
+      font-family: 'Inter', sans-serif; font-size: 0.95rem; line-height: 1.75; color: var(--gray);
+    }
+
+    /* ─── PARTNER LOGOS ─── */
+    .hardware-wrap { background: var(--bg); }
+    .hardware { max-width: 1200px; margin: 0 auto; padding: 100px 60px; }
+    .hw-label {
+      font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase; color: var(--gray-dim); margin-bottom: 16px;
+    }
+    .hw-sub {
+      font-family: 'Inter', sans-serif; font-size: 1.05rem; line-height: 1.7;
+      color: var(--gray); max-width: 560px; margin-bottom: 0;
+    }
+    .logo-grid {
+      display: grid; grid-template-columns: repeat(5, 1fr);
+      gap: 0; margin-top: 56px; border: 1px solid #e0e0e0;
+    }
+    .logo-card {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 32px 20px; gap: 10px; min-height: 110px;
+      border-right: 1px solid #e0e0e0; border-bottom: 1px solid #e0e0e0;
+      transition: background 0.2s;
+    }
+    .logo-card:nth-child(5n) { border-right: none; }
+    .logo-card:nth-child(n+6) { border-bottom: none; }
+    .logo-card:hover { background: #fafafa; box-shadow: inset 0 0 0 1.5px #111; }
+    .logo-card img {
+      max-width: 100px; max-height: 36px; width: auto; height: auto;
+      filter: grayscale(100%); opacity: 0.5; transition: filter 0.3s, opacity 0.3s; display: block;
+    }
+    .logo-card:hover img { filter: grayscale(0%); opacity: 1; }
+    .brand-name {
+      font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase; color: #bbb;
+    }
+    .logo-wordmark {
+      font-family: 'Sora', sans-serif; font-size: 1rem; font-weight: 800;
+      color: #666; letter-spacing: -0.01em; opacity: 0.5; transition: opacity 0.3s;
+    }
+    .logo-card:hover .logo-wordmark { opacity: 1; }
+
+    /* ─── SECTION 4: USE CASES ─── */
+    .workflow-section {
+      display: grid; grid-template-columns: 1fr 1fr;
+      min-height: 75vh; background: #0a0a0a;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .workflow-section.flip { direction: rtl; }
+    .workflow-section.flip > * { direction: ltr; }
+    .workflow-media { overflow: hidden; position: relative; background: #111; }
+    .workflow-media video {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      object-fit: cover; display: block;
+    }
+    .workflow-text {
+      padding: 80px 64px; display: flex; flex-direction: column; justify-content: center;
+    }
+    .wf-num {
+      font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(255,255,255,0.25); margin-bottom: 16px;
+    }
+    .wf-tag {
+      display: inline-block; font-size: 10px; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.5);
+      padding: 5px 12px; border-radius: 2px; margin-bottom: 24px; width: fit-content;
+    }
+    .workflow-text h2 {
+      font-family: 'Sora', sans-serif; font-size: clamp(1.8rem, 3vw, 2.8rem);
+      font-weight: 800; color: #fff; line-height: 1.1;
+      letter-spacing: -0.02em; margin-bottom: 20px;
+    }
+    .workflow-text p {
+      font-family: 'Inter', sans-serif; font-size: 1rem; line-height: 1.8;
+      color: rgba(255,255,255,0.6); max-width: 460px; margin-bottom: 32px;
+    }
+    .wf-source {
+      font-size: 10.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(255,255,255,0.3); text-decoration: none; transition: color 0.2s; margin-top: 4px;
+    }
+    .wf-source:hover { color: rgba(255,255,255,0.7); }
+
+    /* ─── INLINE MEDIA PANELS ─── */
+    /* WF1 — Predictive Maintenance Dashboard */
+    .wf-maint-panel {
+      position: absolute; inset: 0; background: #0d1117;
+      display: flex; flex-direction: column; padding: 24px; gap: 14px;
+      font-family: 'Inter', sans-serif;
+    }
+    .wf-maint-header {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+    }
+    .wf-maint-title { color: rgba(255,255,255,0.45); }
+    .wf-maint-live { color: #22c55e; display: flex; align-items: center; gap: 5px; }
+    .wf-maint-live::before { content: '●'; font-size: 8px; animation: pm-pulse 1.4s ease-in-out infinite; }
+    @keyframes pm-pulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
+    .wf-machines { display: flex; flex-direction: column; gap: 10px; flex: 1; }
+    .wf-machine {
+      background: #161b22; border: 1px solid rgba(255,255,255,0.06); border-radius: 6px;
+      padding: 14px 16px; display: flex; align-items: center; gap: 14px;
+    }
+    .wf-machine-icon { font-size: 1.4rem; flex-shrink: 0; }
+    .wf-machine-info { flex: 1; min-width: 0; }
+    .wf-machine-name { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.8); margin-bottom: 6px; }
+    .wf-machine-bar-wrap { height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; }
+    .wf-machine-bar {
+      height: 100%; border-radius: 2px;
+      animation: bar-fill 3s ease-in-out infinite alternate;
+    }
+    @keyframes bar-fill { from { opacity: 0.7; } to { opacity: 1; } }
+    .wf-machine-bar.ok { background: #22c55e; width: 88%; }
+    .wf-machine-bar.warn { background: #f59e0b; width: 62%; }
+    .wf-machine-bar.crit { background: #ef4444; width: 28%; animation: crit-pulse 1.2s ease-in-out infinite; }
+    @keyframes crit-pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
+    .wf-machine-status {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      flex-shrink: 0; padding: 3px 8px; border-radius: 2px;
+    }
+    .wf-machine-status.ok { color: #22c55e; background: rgba(34,197,94,0.08); }
+    .wf-machine-status.warn { color: #f59e0b; background: rgba(245,158,11,0.08); }
+    .wf-machine-status.crit { color: #ef4444; background: rgba(239,68,68,0.1); }
+    .wf-maint-alert {
+      background: rgba(239,68,68,0.06); border: 1px solid rgba(239,68,68,0.2); border-radius: 6px;
+      padding: 12px 16px; display: flex; align-items: center; gap: 10px;
+    }
+    .wf-maint-alert-icon { font-size: 1rem; }
+    .wf-maint-alert-text { font-size: 11px; color: rgba(255,255,255,0.65); line-height: 1.5; }
+    .wf-maint-alert-text strong { color: #ef4444; }
+
+    /* WF2 — Quality Control Camera Grid */
+    .wf-qc-panel {
+      position: absolute; inset: 0; background: #0a0a0a;
+      display: flex; flex-direction: column; padding: 20px; gap: 12px;
+      font-family: 'Inter', sans-serif;
+    }
+    .wf-qc-header {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+    }
+    .wf-qc-title { color: rgba(255,255,255,0.4); }
+    .wf-qc-count { color: #f59e0b; }
+    .wf-qc-cams {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 8px; flex: 1;
+    }
+    .wf-qc-cam {
+      background: #161b22; border: 1px solid rgba(255,255,255,0.07); border-radius: 4px;
+      position: relative; overflow: hidden; min-height: 120px;
+    }
+    .wf-qc-cam-label {
+      position: absolute; top: 6px; left: 8px; font-size: 9px; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4);
+    }
+    .wf-qc-cam-time {
+      position: absolute; top: 6px; right: 8px; font-size: 9px;
+      color: rgba(255,255,255,0.3); font-family: 'Courier New', monospace;
+    }
+    .wf-qc-detection {
+      position: absolute; border: 2px solid; border-radius: 2px;
+      animation: qc-detect 2.4s ease-in-out infinite;
+    }
+    .wf-qc-detection.ok { border-color: #22c55e; top: 35%; left: 20%; width: 60%; height: 40%; }
+    .wf-qc-detection.defect { border-color: #ef4444; top: 30%; left: 30%; width: 40%; height: 35%; animation-delay: 0.8s; }
+    .wf-qc-detection.warn { border-color: #f59e0b; top: 25%; left: 15%; width: 50%; height: 45%; animation-delay: 1.4s; }
+    .wf-qc-detection.ok2 { border-color: #22c55e; top: 40%; left: 25%; width: 50%; height: 35%; animation-delay: 0.3s; }
+    @keyframes qc-detect { 0%,100%{ opacity:1; } 50%{ opacity:0.3; } }
+    .wf-qc-badge {
+      position: absolute; bottom: 6px; left: 8px; right: 8px;
+      font-size: 9px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 3px 6px; border-radius: 2px;
+    }
+    .wf-qc-badge.pass { background: rgba(34,197,94,0.12); color: #22c55e; }
+    .wf-qc-badge.fail { background: rgba(239,68,68,0.12); color: #ef4444; }
+    .wf-qc-badge.warn { background: rgba(245,158,11,0.12); color: #f59e0b; }
+    .wf-qc-ticker {
+      background: #111; border: 1px solid rgba(255,255,255,0.06); border-radius: 4px;
+      padding: 8px 12px; overflow: hidden; white-space: nowrap;
+    }
+    .wf-qc-ticker-inner {
+      display: inline-block; color: rgba(255,255,255,0.5); font-size: 10px;
+      font-weight: 600; letter-spacing: 0.08em;
+      animation: ticker-scroll 14s linear infinite;
+    }
+    @keyframes ticker-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+    /* WF3 — OEE Production Line Chart */
+    .wf-oee-panel {
+      position: absolute; inset: 0; background: #ffffff;
+      display: flex; flex-direction: column; padding: 20px; gap: 14px;
+      font-family: 'Inter', sans-serif;
+    }
+    .wf-oee-header {
+      display: flex; justify-content: space-between; align-items: flex-start; flex-shrink: 0;
+    }
+    .wf-oee-title {
+      font-size: 13px; font-weight: 700; color: #1e293b; font-family: 'Sora', sans-serif;
+      letter-spacing: -0.02em;
+    }
+    .wf-oee-subtitle { font-size: 10px; color: #94a3b8; letter-spacing: 0.04em; margin-top: 2px; }
+    .wf-oee-badge {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      color: #22c55e; background: rgba(34,197,94,0.08); padding: 4px 10px; border-radius: 4px;
+    }
+    .wf-oee-lines { display: flex; flex-direction: column; gap: 10px; flex: 1; justify-content: center; }
+    .wf-oee-line { display: flex; align-items: center; gap: 10px; }
+    .wf-oee-line-label { font-size: 10px; font-weight: 600; color: #64748b; width: 50px; flex-shrink: 0; }
+    .wf-oee-bar-wrap { flex: 1; height: 20px; background: #f1f5f9; border-radius: 3px; overflow: hidden; }
+    .wf-oee-bar {
+      height: 100%; border-radius: 3px; display: flex; align-items: center; padding-right: 8px;
+      justify-content: flex-end;
+      animation: oee-grow 2s ease-out forwards;
+    }
+    .wf-oee-bar-val { font-size: 9px; font-weight: 700; color: white; letter-spacing: 0.04em; }
+    @keyframes oee-grow { from { width: 0 !important; } }
+    .wf-oee-bar.l1 { background: #2563EB; width: 87%; animation-delay: 0s; }
+    .wf-oee-bar.l2 { background: #22c55e; width: 91%; animation-delay: 0.15s; }
+    .wf-oee-bar.l3 { background: #f59e0b; width: 64%; animation-delay: 0.3s; }
+    .wf-oee-bar.l4 { background: #ef4444; width: 43%; animation-delay: 0.45s; }
+    .wf-oee-bottleneck {
+      background: rgba(239,68,68,0.05); border: 1px solid rgba(239,68,68,0.15); border-radius: 4px;
+      padding: 10px 12px; display: flex; align-items: center; gap: 8px;
+    }
+    .wf-oee-bottleneck-icon { font-size: 1rem; }
+    .wf-oee-bottleneck-text { font-size: 11px; color: #475569; line-height: 1.5; }
+    .wf-oee-bottleneck-text strong { color: #ef4444; }
+
+    /* WF4 — Plant Command Centre */
+    .wf-cmd-panel {
+      position: absolute; inset: 0; background: #0a0a0a;
+      display: flex; flex-direction: column; padding: 20px; gap: 12px;
+      font-family: 'Inter', sans-serif;
+    }
+    .wf-cmd-header {
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .wf-cmd-title { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.5); letter-spacing: 0.1em; text-transform: uppercase; }
+    .wf-cmd-active { font-size: 10px; font-weight: 700; color: #22c55e; letter-spacing: 0.06em; }
+    .wf-cmd-plants { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; flex: 1; }
+    .wf-cmd-plant {
+      background: #161b22; border: 1px solid rgba(255,255,255,0.07); border-radius: 6px;
+      padding: 14px 14px; display: flex; flex-direction: column; gap: 8px;
+    }
+    .wf-cmd-plant.alert { border-color: rgba(239,68,68,0.3); background: rgba(239,68,68,0.04); }
+    .wf-cmd-plant-name { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.75); }
+    .wf-cmd-plant-oee { font-size: 22px; font-weight: 800; font-family: 'Sora', sans-serif; line-height: 1; }
+    .wf-cmd-plant-oee.good { color: #22c55e; }
+    .wf-cmd-plant-oee.ok { color: #f59e0b; }
+    .wf-cmd-plant-oee.bad { color: #ef4444; animation: crit-pulse 1.2s ease-in-out infinite; }
+    .wf-cmd-plant-label { font-size: 9px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.3); }
+    .wf-cmd-plant-status {
+      font-size: 9px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 3px 6px; border-radius: 2px; width: fit-content; margin-top: 2px;
+    }
+    .wf-cmd-plant-status.on-track { background: rgba(34,197,94,0.1); color: #22c55e; }
+    .wf-cmd-plant-status.warning { background: rgba(245,158,11,0.1); color: #f59e0b; }
+    .wf-cmd-plant-status.alert { background: rgba(239,68,68,0.1); color: #ef4444; }
+    .wf-cmd-summary {
+      background: #161b22; border: 1px solid rgba(255,255,255,0.07); border-radius: 6px;
+      padding: 12px 14px; display: flex; justify-content: space-between; align-items: center;
+    }
+    .wf-cmd-metric { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+    .wf-cmd-metric-val { font-size: 18px; font-weight: 800; font-family: 'Sora', sans-serif; color: rgba(255,255,255,0.9); }
+    .wf-cmd-metric-lbl { font-size: 9px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.3); }
+
+    /* ─── SECTION 5: RESULTS ─── */
+    #results { background: var(--bg-alt); border-top: 1px solid var(--border); }
+    .results-inner { max-width: 1200px; margin: 0 auto; padding: 100px 60px; }
+    .results-inner .section-sub { max-width: 560px; margin-bottom: 72px; }
+    .results-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 1px; background: var(--border); border: 1px solid var(--border);
+    }
+    .result-card {
+      background: var(--bg); padding: 48px 40px; display: flex;
+      flex-direction: column; gap: 16px;
+    }
+    .result-num {
+      font-family: 'Sora', sans-serif; font-size: 4.5rem; font-weight: 800;
+      color: var(--dark); line-height: 1; letter-spacing: -0.03em;
+    }
+    .result-num sup { font-size: 2rem; vertical-align: super; }
+    .result-label {
+      font-family: 'Sora', sans-serif; font-size: 1.15rem; font-weight: 700;
+      color: var(--dark); line-height: 1.3; letter-spacing: -0.01em;
+    }
+    .result-desc {
+      font-family: 'Inter', sans-serif; font-size: 0.95rem; line-height: 1.75; color: var(--gray);
+    }
+    .result-source {
+      font-family: 'Inter', sans-serif; font-size: 10.5px; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase; color: var(--gray-dim); margin-top: 8px;
+    }
+
+    /* ─── SECTION 6: TEAM ─── */
+    #team { background: var(--bg); padding: 0; }
+    .team-inner { max-width: 1200px; margin: 0 auto; padding: 100px 72px; }
+    .team-header-block { margin-bottom: 64px; }
+    .team-header-block .section-label { margin-bottom: 20px; }
+    .team-header-block .section-heading { margin-bottom: 20px; }
+    .team-header-block .section-sub { max-width: 580px; }
+    .team-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .tc { background: var(--bg); border: 1px solid var(--border); overflow: hidden; }
+    .tc-photo { aspect-ratio: 4/3; overflow: hidden; background: #f0f0f0; }
+    .tc-photo img { width: 100%; height: 100%; object-fit: cover; object-position: top center; filter: grayscale(20%); transition: filter 0.4s; display: block; }
+    .tc:hover .tc-photo img { filter: grayscale(50%); }
+    .tc-body { padding: 20px 20px 24px; }
+    .tc-name {
+      font-family: 'Sora', sans-serif; font-size: 1.5rem; font-weight: 800;
+      color: var(--dark); letter-spacing: -0.02em; margin-bottom: 12px;
+    }
+    .tc-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+    .tc-tag {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--gray-dim); border: 1px solid var(--border); padding: 4px 10px; border-radius: 2px;
+    }
+    .tc-bio { font-size: 0.92rem; line-height: 1.7; color: var(--gray); margin-bottom: 20px; }
+    .tc-bio .hl-college { color: var(--dark); font-weight: 600; border-bottom: 1.5px solid var(--amber); padding-bottom: 1px; }
+    .tc-bio .hl-company { color: var(--dark); font-weight: 600; border-bottom: 1.5px solid #94a3b8; padding-bottom: 1px; }
+    .tc-bio .metric { color: var(--blue); font-weight: 600; }
+    .tc-creds { display: flex; flex-wrap: wrap; gap: 6px; border-top: 1px solid var(--border); padding-top: 16px; }
+    .tc-cred {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+      background: var(--bg-alt); color: var(--gray-dim); padding: 5px 10px; border-radius: 2px;
+    }
+    .tc-cred.amber { background: rgba(217,119,6,0.08); color: var(--amber); }
+
+    /* ─── SECTION 7: FOOTER / CONTACT ─── */
+    footer { background: #0a0a0a; padding: 100px 60px 48px; }
+    .footer-top { display: grid; grid-template-columns: 1fr 1.6fr; gap: 80px; max-width: 1200px; margin: 0 auto; }
+    .footer-brand {}
+    .footer-logo { height: 28px; margin-bottom: 24px; filter: brightness(0) invert(1); display: block; }
+    .footer-tagline {
+      font-family: 'Sora', sans-serif; font-size: 1.4rem; font-weight: 700;
+      color: rgba(255,255,255,0.9); line-height: 1.35; letter-spacing: -0.01em; margin-bottom: 32px;
+    }
+    .footer-details { display: flex; flex-direction: column; gap: 14px; }
+    .footer-detail { display: flex; align-items: flex-start; gap: 12px; }
+    .di { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+    .footer-detail span, .footer-detail a {
+      font-size: 0.9rem; color: rgba(255,255,255,0.5); text-decoration: none; line-height: 1.55; transition: color 0.2s;
+    }
+    .footer-detail a:hover { color: rgba(255,255,255,0.85); }
+    .footer-form {}
+    .footer-form-label {
+      display: block; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600;
+      letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 28px;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+    .form-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+    .form-field label {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+    }
+    .form-field input, .form-field select, .form-field textarea {
+      font-family: 'Inter', sans-serif; font-size: 0.9rem; color: rgba(255,255,255,0.85);
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      padding: 12px 16px; outline: none; transition: border-color 0.2s; border-radius: 2px;
+    }
+    .form-field input::placeholder, .form-field textarea::placeholder { color: rgba(255,255,255,0.2); }
+    .form-field select option { background: #1a1a1a; color: #fff; }
+    .form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: rgba(255,255,255,0.3); }
+    .form-field textarea { resize: vertical; min-height: 100px; }
+    .form-submit {
+      display: inline-block; padding: 14px 36px; background: #fff; color: #0a0a0a;
+      font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700;
+      letter-spacing: 0.06em; text-transform: uppercase; border: none; cursor: pointer;
+      border-radius: 2px; transition: opacity 0.2s; margin-top: 8px;
+    }
+    .form-submit:hover { opacity: 0.88; }
+    .form-success-msg {
+      display: none; background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.2);
+      padding: 20px 24px; margin-top: 20px;
+    }
+    .form-success-msg p { font-size: 0.95rem; color: #22c55e; line-height: 1.6; }
+    .footer-bottom {
+      max-width: 1200px; margin: 80px auto 0; padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.2); }
+    .footer-back {
+      font-size: 12px; color: rgba(255,255,255,0.2); text-decoration: none; transition: color 0.2s;
+    }
+    .footer-back:hover { color: rgba(255,255,255,0.5); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1024px) {
+      nav { padding: 20px 40px; }
+      #hero { padding: 100px 40px 80px; }
+      .benefits-inner { padding: 80px 40px; }
+      .intel-intro { padding: 80px 40px 48px; }
+      .intel-frame-wrap { width: 90%; }
+      .implementation { padding: 80px 40px; }
+      .hardware { padding: 80px 40px; }
+      .workflow-text { padding: 60px 48px; }
+      .results-inner { padding: 80px 40px; }
+      .team-inner { padding: 80px 48px; }
+      footer { padding: 80px 40px 40px; }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 16px 24px; }
+      #hero { padding: 80px 24px 64px; }
+      #hero h1 { font-size: clamp(2.4rem, 9vw, 3.5rem); }
+      .hero-sub { font-size: 1rem; }
+      .benefits-inner { padding: 64px 24px; }
+      .video-frame { margin: 40px 0 0; }
+      .video-placeholder { margin: 40px 0 0; }
+      .problems-list { grid-template-columns: 1fr; }
+      .intel-intro { padding: 64px 24px 40px; }
+      .intel-frame-wrap { width: 100%; border-radius: 0; }
+      .intel-frame-wrap iframe { height: 420px; }
+      .intel-placeholder { width: 100%; }
+      .implementation { padding: 64px 24px; }
+      .timeline { flex-direction: column; }
+      .timeline-item { border-right: none; border-bottom: 1px solid var(--border); padding: 36px 24px; }
+      .timeline-item:last-child { border-bottom: none; }
+      .hardware { padding: 64px 24px; }
+      .logo-grid { grid-template-columns: repeat(2, 1fr); }
+      .logo-card:nth-child(5n) { border-right: 1px solid #e0e0e0; }
+      .logo-card:nth-child(2n) { border-right: none; }
+      .workflow-section { grid-template-columns: 1fr; min-height: auto; }
+      .workflow-section.flip { direction: ltr; }
+      .workflow-media { min-height: 300px; }
+      .workflow-text { padding: 48px 24px; }
+      .results-inner { padding: 64px 24px; }
+      .results-grid { grid-template-columns: 1fr; }
+      .team-inner { padding: 64px 24px; }
+      .team-cards { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr; gap: 48px; }
+      .form-row { grid-template-columns: 1fr; }
+      footer { padding: 64px 24px 40px; }
+      .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      nav { padding: 14px 20px; }
+      #hero { padding: 64px 20px 48px; }
+      #hero h1 { font-size: 2.3rem; }
+      .hero-sub { font-size: 0.95rem; }
+      .benefits-inner { padding: 48px 20px; }
+      .implementation { padding: 48px 20px; }
+      .hardware { padding: 48px 20px; }
+      .results-inner { padding: 48px 20px; }
+      .team-inner { padding: 48px 20px; }
+      footer { padding: 48px 20px 32px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="../">
+      <img src="../security/assets/Logo/yantrai_logo_main.png" alt="Yantra AI Labs">
+    </a>
+    <span class="nav-domain">Manufacturing AI</span>
+    <a href="#contact" class="nav-cta">Book a Demo</a>
+  </nav>
+
+  <!-- ─── SECTION 1: HERO ─── -->
+  <section id="hero">
+    <div class="hero-eyebrow">For Industrial Manufacturers</div>
+
+    <h1>Make your production<br>predictive, not <span class="reactive">reactive.</span></h1>
+
+    <p class="hero-sub">
+      A plant manager who knows which line will go down 3 weeks before it does. A quality director who catches defect patterns before a single unit ships. A VP whose entire factory floor — across every plant, every shift — is visible right now, not in next week's report. This is what AI-powered manufacturing intelligence delivers.
+    </p>
+
+    <p class="hero-insight">
+      Unplanned downtime costs industrial manufacturers an estimated <strong>$50 billion annually</strong> — yet AI-driven predictive maintenance can reduce machine failures by up to 70% and extend equipment life by 20–40%. <a href="https://www2.deloitte.com/global/en/pages/manufacturing/articles/industry-4-0-and-manufacturing.html" target="_blank" rel="noopener" class="insight-link">Deloitte — Industry 4.0 & Manufacturing →</a>
+    </p>
+
+    <a href="#contact" class="hero-cta">See How It Works →</a>
+  </section>
+
+  <!-- ─── SECTION 2: PLATFORM OVERVIEW ─── -->
+  <section id="benefits">
+    <div class="benefits-inner">
+      <div class="section-label">Platform Overview</div>
+      <h2 class="section-heading">One platform.<br>Every manufacturing problem.</h2>
+      <p class="section-sub">From the production floor to the boardroom — every layer of your manufacturing operation becomes measurable, manageable, and predictable.</p>
+
+      <!-- Video -->
+      <div class="video-frame">
+        <video autoplay muted loop playsinline>
+          <source src="../assets/video/Workflow_1.mp4" type="video/mp4">
+        </video>
+        <div class="video-caption">How Yantra AI makes your manufacturing operations predictive — from equipment health to quality control and plant-wide command</div>
+      </div>
+
+      <!-- 10 Problem Areas -->
+      <div class="uc-grid-label">Problems Yantra AI Labs solves for your plant</div>
+      <div class="problems-list">
+
+        <div class="problem-item">
+          <div class="problem-icon">⚙️</div>
+          <div class="problem-tag">Maintenance</div>
+          <div class="problem-title">Unplanned Downtime &amp; Reactive Repairs</div>
+        </div>
+
+        <div class="problem-item">
+          <div class="problem-icon">🎯</div>
+          <div class="problem-tag">Quality Control</div>
+          <div class="problem-title">Defects, Scrap &amp; End-of-Line Rejects</div>
+        </div>
+
+        <div class="problem-item">
+          <div class="problem-icon">📉</div>
+          <div class="problem-tag">Production Efficiency</div>
+          <div class="problem-title">Low OEE &amp; Hidden Bottlenecks</div>
+        </div>
+
+        <div class="problem-item">
+          <div class="problem-icon">⚡</div>
+          <div class="problem-tag">Energy</div>
+          <div class="problem-title">Energy Overconsumption &amp; Carbon Waste</div>
+        </div>
+
+        <div class="problem-item">
+          <div class="problem-icon">🏭</div>
+          <div class="problem-tag">Asset Management</div>
+          <div class="problem-title">Equipment Ageing &amp; Lifecycle Blindness</div>
+        </div>
+
+        <div class="problem-item">
+          <div class="problem-icon">🦺</div>
+          <div class="problem-tag">Worker Safety</div>
+          <div class="problem-title">PPE Violations &amp; Ergonomic Risk on the Floor</div>
+        </div>
+
+        <div class="problem-item">
+          <div class="problem-icon">🔗</div>
+          <div class="problem-tag">Supply Chain</div>
+          <div class="problem-title">Material Shortages &amp; Supplier Risk</div>
+        </div>
+
+        <div class="problem-item">
+          <div class="problem-icon">📋</div>
+          <div class="problem-tag">Compliance</div>
+          <div class="problem-title">Regulatory Non-Compliance &amp; Audit Gaps</div>
+        </div>
+
+        <div class="problem-item">
+          <div class="problem-icon">🖥️</div>
+          <div class="problem-tag">Visibility</div>
+          <div class="problem-title">Fragmented Data Across Plants &amp; Systems</div>
+        </div>
+
+        <div class="problem-item">
+          <div class="problem-icon">📊</div>
+          <div class="problem-tag">Reporting</div>
+          <div class="problem-title">Lagging Reports That Don't Enable Real-Time Decisions</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SECTION 3: INTELLIGENCE LAYER ─── -->
+  <section id="intelligence">
+    <div class="intel-intro">
+      <div class="section-label">How It Works</div>
+      <h2 class="section-heading">The Intelligence<br>Layer Explained.</h2>
+      <p class="section-sub">
+        Traditional SCADA and MES systems collect data. AI agents act on it — continuously, autonomously, and in real time. Think of it less like a dashboard and more like hiring a team of tireless process engineers who monitor every machine, every sensor, and every production run simultaneously — and escalate the right thing to the right person before it becomes a problem.
+      </p>
+      <div class="analogy-box">
+        <div class="bar"></div>
+        <div class="analogy-text">
+          <strong>A simple analogy:</strong> Your MES is a logbook — it records what happened. An AI agent is more like a seasoned plant manager who <em>watches the entire floor in real time</em>, detects the early signature of a bearing failure, flags the quality drift on Line 3, and hands your maintenance team a work order — not a data dump. The difference isn't incremental. It's structural.
+        </div>
+      </div>
+    </div>
+    <div class="intel-frame-wrap">
+      <iframe
+        src="../assets/IAAS/yantrai-brain-v2.html"
+        title="Yantra AI — Intelligence Layer"
+        loading="lazy">
+      </iframe>
+    </div>
+  </section>
+
+  <!-- ─── DEPLOYMENT & SCALE ─── -->
+  <div class="implementation-wrap">
+    <div class="implementation">
+      <div class="section-label">Deployment &amp; Scale</div>
+      <h2 class="section-heading">From Pilot Plant<br>to Full Fleet.</h2>
+      <p class="section-subtext">A structured rollout that integrates with your existing plant infrastructure — from day one to full multi-site deployment.</p>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-num">1</div>
+          <div class="timeline-content">
+            <h3>Connect Your Plant</h3>
+            <p>Integrate with existing SCADA, MES, ERP, and IoT sensors. Plug into your cameras, PLCs, and cloud infrastructure. No rip-and-replace required.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-num">2</div>
+          <div class="timeline-content">
+            <h3>AI Learns Your Processes</h3>
+            <p>Models trained on your production history, machine specs, quality standards, and shift patterns. Live within 6 weeks. No generic templates.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-num">3</div>
+          <div class="timeline-content">
+            <h3>Scale Across Your Fleet</h3>
+            <p>Deploy to every plant and production line. Dashboards for every role — from floor operator to VP Operations to the boardroom.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── PARTNER LOGOS ─── -->
+  <div class="hardware-wrap">
+    <div class="hardware">
+      <div class="hw-label">Built to work with your current systems</div>
+      <p class="hw-sub">Connect to the industrial platforms, cloud infrastructure, and AI models your teams already rely on — without replacing a single system.</p>
+      <div class="logo-grid">
+        <div class="logo-card">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" alt="SAP">
+          <span class="brand-name">ERP</span>
+        </div>
+        <div class="logo-card">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Siemens-logo.svg" alt="Siemens">
+          <span class="brand-name">Automation</span>
+        </div>
+        <div class="logo-card">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Microsoft_Azure.svg" alt="Microsoft Azure">
+          <span class="brand-name">Cloud</span>
+        </div>
+        <div class="logo-card">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg" alt="AWS">
+          <span class="brand-name">Cloud</span>
+        </div>
+        <div class="logo-card">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/3/35/Honeywell_Logo.svg" alt="Honeywell">
+          <span class="brand-name">Process Control</span>
+        </div>
+        <div class="logo-card">
+          <div class="logo-wordmark">Rockwell</div>
+          <span class="brand-name">PLC / SCADA</span>
+        </div>
+        <div class="logo-card">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/OpenAI_Logo.svg" alt="OpenAI">
+          <span class="brand-name">AI Models</span>
+        </div>
+        <div class="logo-card">
+          <img src="https://cdn.simpleicons.org/anthropic/000000.svg" alt="Anthropic">
+          <span class="brand-name">AI Safety</span>
+        </div>
+        <div class="logo-card">
+          <img src="https://cdn.simpleicons.org/n8n/000000.svg" alt="n8n">
+          <span class="brand-name">Automation</span>
+        </div>
+        <div class="logo-card">
+          <div class="logo-wordmark">PTC</div>
+          <span class="brand-name">IIoT</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── USE CASE 01: PREDICTIVE MAINTENANCE ─── -->
+  <div class="workflow-section">
+    <div class="workflow-media">
+      <!-- Predictive Maintenance Dashboard Animation -->
+      <div class="wf-maint-panel">
+        <div class="wf-maint-header">
+          <span class="wf-maint-title">Plant 01 · Equipment Health</span>
+          <span class="wf-maint-live">Live Monitoring</span>
+        </div>
+        <div class="wf-machines">
+          <div class="wf-machine">
+            <div class="wf-machine-icon">🔧</div>
+            <div class="wf-machine-info">
+              <div class="wf-machine-name">CNC Machine — Line A</div>
+              <div class="wf-machine-bar-wrap"><div class="wf-machine-bar ok"></div></div>
+            </div>
+            <div class="wf-machine-status ok">Healthy</div>
+          </div>
+          <div class="wf-machine">
+            <div class="wf-machine-icon">⚙️</div>
+            <div class="wf-machine-info">
+              <div class="wf-machine-name">Hydraulic Press — Line B</div>
+              <div class="wf-machine-bar-wrap"><div class="wf-machine-bar warn"></div></div>
+            </div>
+            <div class="wf-machine-status warn">Watch</div>
+          </div>
+          <div class="wf-machine">
+            <div class="wf-machine-icon">🏭</div>
+            <div class="wf-machine-info">
+              <div class="wf-machine-name">Conveyor Motor — Line C</div>
+              <div class="wf-machine-bar-wrap"><div class="wf-machine-bar crit"></div></div>
+            </div>
+            <div class="wf-machine-status crit">Critical</div>
+          </div>
+          <div class="wf-machine">
+            <div class="wf-machine-icon">🔩</div>
+            <div class="wf-machine-info">
+              <div class="wf-machine-name">Compressor Unit — Line D</div>
+              <div class="wf-machine-bar-wrap"><div class="wf-machine-bar ok"></div></div>
+            </div>
+            <div class="wf-machine-status ok">Healthy</div>
+          </div>
+        </div>
+        <div class="wf-maint-alert">
+          <div class="wf-maint-alert-icon">⚠️</div>
+          <div class="wf-maint-alert-text">
+            <strong>Predicted failure in 18 days</strong> — Conveyor Motor Line C showing bearing wear signature. Schedule maintenance now to avoid ₹12L downtime cost.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="workflow-text">
+      <div class="wf-num">USE CASE 01</div>
+      <div class="wf-tag">Predictive Maintenance</div>
+      <h2>Predict Failures.<br>Eliminate Downtime.</h2>
+      <p>AI monitors vibration, temperature, pressure, and cycle data from every machine — detecting failure signatures 2–4 weeks before breakdown. Maintenance becomes planned, not panic. Your production lines stay running.</p>
+      <a href="https://www2.deloitte.com/global/en/pages/manufacturing/articles/industry-4-0-and-manufacturing.html" target="_blank" rel="noopener" class="wf-source">↗ Deloitte — Industry 4.0 &amp; Predictive Maintenance</a>
+    </div>
+  </div>
+
+  <!-- ─── USE CASE 02: QUALITY CONTROL ─── -->
+  <div class="workflow-section flip">
+    <div class="workflow-media">
+      <!-- Quality Control Camera Grid Animation -->
+      <div class="wf-qc-panel">
+        <div class="wf-qc-header">
+          <span class="wf-qc-title">Quality Inspection · Line A, B, C, D</span>
+          <span class="wf-qc-count">3 Defects Flagged</span>
+        </div>
+        <div class="wf-qc-cams">
+          <div class="wf-qc-cam">
+            <div class="wf-qc-cam-label">CAM 01 · Line A</div>
+            <div class="wf-qc-cam-time">09:14:32</div>
+            <div class="wf-qc-detection ok"></div>
+            <div class="wf-qc-badge pass">✓ Pass</div>
+          </div>
+          <div class="wf-qc-cam">
+            <div class="wf-qc-cam-label">CAM 02 · Line B</div>
+            <div class="wf-qc-cam-time">09:14:32</div>
+            <div class="wf-qc-detection defect"></div>
+            <div class="wf-qc-badge fail">✗ Defect — Surface Crack</div>
+          </div>
+          <div class="wf-qc-cam">
+            <div class="wf-qc-cam-label">CAM 03 · Line C</div>
+            <div class="wf-qc-cam-time">09:14:33</div>
+            <div class="wf-qc-detection warn"></div>
+            <div class="wf-qc-badge warn">⚠ Dimensional Drift</div>
+          </div>
+          <div class="wf-qc-cam">
+            <div class="wf-qc-cam-label">CAM 04 · Line D</div>
+            <div class="wf-qc-cam-time">09:14:33</div>
+            <div class="wf-qc-detection ok2"></div>
+            <div class="wf-qc-badge pass">✓ Pass</div>
+          </div>
+        </div>
+        <div class="wf-qc-ticker">
+          <span class="wf-qc-ticker-inner">
+            ● DEFECT DETECTED · CAM 02 · Line B · Surface Crack · 09:14:32 &nbsp;&nbsp;&nbsp; ● DIMENSIONAL DRIFT · CAM 03 · Line C · Tolerance +0.3mm · 09:14:33 &nbsp;&nbsp;&nbsp; ● ROOT CAUSE TRACED · Tool Wear on Station 4 · Alert Sent to QC Lead &nbsp;&nbsp;&nbsp; ● DEFECT DETECTED · CAM 02 · Line B · Surface Crack · 09:14:32 &nbsp;&nbsp;&nbsp; ● DIMENSIONAL DRIFT · CAM 03 · Line C · Tolerance +0.3mm
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="workflow-text">
+      <div class="wf-num">USE CASE 02</div>
+      <div class="wf-tag">Quality Intelligence</div>
+      <h2>Inspect Every Unit.<br>At Line Speed.</h2>
+      <p>AI inspects every unit on the line — detecting surface defects, dimensional errors, and assembly faults in milliseconds. Root cause traced automatically. Scrap rates and end-of-line rejects drop from the first week of go-live.</p>
+      <a href="https://www.mckinsey.com/industries/industrials-and-electronics/our-insights/capturing-the-true-value-of-ai-in-manufacturing" target="_blank" rel="noopener" class="wf-source">↗ McKinsey — AI in Quality Management</a>
+    </div>
+  </div>
+
+  <!-- ─── USE CASE 03: OEE & PRODUCTION INTELLIGENCE ─── -->
+  <div class="workflow-section">
+    <div class="workflow-media">
+      <!-- OEE / Production Line Chart -->
+      <div class="wf-oee-panel">
+        <div class="wf-oee-header">
+          <div>
+            <div class="wf-oee-title">OEE by Production Line</div>
+            <div class="wf-oee-subtitle">Live · Updated every 60 seconds</div>
+          </div>
+          <div class="wf-oee-badge">Live</div>
+        </div>
+        <div class="wf-oee-lines">
+          <div class="wf-oee-line">
+            <div class="wf-oee-line-label">Line A</div>
+            <div class="wf-oee-bar-wrap"><div class="wf-oee-bar l1"><span class="wf-oee-bar-val">87%</span></div></div>
+          </div>
+          <div class="wf-oee-line">
+            <div class="wf-oee-line-label">Line B</div>
+            <div class="wf-oee-bar-wrap"><div class="wf-oee-bar l2"><span class="wf-oee-bar-val">91%</span></div></div>
+          </div>
+          <div class="wf-oee-line">
+            <div class="wf-oee-line-label">Line C</div>
+            <div class="wf-oee-bar-wrap"><div class="wf-oee-bar l3"><span class="wf-oee-bar-val">64%</span></div></div>
+          </div>
+          <div class="wf-oee-line">
+            <div class="wf-oee-line-label">Line D</div>
+            <div class="wf-oee-bar-wrap"><div class="wf-oee-bar l4"><span class="wf-oee-bar-val">43%</span></div></div>
+          </div>
+        </div>
+        <div class="wf-oee-bottleneck">
+          <div class="wf-oee-bottleneck-icon">🔍</div>
+          <div class="wf-oee-bottleneck-text">
+            <strong>Bottleneck Detected — Line D</strong> · Station 7 changeover time is constraining throughput by 38%. AI recommends: pre-stage tooling 12 min earlier. Est. recovery: +1,200 units/shift.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="workflow-text">
+      <div class="wf-num">USE CASE 03</div>
+      <div class="wf-tag">Production Intelligence</div>
+      <h2>Live OEE. Live<br>Bottleneck Detection.</h2>
+      <p>AI surfaces which line is constraining output, which station is causing the slowdown, and exactly what to do about it — in real time. Stop guessing. Start optimising with data that updates every 60 seconds.</p>
+      <a href="https://www.weforum.org/agenda/2022/01/manufacturing-ai-industry-4/" target="_blank" rel="noopener" class="wf-source">↗ World Economic Forum — AI in Manufacturing</a>
+    </div>
+  </div>
+
+  <!-- ─── USE CASE 04: PLANT COMMAND CENTRE ─── -->
+  <div class="workflow-section flip">
+    <div class="workflow-media">
+      <!-- Plant Command Centre Dashboard -->
+      <div class="wf-cmd-panel">
+        <div class="wf-cmd-header">
+          <span class="wf-cmd-title">Plant Command Centre — Live</span>
+          <span class="wf-cmd-active">● 4 Plants Active</span>
+        </div>
+        <div class="wf-cmd-plants">
+          <div class="wf-cmd-plant">
+            <div class="wf-cmd-plant-name">Plant 01 · Pune</div>
+            <div class="wf-cmd-plant-oee good">89%</div>
+            <div class="wf-cmd-plant-label">OEE</div>
+            <div class="wf-cmd-plant-status on-track">On Target</div>
+          </div>
+          <div class="wf-cmd-plant alert">
+            <div class="wf-cmd-plant-name">Plant 02 · Chennai</div>
+            <div class="wf-cmd-plant-oee bad">43%</div>
+            <div class="wf-cmd-plant-label">OEE</div>
+            <div class="wf-cmd-plant-status alert">⚠ Attention</div>
+          </div>
+          <div class="wf-cmd-plant">
+            <div class="wf-cmd-plant-name">Plant 03 · Ahmedabad</div>
+            <div class="wf-cmd-plant-oee ok">76%</div>
+            <div class="wf-cmd-plant-label">OEE</div>
+            <div class="wf-cmd-plant-status warning">Below Target</div>
+          </div>
+          <div class="wf-cmd-plant">
+            <div class="wf-cmd-plant-name">Plant 04 · Noida</div>
+            <div class="wf-cmd-plant-oee good">92%</div>
+            <div class="wf-cmd-plant-label">OEE</div>
+            <div class="wf-cmd-plant-status on-track">On Target</div>
+          </div>
+        </div>
+        <div class="wf-cmd-summary">
+          <div class="wf-cmd-metric">
+            <div class="wf-cmd-metric-val">4,820</div>
+            <div class="wf-cmd-metric-lbl">Units Today</div>
+          </div>
+          <div class="wf-cmd-metric">
+            <div class="wf-cmd-metric-val">76%</div>
+            <div class="wf-cmd-metric-lbl">Fleet OEE</div>
+          </div>
+          <div class="wf-cmd-metric">
+            <div class="wf-cmd-metric-val">2</div>
+            <div class="wf-cmd-metric-lbl">Alerts Active</div>
+          </div>
+          <div class="wf-cmd-metric">
+            <div class="wf-cmd-metric-val">18</div>
+            <div class="wf-cmd-metric-lbl">Days to Maint.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="workflow-text">
+      <div class="wf-num">USE CASE 04</div>
+      <div class="wf-tag">Command Centre</div>
+      <h2>Every Plant. Every<br>Line. One View.</h2>
+      <p>Every plant, every production line, every shift — visible in one dashboard. AI surfaces what needs your attention before it becomes a crisis. From floor operator to VP Operations, everyone sees exactly what they need.</p>
+      <a href="https://www.pwc.com/gx/en/industries/industries-4.0/landing-page/industry-4.0-building-your-digital-enterprise-april-2016.pdf" target="_blank" rel="noopener" class="wf-source">↗ PwC — Industry 4.0: Building the Digital Enterprise</a>
+    </div>
+  </div>
+
+  <!-- ─── SECTION 5: RESULTS ─── -->
+  <section id="results">
+    <div class="results-inner">
+      <div class="section-label">Industry Results</div>
+      <h2 class="section-heading">What AI Adoption<br>Actually Delivers.</h2>
+      <p class="section-sub">Manufacturers that have deployed AI-driven intelligence are reporting consistent, measurable improvements within the first 6–12 months of go-live.</p>
+
+      <div class="results-grid">
+
+        <div class="result-card">
+          <div class="result-num">50<sup>%</sup></div>
+          <div class="result-label">Reduction in unplanned downtime</div>
+          <div class="result-desc">Manufacturers deploying AI-driven predictive maintenance report up to a 50% reduction in unplanned equipment failures, with maintenance costs dropping by 10–25% in the first year.</div>
+          <div class="result-source">Source — Deloitte, Industry 4.0 &amp; Manufacturing Report</div>
+        </div>
+
+        <div class="result-card">
+          <div class="result-num">40<sup>%</sup></div>
+          <div class="result-label">Improvement in quality defect detection</div>
+          <div class="result-desc">AI visual inspection systems detect defects at line speed with accuracy exceeding human inspection — reducing scrap rates by 25–40% and cutting end-of-line rejects in documented pilots.</div>
+          <div class="result-source">Source — McKinsey Global Institute, AI in Manufacturing 2024</div>
+        </div>
+
+        <div class="result-card">
+          <div class="result-num">20<sup>%</sup></div>
+          <div class="result-label">Average OEE improvement in year one</div>
+          <div class="result-desc">Plants using real-time AI production monitoring report a 15–20% improvement in Overall Equipment Effectiveness within the first year, recovering millions in previously hidden capacity.</div>
+          <div class="result-source">Source — World Economic Forum, Fourth Industrial Revolution</div>
+        </div>
+
+        <div class="result-card">
+          <div class="result-num">3<sup>×</sup></div>
+          <div class="result-label">Faster response to floor-level incidents</div>
+          <div class="result-desc">AI-powered command centres reduce time from detection to action from hours to minutes — enabling plant managers to respond to quality alerts, safety events, and machine anomalies 3× faster.</div>
+          <div class="result-source">Source — PwC, Industry 4.0: Building the Digital Enterprise</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SECTION 6: TEAM ─── -->
+  <section id="team">
+    <div class="team-inner">
+      <div class="team-header-block">
+        <div class="section-label">Our Core Team</div>
+        <h2 class="section-heading">The Minds Behind<br>the Platform.</h2>
+        <p class="section-sub">Engineers and operators from <strong>IIT Delhi</strong>, <strong>NIT Rourkela</strong> — Hero Group, Zomato, EY — who've built and scaled operations in industrial environments and are now building multimodal AI that makes manufacturing organisations truly intelligent.</p>
+      </div>
+
+      <div class="team-cards">
+
+        <!-- Rakesh -->
+        <div class="tc">
+          <div class="tc-photo">
+            <img src="../assets/Team/team_1.png" alt="Rakesh — Co-founder, Yantra AI Labs"
+              onerror="this.parentElement.style.background='#f0f0f0';this.style.display='none'">
+          </div>
+          <div class="tc-body">
+            <div class="tc-name">Rakesh</div>
+            <div class="tc-tags">
+              <span class="tc-tag">AI</span>
+              <span class="tc-tag">ML</span>
+              <span class="tc-tag">Engineering</span>
+            </div>
+            <p class="tc-bio">
+              B.Tech, <span class="hl-college">NIT Rourkela</span> '13 · <span class="hl-company">EY</span>, <span class="hl-company">AI Monk</span>, <span class="hl-company">Dvara E-diary</span> · <span class="metric">$2M raised</span>
+            </p>
+            <div class="tc-creds">
+              <span class="tc-cred amber">NIT Rourkela</span>
+              <span class="tc-cred">Patented AI</span>
+              <span class="tc-cred">EY · AI Monk</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rohit -->
+        <div class="tc">
+          <div class="tc-photo">
+            <img src="../assets/Team/team_2.png" alt="Rohit — Co-founder, Yantra AI Labs"
+              onerror="this.parentElement.style.background='#f0f0f0';this.style.display='none'">
+          </div>
+          <div class="tc-body">
+            <div class="tc-name">Rohit</div>
+            <div class="tc-tags">
+              <span class="tc-tag">Business</span>
+              <span class="tc-tag">GTM</span>
+              <span class="tc-tag">Product</span>
+            </div>
+            <p class="tc-bio">
+              B.Tech, <span class="hl-college">NIT Rourkela</span> '12 · <span class="hl-company">Hero Group</span> · EasyLokal <span class="metric">~$100K (Techstars)</span> → <span class="hl-company">WayCool</span> · <span class="hl-company">Zomato</span> 1.5M txns/month
+            </p>
+            <div class="tc-creds">
+              <span class="tc-cred amber">NIT Rourkela</span>
+              <span class="tc-cred">Techstars</span>
+              <span class="tc-cred">Hero · Zomato</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mohit -->
+        <div class="tc">
+          <div class="tc-photo">
+            <img src="../assets/Team/team_3.png" alt="Mohit — Co-founder, Yantra AI Labs"
+              onerror="this.parentElement.style.background='#f0f0f0';this.style.display='none'">
+          </div>
+          <div class="tc-body">
+            <div class="tc-name">Mohit</div>
+            <div class="tc-tags">
+              <span class="tc-tag">Strategy</span>
+              <span class="tc-tag">Business</span>
+              <span class="tc-tag">AI</span>
+            </div>
+            <p class="tc-bio">
+              B.Tech, <span class="hl-college">IIT Delhi</span> '12 · <span class="hl-company">Hero Group</span> <span class="metric">$200M+</span> · <span class="hl-company">Jangid Motors</span> <span class="metric">$5M ARR</span> · <span class="hl-company">Oye! Rickshaw</span> 100k+ txns/day, <span class="metric">$12M raised</span> (Matrix, Xiaomi)
+            </p>
+            <div class="tc-creds">
+              <span class="tc-cred amber">IIT Delhi</span>
+              <span class="tc-cred">Jangid Motors</span>
+              <span class="tc-cred">Oye Rickshaw</span>
+              <span class="tc-cred">Hero Group</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SECTION 7: FOOTER / CONTACT ─── -->
+  <footer id="contact">
+    <div class="footer-top">
+
+      <!-- Brand -->
+      <div class="footer-brand">
+        <img src="../security/assets/Logo/yantrai_logo_main.png" alt="Yantra AI Labs" class="footer-logo">
+        <div class="footer-tagline">AI that works on your floor.<br>Not just in a demo.</div>
+        <div class="footer-details" style="margin-top: 32px;">
+          <div class="footer-detail">
+            <span class="di">📍</span>
+            <span>YantrAI Labs, SAS Towers, Sector 38,<br>Gurgaon, Haryana — 122018, India</span>
+          </div>
+          <div class="footer-detail">
+            <span class="di">📱</span>
+            <a href="tel:+919123102267">+91 91231 02267</a>
+          </div>
+          <div class="footer-detail">
+            <span class="di">✉️</span>
+            <a href="mailto:rohit@yantrailabs.com">rohit@yantrailabs.com</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <div class="footer-form">
+        <span class="footer-form-label">Book a Demo — Response within 2 hours</span>
+        <form id="demoForm" onsubmit="submitForm(event)">
+          <div class="form-row">
+            <div class="form-field">
+              <label>Full Name *</label>
+              <input type="text" placeholder="Arjun Sharma" required>
+            </div>
+            <div class="form-field">
+              <label>Company *</label>
+              <input type="text" placeholder="Tata Motors, L&amp;T, Mahindra..." required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-field">
+              <label>Your Role *</label>
+              <select required>
+                <option value="" disabled selected>Select role</option>
+                <option>CEO / MD</option>
+                <option>VP Operations</option>
+                <option>Plant Director / GM</option>
+                <option>Quality Manager / Head</option>
+                <option>Maintenance Head</option>
+                <option>IT / Digital Head</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label>Mobile *</label>
+              <input type="tel" placeholder="+91 98765 43210" required>
+            </div>
+          </div>
+          <div class="form-field">
+            <label>Number of Plants</label>
+            <select>
+              <option value="" disabled selected>Select range</option>
+              <option>1 plant</option>
+              <option>2–5 plants</option>
+              <option>6–20 plants</option>
+              <option>20+ plants</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>What challenge can we solve?</label>
+            <textarea placeholder="Tell us about your plant — key pain points (downtime, quality, OEE), current systems (SCADA, MES, ERP), and what you'd like to automate..."></textarea>
+          </div>
+          <button type="submit" class="form-submit">Request a Demo →</button>
+        </form>
+        <div class="form-success-msg" id="successMsg">
+          <p><strong>Thank you!</strong> Rohit will reach out within 2 hours with a personalised walkthrough for your plant network.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 Yantra AI Labs. All rights reserved.</div>
+      <a href="../" class="footer-back">← Back to all industries</a>
+    </div>
+  </footer>
+
+  <script>
+    function submitForm(e) {
+      e.preventDefault();
+      document.getElementById('demoForm').style.display = 'none';
+      document.getElementById('successMsg').style.display = 'block';
+    }
+  </script>
+
+</body>
+</html>
