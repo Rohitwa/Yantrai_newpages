@@ -1,136 +1,247 @@
-# Proposal Page System — Project Context
+# CONTEXT.md — Yantra AI Labs Page System
 
 ## What This System Is
 
-A reusable static HTML proposal page builder for **Yantra AI Labs** and future AI-product domains.
-Output is always two files: `[domain]_proposal.html` + `contact.html`.
-No build tools, frameworks, or backend — pure HTML + CSS + JS.
+A reusable static HTML proposal page builder for **Yantra AI Labs**.
+Every domain page is built from the same 11-section architecture. Same CSS. New content.
 
-The design system was built and refined during the **Security domain** (Vision AI physical security platform).
-All future domains reuse the same visual language, layout patterns, and component library.
-
----
-
-## Current Domain: Physical Security
-
-**Company**: Yantra AI Labs (also: Yantrai Labs)
-**Builder**: Rohit, Co-founder
-**Audience**: CISOs, Security Heads, Facility Managers at manufacturing plants, corporate campuses, institutions
-**Output file**: `security_proposal.html`
-
-### Contact Details (used in form and footer)
-- **Name**: Rohit
-- **Company**: Yantra AI Labs
-- **Mobile**: +91 91231 02267
-- **Email**: rohit@yantrailabs.com
-- **CTA destination**: `contact.html`
+**Canonical Reference**: `construction/index.html`
+This is the most complete, production-grade page in the system.
+All future domains use this as their structural and stylistic template.
 
 ---
 
-## Tech Stack
-
-- Pure HTML + CSS + JS (no frameworks, no build tools)
-- Two output files: `[domain]_proposal.html` + `contact.html`
-- Assets served from relative `./assets/` folder
-- Hosted as static page (GitHub Pages / direct browser open)
-
----
-
-## Asset Folder Structure
-
-```
-project-root/
-├── [domain]_proposal.html      ← main page (e.g. security_proposal.html)
-├── contact.html                ← contact/demo form page
-├── assets/
-│   ├── Logo/                   ← Company logo files (SVG preferred)
-│   ├── video/                  ← Hero video file (MP4 preferred)
-│   ├── IAAS/                   ← Intelligence layer visual (HTML or GIF)
-│   ├── use-case/               ← 4 use case visuals (GIF or PNG)
-│   ├── Scale/                  ← Deployment phases text content (TXT/MD/RTF)
-│   └── Team/                   ← Team photo or team card design image (PNG)
-├── CLAUDE.md
-├── CONTEXT.md
-├── SKILL.md
-├── COMMANDS.md
-├── HOOKS.md
-└── README.md
-```
-
-**Asset priority rules (always apply):**
-- `Logo/`: prefer `.svg` > `.png` > `.jpg`
-- `video/`: prefer `.mp4` > `.webm`
-- `IAAS/`: use first `.html` or `.gif`
-- `use-case/`: match by filename keyword; fallback to alphabetical
-- `Team/`: use first image file
-
----
-
-## Brand Rules (non-negotiable across all domains)
-
-1. **Fonts**: `Syne` (headings, weight 700/800) + `Inter` (body, 400/500) — loaded via Google Fonts
-2. **Palette**: White `#ffffff` bg + Black `#0a0a0a` text (main); Black bg + White text (Use Cases section)
-3. **Accent**: Red `#e63030` — used **only** on the `.reactive` strikethrough word in the hero heading
-4. **No gradients. No purple. No rounded hero cards.**
-5. Logo appears in header (dark version) and footer (light/white version if available)
-6. Hero CTA button and footer both link to `contact.html`
-
----
-
-## Page Architecture — 11 Sections
-
-| # | Section | Background | Key Pattern |
-|---|---------|-----------|-------------|
-| 1 | Hero | White | Large heading + `.reactive` strikethrough + camera-frame CTA |
-| 2 | Video | White | Full-width autoplay, no controls |
-| 3 | Platform Overview | White | 8-card grid (4×2 desktop), hover border black |
-| 4 | Intelligence Layer | Black | Full-screen visual from `assets/IAAS/` |
-| 5 | Deployment & Scale | Light gray `#f5f5f5` | **Horizontal 3-step row**, vertical dividers between steps |
-| 6 | Partner Logos | Light gray `#f5f5f5` | **5×2 logo grid**, seamless borders, grayscale→color on hover |
-| 7 | Core Benefits | White | 3 stat blocks in a row (95%, 10×, 24/7) |
-| 8 | Use Cases | Black `#0a0a0a` | 4 full-width sections, alternating image/text layout |
-| 9 | Core Team | White | Section heading + team card image from `assets/Team/`, padded container |
-| 10 | Full-width Team Photo | — | Edge-to-edge image from `assets/Team/` (secondary visual) |
-| 11 | Footer | Black `#0a0a0a` | Logo + links + contact details |
-
----
-
-## Domain Expansion — Variable Config
-
-When building for a new domain, only these variables change.
-Everything else (layout, fonts, colors, CSS patterns) is reused as-is.
+## Company Details (Shared Across All Domains)
 
 ```yaml
-domain:
-  name: "physical-security"           # used in filename: [name]_proposal.html
-  company: "Yantra AI Labs"
-  tagline_verb: "reactive"            # the strikethrough word in hero heading
-  hero_headline: "Make your security preventive, not [reactive]"
-  hero_subtext: "Vision AI turns traditional surveillance into an intelligent security layer..."
-  section3_heading: "One Platform. All Security Solutions."
-  section3_cards: [8 capability cards with icon + label]
-  section5_steps: [3 deployment steps]
-  section6_partners: [10 partner companies with logo URLs]
-  section7_stats: [{value, label}, {value, label}, {value, label}]
-  section8_usecases: [4 use cases with title, body, media keyword]
-  contact:
-    name: "Rohit"
-    mobile: "+91 91231 02267"
-    email: "rohit@yantrailabs.com"
+company: "Yantra AI Labs"
+tagline: "AI for the physical world."
+contact:
+  name: "Rohit"
+  mobile: "+91 91231 02267"
+  email: "rohit@yantrailabs.com"
+  response_promise: "2 hours"
 ```
-
-**Known future domains:**
-- `healthcare` — AI diagnostics / hospital operations
-- `manufacturing` — AI quality control / factory safety
-- `retail` — AI customer analytics / inventory intelligence
-- `logistics` — AI fleet / warehouse monitoring
 
 ---
 
-## Session Continuity Rules
+## Canonical Domain: Construction
 
-- Always run `ls ./assets/[folder]/` before writing any `src=` attribute
-- Never hardcode filenames — use actual output from `ls`
-- If a folder is empty: use a dark placeholder `<div>` with `<!-- ADD: filename -->` comment
-- Read `Scale/` content file (whatever type is present) before building Section 5
-- The `SKILL.md` file contains all CSS patterns and section specs — read it before any build
+> **This is the reference implementation. Read `construction/index.html` to understand every pattern.**
+
+```yaml
+domain: construction
+folder: construction/
+github_repo: YantrAILabs/construction-solutions
+live_url: https://construction.yantrailabs.com
+output_file: construction/index.html
+audience: "Project Directors, Site Managers, CEOs at mid-to-large construction firms"
+
+hero:
+  eyebrow: "For Construction Companies"
+  headline: "Make your decisions proactive, not reactive."
+  reactive_word: "reactive"
+  sub: |
+    A site officer who spots risks before they become incidents.
+    A project head who reviews 12 live sites without leaving his desk.
+    A CEO whose entire portfolio is visible in one dashboard — not next week's report.
+  insight_stat: "Over 60% of current jobs in Sales, Architecture & Engineering, Legal, and Office & Admin can be autonomously handled by AI models today"
+  insight_source: "Anthropic Economic Index"
+  insight_url: "https://www.anthropic.com/research/labor-market-impacts"
+
+section3:
+  heading: "One Platform. All Construction Solutions."
+  subtext: "From site safety to project delivery — every layer of your operations, made intelligent."
+  cards:
+    - { icon: "🏗️", label: "Site Safety Monitoring", desc: "Real-time hazard detection across active construction zones" }
+    - { icon: "📊", label: "Project Progress Tracking", desc: "AI-driven milestone visibility across every site" }
+    - { icon: "🔧", label: "Equipment Intelligence", desc: "Predictive maintenance and utilisation analytics" }
+    - { icon: "👷", label: "Workforce Management", desc: "Attendance, certification, and productivity insights" }
+    - { icon: "📋", label: "Compliance & Permits", desc: "Automated documentation and regulatory tracking" }
+    - { icon: "💰", label: "Cost & Budget Control", desc: "Real-time variance alerts before overruns happen" }
+    - { icon: "🌦️", label: "Weather & Risk Planning", desc: "AI scheduling adjusted for site conditions" }
+    - { icon: "📡", label: "Subcontractor Coordination", desc: "Unified communication and delivery tracking" }
+
+section5:
+  heading: "From Day 1 to Full Scale."
+  steps:
+    - { num: "01", title: "Connect Your Sites", desc: "Integrate with existing sensors, cameras, ERP, and project management tools — no rip-and-replace." }
+    - { num: "02", title: "AI Learns Your Operations", desc: "Models trained on your historical data, site layouts, and workflows. Live within 4 weeks." }
+    - { num: "03", title: "Deploy Across Your Portfolio", desc: "Roll out to every site. Dashboards for every level — from site officer to CEO." }
+
+section6:
+  heading: "Built to Work With What You Already Use."
+  partners:
+    - { name: "Autodesk", category: "BIM & Design", logo: "https://cdn.worldvectorlogo.com/logos/autodesk.svg" }
+    - { name: "SAP", category: "ERP", logo: "https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg" }
+    - { name: "Microsoft Azure", category: "Cloud", logo: "https://upload.wikimedia.org/wikipedia/commons/f/fa/Microsoft_Azure.svg" }
+    - { name: "AWS", category: "Cloud", logo: "https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg" }
+    - { name: "OpenAI", category: "AI Models", logo: "https://upload.wikimedia.org/wikipedia/commons/4/4d/OpenAI_Logo.svg" }
+    - { name: "Anthropic", category: "AI Safety", logo: "https://cdn.simpleicons.org/anthropic/000000.svg" }
+    - { name: "Slack", category: "Communication", logo: "https://upload.wikimedia.org/wikipedia/commons/b/b9/Slack_Technologies_Logo.svg" }
+    - { name: "Google Cloud", category: "Cloud", logo: "https://upload.wikimedia.org/wikipedia/commons/0/01/Google-cloud-platform.svg" }
+    - { name: "n8n", category: "Automation", logo: "https://cdn.simpleicons.org/n8n/000000.svg" }
+    - { name: "Procore", category: "Project Mgmt", logo: "wordmark" }
+
+section7:
+  statement: "The numbers speak for themselves."
+  stats:
+    - { value: "40%", label: "Reduction in project delays" }
+    - { value: "3×", label: "Faster incident response" }
+    - { value: "60%", label: "Drop in safety violations" }
+
+section8:
+  usecases:
+    - { num: "01", title: "Real-Time Site Safety.", desc: "AI detects hazards — missing PPE, unsafe proximity, unplanned access — the moment they happen.", source: "OSHA — Construction Safety Statistics", url: "https://www.osha.gov/data/commonstats", media: "wf1" }
+    - { num: "02", title: "Project Intelligence Dashboard.", desc: "One view of every site, every milestone, every delay risk. AI surfaces what needs your attention today.", source: "McKinsey — The Next Normal in Construction", url: "https://www.mckinsey.com/industries/capital-projects-and-infrastructure/our-insights/reinventing-construction-through-a-productivity-revolution", media: "wf2" }
+    - { num: "03", title: "Predictive Delay Prevention.", desc: "AI models flag delay indicators 3–5 weeks before they materialise. Act before the schedule slips.", source: "KPMG — Global Construction Survey", url: "https://kpmg.com/xx/en/home/industries/infrastructure/global-construction-survey.html", media: "wf3" }
+    - { num: "04", title: "Workforce & Compliance Automation.", desc: "Attendance, certifications, permit-to-work — automated, auditable, always current.", source: "ILO — Construction Sector Safety Report", url: "https://www.ilo.org/global/industries-and-sectors/construction/lang--en/index.htm", media: "wf4" }
+```
+
+---
+
+## Active Domains
+
+### Security
+
+```yaml
+domain: security
+folder: security/
+github_repo: YantrAILabs/security-solutions
+live_url: https://security.yantrailabs.com
+output_file: security/index.html
+audience: "CISOs, Security Directors, Facility Managers at campuses, manufacturing plants, institutions"
+
+hero:
+  headline: "Make your security preventive, not reactive."
+  reactive_word: "reactive"
+  insight_stat: "AI and automation detect and contain incidents 108 days faster — saving $2.22M per breach on average"
+  insight_source: "IBM Cost of a Data Breach Report"
+  insight_url: "https://www.ibm.com/reports/data-breach"
+
+section3:
+  heading: "One Platform. All Security Solutions."
+  cards: [8 Vision AI physical security capabilities]
+
+section7:
+  stats:
+    - { value: "95%", label: "False Alarm Reduction" }
+    - { value: "10×", label: "Faster Threat Response" }
+    - { value: "24/7", label: "Autonomous Monitoring" }
+
+section8:
+  usecases:
+    - { num: "01", title: "24/7 Intelligent Security Monitoring.", source: "Genetec — State of Physical Security Report", url: "https://www.genetec.com/resources/guides/state-of-physical-security-report" }
+    - { num: "02", title: "Operational Efficiency at Scale.", source: "CISA — Physical Security Guidance", url: "https://www.cisa.gov/topics/physical-security" }
+    - { num: "03", title: "Proactive Threat Response.", source: "IBM Security — Cost of a Data Breach Report 2024", url: "https://www.ibm.com/reports/data-breach" }
+    - { num: "04", title: "Data-Driven Security Decisions.", source: "ASIS International — Security Management", url: "https://www.asisonline.org/asis-publications/security-management/" }
+```
+
+---
+
+## Future Domains (To Be Built)
+
+```yaml
+domains_planned:
+  - name: health
+    folder: health/
+    github_repo: YantrAILabs/health-solutions
+    live_url: https://health.yantrailabs.com
+    audience: "Hospital CEOs, CMOs, Operations Directors at large healthcare networks"
+    reactive_word: "reactive"   # "Make your diagnostics proactive, not reactive"
+    hero_noun: "diagnostics"
+
+  - name: retail
+    folder: retail/
+    github_repo: YantrAILabs/retail-solutions
+    live_url: https://retail.yantrailabs.com
+    audience: "Retail Chain Directors, Operations VPs, Store Network Managers"
+    reactive_word: "guesswork"  # "Make your retail decisions data-driven, not guesswork"
+    hero_noun: "decisions"
+
+  - name: logistics
+    folder: logistics/
+    github_repo: YantrAILabs/logistics-solutions
+    live_url: TBD
+    audience: "Fleet Operations Directors, Warehouse Managers, Supply Chain VPs"
+    reactive_word: "reactive"
+
+  - name: manufacturing
+    folder: manufacturing/
+    github_repo: YantrAILabs/manufacturing-solutions
+    live_url: TBD
+    audience: "Plant Directors, Quality Managers, VP Operations at industrial manufacturers"
+    reactive_word: "reactive"
+```
+
+---
+
+## Repo Structure
+
+```
+/Users/rohitsingh/Desktop/Claude_security/   ← Project Root
+├── construction/
+│   └── index.html                           ← CANONICAL REFERENCE
+├── security/
+│   ├── index.html
+│   ├── contact.html
+│   └── assets/
+├── health/                                  ← to be created
+├── retail/                                  ← to be created
+├── assets/                                  ← shared assets (Team, Logo)
+├── CLAUDE.md
+├── SKILL.md
+├── CONTEXT.md
+├── COMMANDS.md
+└── HOOKS.md
+```
+
+**Sync target** (for `/p&c`):
+```
+/tmp/yantra-sync/[domain]-solutions/   ← cloned YantrAILabs repo
+```
+
+---
+
+## Domain Variable Config Schema
+
+When building a new domain, fill in this schema then run `/sb`:
+
+```yaml
+domain: "[name]"                            # used in folder name and file paths
+folder: "[name]/"
+github_repo: "YantrAILabs/[name]-solutions"
+live_url: "https://[name].yantrailabs.com"
+audience: "[who buys this — 1 sentence]"
+
+hero:
+  eyebrow: "For [Industry] Companies"
+  headline: "Make your [noun] [positive], not [reactive_word]."
+  reactive_word: "[old way of doing things]"
+  sub: "[2–3 sentences: paint the before/after transformation in vivid, specific terms]"
+  insight_stat: "[1 sentence with a hard number from a trusted published source]"
+  insight_source: "[Source name]"
+  insight_url: "[Direct URL to source]"
+
+section3:
+  heading: "One Platform. All [Industry] Solutions."
+  subtext: "[1–2 sentences]"
+  cards: 8 × { icon, label, desc }
+
+section5:
+  heading: "[Action phrase]. [Outcome phrase]."
+  steps: 3 × { num, title, desc }
+
+section6:
+  heading: "Built to Work With What You Already Use."
+  partners: 10 × { name, category, logo_url }
+
+section7:
+  statement: "[Bold claim — not a feature, a result]"
+  stats: 3 × { value, label }
+
+section8:
+  usecases: 4 × { num, title, desc, source_name, source_url, media_keyword }
+
+team_sub: "[1–2 sentences about the team's relevant background for this domain]"
+```

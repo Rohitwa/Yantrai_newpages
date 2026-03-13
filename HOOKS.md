@@ -1,113 +1,183 @@
-# Session Hooks — Proposal Page Builder
+# HOOKS.md — Yantra AI Labs Page Builder
+
+Hooks are automatic behaviors that fire at specific moments.
+They enforce consistency without requiring manual checks.
 
 ---
 
-## PRE-SESSION HOOK
+## SESSION START HOOK
 
-At the start of every session, before any command:
+**Fires**: At the beginning of every session, before any command.
 
-1. **Read project files**
-   ```
-   Read: CONTEXT.md
-   Read: SKILL.md
-   ```
-
-2. **Scan asset folders**
-   ```bash
-   ls ./assets/Logo/ ./assets/video/ ./assets/IAAS/ ./assets/use-case/ ./assets/Scale/ ./assets/Team/
-   ```
-
-3. **Report status** (one line each):
-   - Which asset folders are populated vs empty
-   - Whether `[domain]_proposal.html` exists
-   - Whether `contact.html` exists
-   - Recommended next command
-
-4. **Await explicit command** — do not auto-build.
+```
+1. READ SKILL.md and CONTEXT.md silently
+2. IDENTIFY the domain being worked on (from recent file edits or ask)
+3. SCAN asset folders for that domain:
+     ls ./[domain]/assets/Logo/
+     ls ./[domain]/assets/video/
+     ls ./[domain]/assets/IAAS/
+     ls ./[domain]/assets/use-case/
+     ls ./[domain]/assets/Scale/
+     ls ./[domain]/assets/Team/
+4. REPORT one-line status:
+   - Asset folders: populated / empty
+   - index.html: exists / missing
+   - contact.html: exists / missing
+5. PRINT the 3-command reminder:
+   ╔══════════════════════════════════════════════╗
+   ║  /sb [domain]  →  Build                     ║
+   ║  /verify       →  Check                     ║
+   ║  /p&c "msg"    →  Push live                 ║
+   ╚══════════════════════════════════════════════╝
+6. AWAIT command — do not auto-build.
+```
 
 ---
 
 ## POST-BUILD HOOK
 
-After every `/build`, `/rebuild`, or `/new-domain`:
+**Fires**: After every `/sb` command, before printing the build summary.
 
-1. **Verify all `src=` paths** — confirm every referenced file exists in `./assets/`
-2. **Verify section count** — confirm all 11 sections are present
-3. **Verify layout patterns**:
-   - Section 5 `.timeline` has `flex-direction: row` (horizontal)
-   - Section 6 `.logo-grid` has `grid-template-columns: repeat(5, 1fr)` (5 columns)
-   - Section 9 `.core-team` has `padding: 100px 72px` (padded container)
-4. **Flag placeholders** — list any `<!-- ADD: ... -->` placeholder divs
-5. **Print summary**:
-   ```
-   ✅ [domain]_proposal.html — 11 sections built
-   ✅ contact.html — form + contact details
+```
+1. COUNT sections in the built index.html — must be exactly 11
+2. VERIFY layout patterns:
+   - Section 5 .timeline → flex-direction: row (horizontal)
+   - Section 6 .logo-grid → grid-template-columns: repeat(5, 1fr) (5 columns)
+   - Section 9 .team-inner → padding: 100px 72px (padded container, not full-bleed)
+3. VERIFY brand rules (all must pass):
+   - Sora + Inter fonts in <head>
+   - .reactive has color:#e63030 and text-decoration:line-through
+   - Section 8 has background:#0a0a0a or black
+   - No purple, violet, or #8b5cf6 anywhere
+   - No linear-gradient or radial-gradient on brand elements
+   - Hero CTA and footer both link to contact.html
+   - @media (max-width: 768px) block is present
+4. VERIFY asset paths:
+   - Every src= path either: (a) matches a file in assets/, or (b) is a valid external URL
+   - Placeholder divs have <!-- ADD: ... --> comment
+5. PRINT summary:
+   ✅ [domain]/index.html — 11 sections built
+   ✅ [domain]/contact.html — form ready
    ⚠️  Missing assets: [list or "none"]
-   📁 Files saved to: [path]
-   ```
+   Next: /verify → /p&c
+```
 
 ---
 
 ## POST-SECTION HOOK
 
-After every `/section [N]` command:
+**Fires**: After every `/section [N]` command.
 
-1. Confirm which section was modified
-2. Confirm no other sections were changed
-3. Verify section-specific brand rules (see Style Guard below)
-4. Print: `✅ Section [N] updated — no other sections modified`
-
----
-
-## VERIFICATION HOOK
-
-After any file edit while a preview server is running:
-
-1. Reload the preview
-2. Scroll to the modified section
-3. Take a screenshot to confirm visual output
-4. Check browser console for errors
-5. Confirm layout with a DOM inspection (dimensions, computed styles)
+```
+1. CONFIRM which section was modified (print section number and heading)
+2. CONFIRM no other sections changed (diff check)
+3. VALIDATE section-specific rules:
+   - If Section 5: timeline is horizontal row
+   - If Section 6: logo-grid is 5 columns
+   - If Section 8: background is #0a0a0a, text is white
+   - If Section 9: team-inner has padding, not full-bleed
+4. PRINT: ✅ Section [N] updated — no other sections modified
+```
 
 ---
 
 ## STYLE GUARD HOOK
 
-Before saving any file, validate ALL of these — fix automatically if any fail:
+**Fires**: Before saving any HTML file.
+**Action**: Fix violations automatically, then save. Never save a failing file.
 
-| Rule | Check |
-|------|-------|
-| Fonts | `font-family` references `Syne` and `Inter` — never Arial, Roboto, system-ui alone |
-| Reactive word | Hero heading has `.reactive` span with `color:#e63030` and `text-decoration:line-through` |
-| Section 5 layout | `.timeline` uses `flex-direction: row` on desktop |
-| Section 6 layout | `.logo-grid` uses `grid-template-columns: repeat(5, 1fr)` on desktop |
-| Section 8 background | Uses `#0a0a0a` or `black` |
-| Section 8 text | White or `rgba(255,255,255,x)` |
-| Section 9 padding | `.core-team` has horizontal padding (never full-bleed) |
-| CTA links | Hero button and footer both link to `contact.html` |
-| Google Fonts | `<link>` for Syne + Inter present in `<head>` |
-| No purple | No `purple`, `violet`, `#8b5cf6`, or similar anywhere |
-| No gradients | No `linear-gradient` or `radial-gradient` in brand-facing elements |
-| Mobile breakpoint | `@media (max-width: 768px)` block present |
+| Rule | Check | Auto-Fix |
+|------|-------|----------|
+| Fonts | `<link>` for Sora + Inter in `<head>` | Add the Google Fonts link |
+| Reactive span | `.reactive` has `color:#e63030` + `text-decoration:line-through` | Add/correct the CSS |
+| Section 5 layout | `.timeline` has `flex-direction: row` | Fix to row |
+| Section 6 layout | `.logo-grid` has `repeat(5, 1fr)` | Fix column count |
+| Section 8 bg | `#0a0a0a` or `black` | Fix background |
+| Section 8 text | `white` or `rgba(255,255,255,x)` | Fix text color |
+| Section 9 padding | `.team-inner` not full-bleed | Add padding |
+| CTA links | Hero + footer → `contact.html` | Fix href values |
+| No purple | No purple/violet/`#8b5cf6` | Remove/replace |
+| No brand gradients | No gradient on non-media elements | Remove |
+| Mobile breakpoint | `@media (max-width: 768px)` present | Add if missing |
 
 ---
 
 ## ASSET PATH HOOK
 
-Before writing any `src=` attribute:
+**Fires**: Before writing any `src=` or `href=` attribute pointing to `./assets/`.
 
-```bash
-ls ./assets/[folder-name]/
+```
+1. RUN ls ./[domain]/assets/[folder-name]/
+2. USE exact filenames from the output — never guess
+3. IF folder is empty:
+   - Do NOT write a broken src= path
+   - Write an asset-optional placeholder (see SKILL.md)
+   - Add: <!-- ADD: assets/[folder]/[expected-filename] -->
+4. APPLY priority rules:
+   Logo/      → .svg > .png > .jpg
+   video/     → .mp4 > .webm
+   IAAS/      → first .html → fallback first .gif
+   use-case/  → match keyword (monitor/efficiency/threat/data) → alphabetical fallback
+   Team/      → portraits for Section 9 · landscape for Section 10
 ```
 
-Use exact filenames from output. Never guess or hardcode.
+---
 
-**Multi-file priority:**
-- `Logo/`: `.svg` > `.png` > `.jpg`
-- `video/`: `.mp4` > `.webm`
-- `IAAS/`: first `.html`, fallback to first `.gif`
-- `use-case/`: match by keyword (monitor, efficiency, threat, data) → fallback to alphabetical
-- `Team/`: for Section 9 use the team-card design image; for Section 10 use the landscape/full-width photo
+## VERIFICATION HOOK
+
+**Fires**: After any file edit while a preview server is running.
+
+```
+1. RELOAD the preview page
+2. SCROLL to the modified section
+3. TAKE a screenshot
+4. CHECK browser console for JS errors
+5. CONFIRM layout with DOM inspection (dimensions, computed styles)
+6. REPORT: ✅ Section [N] looks correct / ⚠️ [issue found]
+```
+
+---
+
+## ASSET-OPTIONAL HOOK
+
+**Fires**: When any asset folder is empty during build.
+
+```
+For each empty folder, use the correct placeholder per SKILL.md:
+
+assets/video/    → dark placeholder div, text: "ADD VIDEO → assets/video/"
+assets/IAAS/     → dark placeholder div, text: "ADD INTELLIGENCE LAYER → assets/IAAS/"
+assets/use-case/ → inline CSS animation (domain-appropriate, never blank)
+assets/Team/     → light gray div per card, no image tag
+assets/Scale/    → use 3 default deployment steps from SKILL.md
+assets/Logo/     → Sora font wordmark "Yantra AI Labs" as text fallback
+
+Section 10 (full-width photo) → OMIT ENTIRELY if assets/Team/ has no landscape photo
+```
+
+---
+
+## PATH FIX HOOK
+
+**Fires**: During every `/p&c` command, before committing to the target repo.
+
+```
+The domain page lives in ./[domain]/index.html locally.
+When pushed to the standalone YantrAILabs repo, it becomes the root index.html.
+Paths must be corrected before pushing.
+
+REPLACE:
+  ../assets/      → ./assets/
+  ../[domain]/assets/Logo/ → ./assets/Logo/
+  ../[other]/     → ./assets/ (case by case)
+
+DO NOT TOUCH:
+  ./assets/       (already correct for standalone repo)
+  https://        (external URLs — never modify)
+  CNAME           (preserve exactly)
+
+VERIFY after replacement: no ../ remains in src= or href= attributes.
+```
 
 ---
 
@@ -115,21 +185,28 @@ Use exact filenames from output. Never guess or hardcode.
 
 | Error | Action |
 |-------|--------|
-| Missing asset folder | Create folder, add `.gitkeep`, print: `⚠️ Created empty: assets/[name]/ — add your file here` |
-| Scale/ content unreadable | Fall back to 3 default steps from SKILL.md, note it in output |
-| Video not found | Dark placeholder div: `<div style="background:#111;min-height:60vh;display:flex;align-items:center;justify-content:center;"><p style="color:#555;font-family:Inter,sans-serif;font-size:14px;">ADD VIDEO TO assets/video/</p></div>` |
-| Use-case media not found | Same dark placeholder pattern with `<!-- ADD: use-case-[N].gif -->` comment |
-| Partner logo URL fails (naturalWidth=0) | Replace `<img>` with branded wordmark `<div>` in Syne font + company brand colour |
-| Team image not found | Placeholder div: `<div style="background:#f5f5f5;min-height:400px;display:flex;align-items:center;justify-content:center;"><p style="font-family:Inter,sans-serif;color:#999;">ADD TEAM IMAGE TO assets/Team/</p></div>` |
+| Asset folder missing | Create it + `.gitkeep`. Print: `⚠️ Created empty: assets/[name]/ — add your file here` |
+| Scale content unreadable | Use 3 default steps from SKILL.md. Note it in output. |
+| Video not found | Dark placeholder div with ADD instruction |
+| IAAS file not found | Dark placeholder div with ADD instruction |
+| Use-case media not found | Inline CSS animation (domain-relevant). Never blank white box. |
+| Logo URL fails (img.naturalWidth = 0) | Replace with branded Sora wordmark div |
+| Team image not found | Light gray placeholder div with ADD comment |
+| Git push 403 forbidden | Print: "🔒 Access denied to YantrAILabs/[repo]. Ask the repo owner to add your GitHub account." |
+| Path fix missed ../ | Halt /p&c, fix paths, retry push |
 
 ---
 
 ## DOMAIN EXPANSION HOOK
 
-When `/new-domain` is run:
+**Fires**: When `/sb` is run for a domain not yet in CONTEXT.md.
 
-1. Read the existing `[security]_proposal.html` as a structural template
-2. Copy all CSS patterns verbatim — do not redesign
-3. Replace only domain-variable content (headlines, card labels, stats, use cases, partner logos)
-4. Keep all section IDs, class names, and layout patterns identical
-5. Verify the new page passes the full Style Guard before saving
+```
+1. OPEN construction/index.html as the structural template (canonical reference)
+2. COPY all CSS verbatim — do not redesign, do not add new patterns
+3. IDENTIFY all domain-variable content zones (see CONTEXT.md Domain Variable Config Schema)
+4. FILL those zones with domain-appropriate content
+5. KEEP all section IDs, class names, and layout patterns identical to construction
+6. VERIFY the new page passes the full Style Guard before saving
+7. ADD the new domain config to CONTEXT.md after building
+```
