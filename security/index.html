@@ -203,37 +203,51 @@
       line-height: 1.35;
     }
 
-    /* ─── SECTION 4: IAAS ─── */
-    .iaas-section {
+    /* ─── SECTION 4: INTELLIGENCE LAYER ─── */
+    #intelligence {
       background: var(--bg);
-      padding: 80px 0;
-      text-align: center;
+      padding-bottom: 100px;
     }
-    .iaas-heading {
-      font-family: 'Sora', sans-serif;
-      font-size: clamp(2.4rem, 4.5vw, 4.5rem);
-      font-weight: 800;
-      line-height: 1.08;
-      letter-spacing: -0.025em;
+    .intel-intro {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 100px 60px 64px;
+    }
+    .intel-intro .section-sub {
+      max-width: 680px;
+      margin-bottom: 32px;
+    }
+    .analogy-box {
+      display: flex;
+      gap: 0;
+      max-width: 780px;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      margin-top: 36px;
+    }
+    .analogy-box .bar { width: 4px; background: var(--dark); flex-shrink: 0; }
+    .analogy-box .analogy-text {
+      padding: 24px 28px;
+      font-size: 0.95rem;
+      line-height: 1.75;
       color: var(--dark);
-      margin-bottom: 48px;
-      padding: 0 60px;
     }
-    .iaas-frame-wrap {
+    .analogy-box .analogy-text strong { font-weight: 600; }
+    .intel-frame-wrap {
       width: 60%;
       margin: 0 auto;
       overflow: hidden;
       border-radius: 12px;
       border: 1px solid var(--border);
     }
-    .iaas-section iframe {
+    .intel-frame-wrap iframe {
       width: 100%;
-      min-height: 64vh;
+      height: 430px;
       border: none;
       display: block;
     }
     @media (max-width: 768px) {
-      .iaas-frame-wrap { width: 90%; }
+      .intel-frame-wrap { width: 100%; border-radius: 8px; }
     }
 
     /* ─── SECTION 5: IMPLEMENTATION ─── */
@@ -886,9 +900,12 @@
       .use-case-section { grid-template-columns: 1fr; }
       .use-case-section.reverse { direction: ltr; }
       .use-case-text { padding: 56px 24px; }
-      .footer-top { grid-template-columns: 1fr; }
+      /* Footer */
+      .footer-top { grid-template-columns: 1fr; gap: 56px; }
       .footer-contact { text-align: left; }
       footer { padding: 56px 24px 32px; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; padding: 20px 24px; }
 
       /* Hero */
       .hero h1 { font-size: 2.8rem; }
@@ -898,14 +915,23 @@
       /* Video */
       .video-section { padding: 0; }
 
-      /* IAAS iframe */
-      .iaas-frame-wrap { width: 100%; border-radius: 8px; }
-      .iaas-section iframe { min-height: 420px; }
-      .iaas-section { padding: 60px 0; }
+      /* Intelligence Layer */
+      .intel-intro { padding: 64px 24px 48px; }
+      .intel-frame-wrap { width: 100%; border-radius: 8px; }
+      .intel-frame-wrap iframe { height: 380px; }
 
       /* Use case */
       .use-case-placeholder { min-height: 280px; }
       .use-case-section.reverse { direction: ltr; }
+      .use-case-text { padding: 48px 24px; }
+      .use-case-text p { max-width: 100%; }
+
+      /* Implementation */
+      .implementation { padding: 64px 24px; }
+      .timeline-content h3 { font-size: 1.1rem; }
+
+      /* Results */
+      .result-card { padding: 32px 20px; }
 
       /* Team cards */
       .team-inner { padding: 64px 24px; }
@@ -919,7 +945,8 @@
       nav { padding: 20px 40px; }
       .hero { padding: 110px 40px 90px; }
       .platform { padding: 80px 40px; }
-      .iaas-frame-wrap { width: 80%; }
+      .intel-frame-wrap { width: 80%; }
+      .intel-frame-wrap iframe { height: 420px; }
       .implementation { padding: 80px 40px; }
       .hardware { padding: 80px 40px; }
       .benefits { padding: 80px 40px; }
@@ -944,9 +971,8 @@
       .platform-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
       .platform-card { padding: 24px 16px; }
 
-      .iaas-section { padding: 48px 0; }
-      .iaas-section iframe { min-height: 400px; }
-      .iaas-heading { font-size: 2rem; padding: 0 20px; }
+      .intel-intro { padding: 48px 20px 40px; }
+      .intel-frame-wrap iframe { height: 400px; }
 
       .implementation { padding: 48px 20px; }
       .timeline-num { font-size: 40px; }
@@ -960,7 +986,7 @@
       .benefits { padding: 48px 20px; }
       .benefits-statement { font-size: 2rem; }
 
-      .use-case-text { padding: 40px 20px; }
+      .use-case-text { padding: 36px 20px; }
       .use-case-text h2 { font-size: 1.7rem; }
       .use-case-text p { font-size: 0.9rem; }
 
@@ -969,7 +995,9 @@
       .tc-name { font-size: 20px; }
 
       footer { padding: 48px 20px 28px; }
+      .footer-top { padding: 48px 20px; gap: 40px; }
       .footer-bottom { flex-direction: column; gap: 8px; text-align: center; padding-top: 20px; }
+      .footer-form-label { margin-bottom: 20px; }
     }
   </style>
 </head>
@@ -1047,16 +1075,27 @@
     </div>
   </section>
 
-  <!-- SECTION 4: INTELLIGENCE LAYER (IAAS) -->
-  <section class="iaas-section">
-    <h2 class="iaas-heading">The Intelligence Layer</h2>
-    <div class="iaas-frame-wrap">
+  <!-- ─── SECTION 4: INTELLIGENCE LAYER ─── -->
+  <section id="intelligence">
+    <div class="intel-intro">
+      <div class="section-label">How It Works</div>
+      <h2 class="section-heading">The Intelligence<br>Layer Explained.</h2>
+      <p class="section-sub">
+        Traditional CCTV systems record footage that no one watches. AI agents watch every feed, every second — detecting threats, flagging anomalies, and alerting the right person before an incident escalates. Think of it less like a camera system and more like hiring a team of tireless, hyper-alert security analysts stationed at every corner of your facility.
+      </p>
+      <div class="analogy-box">
+        <div class="bar"></div>
+        <div class="analogy-text">
+          <strong>A simple analogy:</strong> A CCTV camera is a tool — it records, but needs a human to watch, interpret, and respond. An AI agent is more like a seasoned security chief who <em>monitors every entrance, corridor, and perimeter simultaneously</em>, flags anomalies the moment they appear, and hands you a decision — not hours of footage. The difference isn't incremental. It's structural.
+        </div>
+      </div>
+    </div>
+    <div class="intel-frame-wrap">
       <iframe
         src="./assets/IAAS/yantrai-brain-v2.html"
-        title="Yantra AI Intelligence Layer"
-        scrolling="no"
-        allowtransparency="true"
-      ></iframe>
+        title="Yantra AI — Intelligence Layer"
+        loading="lazy">
+      </iframe>
     </div>
   </section>
 

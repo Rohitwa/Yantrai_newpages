@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Request a Demo — Yantra AI Labs</title>
+  <link rel="icon" type="image/png" href="./assets/Logo/yantrai_favicon_new.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: #0a0a0a;
+      background: #ffffff;
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 60px;
+      border-bottom: 1px solid #e8e8e8;
+    }
+    nav img { height: 32px; }
+    nav a {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      color: #0a0a0a;
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    nav a:hover { opacity: 0.6; }
+
+    /* MAIN LAYOUT */
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 2fr 3fr;
+      min-height: calc(100vh - 81px);
+    }
+
+    /* LEFT COLUMN */
+    .contact-left {
+      padding: 80px 60px;
+      border-right: 1px solid #e8e8e8;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .contact-left .eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 24px;
+    }
+    .contact-left h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.8rem, 2.8vw, 2.8rem);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .contact-left .response-note {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      color: #888;
+      margin-bottom: 52px;
+    }
+    .contact-person {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding-top: 40px;
+      border-top: 1px solid #e8e8e8;
+    }
+    .contact-person .name {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .contact-person .company {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      color: #888;
+      margin-bottom: 20px;
+    }
+    .contact-person a {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      color: #0a0a0a;
+      text-decoration: none;
+      line-height: 2.2;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .contact-person a:hover { opacity: 0.6; }
+
+    /* RIGHT COLUMN — FORM */
+    .contact-right {
+      padding: 80px 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .contact-right h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 40px;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .form-group.full { grid-column: 1 / -1; }
+    label {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #888;
+    }
+    input, textarea {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      color: #0a0a0a;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid #d0d0d0;
+      padding: 10px 0;
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+    input:focus, textarea:focus {
+      border-bottom-color: #0a0a0a;
+    }
+    textarea {
+      resize: none;
+      height: 100px;
+    }
+    .submit-btn {
+      margin-top: 40px;
+      position: relative;
+      display: inline-block;
+      padding: 18px 48px;
+      border: 1.5px solid #0a0a0a;
+      font-family: 'Syne', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      background: #0a0a0a;
+      color: #ffffff;
+      transition: all 0.2s ease;
+      width: 100%;
+    }
+    .submit-btn:hover { background: transparent; color: #0a0a0a; }
+
+    /* SUCCESS STATE */
+    .success-message {
+      display: none;
+      margin-top: 32px;
+      padding: 24px 28px;
+      background: #f8f8f8;
+      border-left: 3px solid #0a0a0a;
+    }
+    .success-message p {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #0a0a0a;
+    }
+    .success-message.visible { display: block; }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      .contact-layout { grid-template-columns: 1fr; }
+      .contact-left { padding: 60px 24px 40px; border-right: none; border-bottom: 1px solid #e8e8e8; }
+      .contact-right { padding: 40px 24px 60px; }
+      .form-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <img src="./assets/Logo/yantrai_labs_logo.png" alt="Yantra AI Labs">
+    <a href="security_proposal.html">← Back to Security Solutions</a>
+  </nav>
+
+  <div class="contact-layout">
+
+    <!-- LEFT: Sales Contact -->
+    <div class="contact-left">
+      <div class="eyebrow">Get in touch</div>
+      <h1>Talk to our Security AI team</h1>
+      <p class="response-note">Response within 2 hours on business days.</p>
+      <div class="contact-person">
+        <div class="name">Rohit</div>
+        <div class="company">Yantra AI Labs</div>
+        <a href="tel:+919123102267">📱 +91 91231 02267</a>
+        <a href="mailto:rohit@yantrailabs.com">✉️ rohit@yantrailabs.com</a>
+      </div>
+    </div>
+
+    <!-- RIGHT: Form -->
+    <div class="contact-right">
+      <h2>Request a Demo</h2>
+      <form id="demoForm" onsubmit="handleSubmit(event)">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="name">Full Name *</label>
+            <input type="text" id="name" name="name" required placeholder="Your name">
+          </div>
+          <div class="form-group">
+            <label for="company">Company *</label>
+            <input type="text" id="company" name="company" required placeholder="Your company">
+          </div>
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" required placeholder="you@company.com">
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" name="phone" placeholder="+91 00000 00000">
+          </div>
+          <div class="form-group full">
+            <label for="message">Tell us about your security needs</label>
+            <textarea id="message" name="message" placeholder="Number of cameras, sites, key challenges..."></textarea>
+          </div>
+        </div>
+        <button type="submit" class="submit-btn">Request a Demo</button>
+      </form>
+      <div class="success-message" id="successMsg">
+        <p>Thank you! Rohit will reach out within 2 hours.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function handleSubmit(e) {
+      e.preventDefault();
+      document.getElementById('demoForm').style.display = 'none';
+      document.getElementById('successMsg').classList.add('visible');
+    }
+  </script>
+
+</body>
+</html>

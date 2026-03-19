@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yantra AI Labs — Vision AI Security</title>
+  <link rel="icon" type="image/png" href="./assets/Logo/yantrai_favicon_new.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #ffffff;
+      --bg-card:  #f5f6f8;
+      --bg-alt:   #f9f9f9;
+      --dark:     #0a0a0a;
+      --blue:     #2563EB;
+      --red:      #e63030;
+      --gray:     #666666;
+      --gray-dim: #999999;
+      --border:   rgba(0, 0, 0, 0.09);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--dark);
+      background: var(--bg);
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 60px;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+    nav img { height: 30px; }
+    .nav-cta {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: #ffffff;
+      text-decoration: none;
+      background: var(--blue);
+      padding: 10px 24px;
+      border-radius: 50px;
+      transition: opacity 0.2s;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* ─── SECTION 1: HERO ─── */
+    .hero {
+      padding: 140px 60px 120px;
+      text-align: center;
+      background: var(--bg);
+    }
+    .hero h1 {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(3.5rem, 7.5vw, 7rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--dark);
+      margin: 0 auto 28px;
+      max-width: 1000px;
+    }
+    .reactive {
+      color: var(--red);
+      text-decoration: line-through;
+      text-decoration-thickness: 4px;
+    }
+    .hero p {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.15rem;
+      line-height: 1.75;
+      color: var(--gray);
+      max-width: 580px;
+      margin: 0 auto 48px;
+    }
+    .pill-btn {
+      display: inline-block;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: #ffffff;
+      background: var(--blue);
+      padding: 16px 40px;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .pill-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    /* ─── SECTION 2: VIDEO ─── */
+    .video-section {
+      background: var(--bg);
+      padding: 0 10%;
+    }
+    .video-section video {
+      width: 100%;
+      display: block;
+      max-height: 72vh;
+      object-fit: cover;
+    }
+
+    /* ─── SHARED SECTION STYLES ─── */
+    .section-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 20px;
+    }
+    .section-heading {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(2.4rem, 4.5vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -0.025em;
+      color: var(--dark);
+      margin-bottom: 18px;
+    }
+    .section-subtext {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.05rem;
+      color: var(--gray);
+      line-height: 1.75;
+      margin-bottom: 64px;
+    }
+
+    /* ─── SECTION 3: PLATFORM OVERVIEW ─── */
+    .platform {
+      padding: 110px 60px;
+      background: var(--bg);
+      text-align: center;
+    }
+    .platform .section-subtext { max-width: 520px; margin-left: auto; margin-right: auto; }
+    .platform-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .platform-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 36px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      text-align: left;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+      cursor: default;
+    }
+    .platform-card:hover {
+      border-color: rgba(37, 99, 235, 0.3);
+      box-shadow: 0 4px 24px rgba(37, 99, 235, 0.07);
+      transform: translateY(-2px);
+    }
+    .platform-card .icon { font-size: 1.8rem; line-height: 1; }
+    .platform-card .card-cat {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--blue);
+    }
+    .platform-card .card-label {
+      font-family: 'Sora', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--dark);
+      line-height: 1.35;
+    }
+
+    /* ─── SECTION 4: IAAS ─── */
+    .iaas-section {
+      background: var(--bg);
+      padding: 80px 60px;
+      text-align: center;
+    }
+    .iaas-heading {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(2.4rem, 4.5vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -0.025em;
+      color: var(--dark);
+      margin-bottom: 48px;
+    }
+    .iaas-frame-wrap {
+      width: 80%;
+      margin: 0 auto;
+      overflow: hidden;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+    .iaas-section iframe {
+      width: 100%;
+      min-height: 64vh;
+      border: none;
+      display: block;
+    }
+
+    /* ─── SECTION 5: IMPLEMENTATION ─── */
+    .implementation-wrap {
+      background: var(--bg-alt);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .implementation {
+      padding: 110px 60px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .timeline {
+      margin-top: 64px;
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+      gap: 0;
+    }
+    .timeline-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 48px 40px;
+      border-right: 1px solid var(--border);
+      position: relative;
+    }
+    .timeline-item:first-child { padding-left: 0; }
+    .timeline-item:last-child { border-right: none; }
+    .timeline-num {
+      font-family: 'Sora', sans-serif;
+      font-size: 88px;
+      font-weight: 800;
+      color: rgba(0, 0, 0, 0.06);
+      line-height: 1;
+      margin-bottom: 24px;
+    }
+    .timeline-content h3 {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 14px;
+    }
+    .timeline-content p {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: var(--gray);
+    }
+
+    /* ─── SECTION 6: HARDWARE ─── */
+    .hardware-wrap {
+      background: #f5f5f5;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .hardware {
+      padding: 100px 60px;
+      text-align: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .hardware .hw-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gray-dim);
+      margin-bottom: 14px;
+    }
+    .hardware .hw-sub {
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      color: var(--gray);
+      margin-bottom: 0;
+    }
+    .logo-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0;
+      margin-top: 56px;
+      border: 1px solid #e0e0e0;
+    }
+    .logo-card {
+      background: #ffffff;
+      border-right: 1px solid #e0e0e0;
+      border-bottom: 1px solid #e0e0e0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 28px;
+      gap: 16px;
+      transition: background 0.25s ease, box-shadow 0.25s ease;
+      cursor: default;
+      min-height: 140px;
+    }
+    .logo-card:nth-child(5n) { border-right: none; }
+    .logo-card:nth-child(n+6) { border-bottom: none; }
+    .logo-card:hover {
+      background: #fafafa;
+      box-shadow: inset 0 0 0 1.5px #111;
+    }
+    .logo-card img {
+      max-width: 120px;
+      max-height: 42px;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      filter: grayscale(100%);
+      opacity: 0.5;
+      transition: filter 0.3s ease, opacity 0.3s ease;
+    }
+    .logo-card:hover img {
+      filter: grayscale(0%);
+      opacity: 1;
+    }
+    .logo-card .brand-name {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #ccc;
+      transition: color 0.25s ease;
+    }
+    .logo-card:hover .brand-name {
+      color: #888;
+    }
+
+    /* ─── SECTION 7: CORE BENEFITS ─── */
+    .benefits-wrap {
+      background: var(--bg-alt);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .benefits {
+      padding: 110px 60px;
+      text-align: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .benefits-statement {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(2.2rem, 4vw, 4rem);
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      line-height: 1.1;
+      color: var(--dark);
+      max-width: 800px;
+      margin: 0 auto 80px;
+    }
+    .stats-row {
+      display: flex;
+      gap: 0;
+      justify-content: center;
+    }
+    .stat-block {
+      flex: 1;
+      max-width: 260px;
+      padding: 0 40px;
+      border-right: 1px solid var(--border);
+    }
+    .stat-block:first-child { border-left: 1px solid var(--border); }
+    .stat-block .stat-num {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(3.5rem, 5vw, 5rem);
+      font-weight: 800;
+      color: var(--dark);
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+    .stat-block .stat-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      color: var(--gray);
+      line-height: 1.55;
+    }
+
+    /* ─── SECTION 8: USE CASES ─── */
+    .use-case-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 70vh;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+    }
+    .use-case-section.reverse { direction: rtl; }
+    .use-case-section.reverse > * { direction: ltr; }
+    .use-case-media {
+      overflow: hidden;
+      background: var(--bg-card);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .use-case-media img,
+    .use-case-media video {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .use-case-placeholder {
+      width: 100%; height: 100%;
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-card);
+      border: 1px dashed rgba(0,0,0,0.12);
+    }
+    .use-case-placeholder span {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      color: rgba(0,0,0,0.25);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    .use-case-text {
+      padding: 80px 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: var(--bg);
+    }
+    .use-case-text .uc-num {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 24px;
+    }
+    .use-case-text h2 {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(1.8rem, 2.8vw, 2.8rem);
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 24px;
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+    }
+    .use-case-text p {
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--gray);
+      max-width: 460px;
+    }
+
+    /* ─── CORE TEAM SECTION ─── */
+    .core-team-wrap {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .core-team {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 100px 72px;
+    }
+    .core-team .section-label {
+      text-align: left;
+    }
+    .core-team .section-heading {
+      text-align: left;
+      margin-bottom: 12px;
+    }
+    .core-team .section-subtext {
+      text-align: left;
+      margin: 0 0 60px 0;
+      max-width: 560px;
+    }
+    .team-img-wrap {
+      width: 100%;
+    }
+    .team-img-wrap img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 4px;
+    }
+
+    /* ─── SECTION 9: TEAM ─── */
+    .team-section { line-height: 0; }
+    .team-section img { width: 100%; display: block; }
+
+    /* ─── SECTION 10: FOOTER ─── */
+    footer {
+      background: var(--bg);
+      color: var(--dark);
+      padding: 72px 60px 40px;
+      border-top: 1px solid var(--border);
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 40px;
+      align-items: start;
+      margin-bottom: 60px;
+    }
+    .footer-logo img { height: 26px; }
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+    .footer-links a {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      color: var(--gray-dim);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--dark); }
+    .footer-contact { text-align: right; }
+    .footer-contact p {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      color: var(--gray-dim);
+      line-height: 2.2;
+    }
+    .footer-contact a {
+      color: var(--gray-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-contact a:hover { color: var(--dark); }
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-bottom p {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      color: var(--gray-dim);
+    }
+
+    /* ─── MOBILE ─── */
+    @media (max-width: 768px) {
+      nav { padding: 18px 24px; }
+      .hero { padding: 90px 24px 80px; }
+      .platform { padding: 70px 24px; }
+      .platform-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .implementation { padding: 70px 24px; }
+      .timeline { flex-direction: column; }
+      .timeline-item { padding: 40px 0; border-right: none; border-bottom: 1px solid var(--border); }
+      .timeline-item:first-child { padding-left: 0; }
+      .timeline-item:last-child { border-bottom: none; }
+      .timeline-num { font-size: 52px; }
+      .hardware { padding: 60px 24px; }
+      .logo-grid { grid-template-columns: repeat(2, 1fr); }
+      .logo-card { padding: 28px 16px; min-height: 100px; }
+      .logo-card:nth-child(5n) { border-right: 1px solid #e0e0e0; }
+      .logo-card:nth-child(2n) { border-right: none; }
+      .logo-card:nth-child(n+6) { border-bottom: 1px solid #e0e0e0; }
+      .logo-card:last-child, .logo-card:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+      .logo-card img { max-width: 90px; max-height: 32px; }
+      .benefits { padding: 70px 24px; }
+      .stats-row { flex-direction: column; align-items: center; gap: 0; }
+      .stat-block {
+        width: 100%; max-width: 100%;
+        padding: 32px 0;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+      .stat-block:first-child { border-left: none; }
+      .use-case-section { grid-template-columns: 1fr; }
+      .use-case-section.reverse { direction: ltr; }
+      .use-case-text { padding: 56px 24px; }
+      .footer-top { grid-template-columns: 1fr; }
+      .footer-contact { text-align: left; }
+      footer { padding: 56px 24px 32px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <img src="./assets/Logo/yantrai_labs_logo.png" alt="Yantra AI Labs">
+    <a href="contact.html" class="nav-cta">Request Demo</a>
+  </nav>
+
+  <!-- SECTION 1: HERO -->
+  <section class="hero">
+    <h1>Make your security<br>preventive, not <span class="reactive">reactive</span></h1>
+    <p>Vision AI turns traditional surveillance into an intelligent security layer — detecting threats in real time, reducing response time, and enabling proactive operations across every facility.</p>
+    <a href="contact.html" class="pill-btn">Experience the Intelligence Live</a>
+  </section>
+
+  <!-- SECTION 2: VIDEO -->
+  <section class="video-section">
+    <video autoplay muted loop playsinline>
+      <source src="./assets/video/Security_VAI (1).mp4" type="video/mp4">
+    </video>
+  </section>
+
+  <!-- SECTION 3: PLATFORM OVERVIEW -->
+  <section class="platform">
+    <div class="section-label">Platform Capabilities</div>
+    <h2 class="section-heading">One Platform. All Security Solutions.</h2>
+    <p class="section-subtext">From detection to decision — every security function unified under one AI layer.</p>
+    <div class="platform-grid">
+      <div class="platform-card">
+        <div class="icon">🔭</div>
+        <div class="card-cat">Monitoring</div>
+        <div class="card-label">Perimeter Monitoring</div>
+      </div>
+      <div class="platform-card">
+        <div class="icon">🚨</div>
+        <div class="card-cat">Detection</div>
+        <div class="card-label">Intrusion Detection</div>
+      </div>
+      <div class="platform-card">
+        <div class="icon">🚪</div>
+        <div class="card-cat">Access</div>
+        <div class="card-label">Tailgating Detection</div>
+      </div>
+      <div class="platform-card">
+        <div class="icon">🔐</div>
+        <div class="card-cat">Access</div>
+        <div class="card-label">Access Control Violations</div>
+      </div>
+      <div class="platform-card">
+        <div class="icon">🔫</div>
+        <div class="card-cat">Threat</div>
+        <div class="card-label">Firearms Detection</div>
+      </div>
+      <div class="platform-card">
+        <div class="icon">🏃</div>
+        <div class="card-cat">Monitoring</div>
+        <div class="card-label">Crowd &amp; Egress Monitoring</div>
+      </div>
+      <div class="platform-card">
+        <div class="icon">🎥</div>
+        <div class="card-cat">Intelligence</div>
+        <div class="card-label">Investigation Intelligence</div>
+      </div>
+      <div class="platform-card">
+        <div class="icon">⚡</div>
+        <div class="card-cat">Response</div>
+        <div class="card-label">Real-time Alerts</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: INTELLIGENCE LAYER (IAAS) -->
+  <section class="iaas-section">
+    <h2 class="iaas-heading">The Intelligence Layer</h2>
+    <div class="iaas-frame-wrap">
+      <iframe
+        src="./assets/IAAS/yantrai-brain-v2.html"
+        title="Yantra AI Intelligence Layer"
+        scrolling="no"
+        allowtransparency="true"
+      ></iframe>
+    </div>
+  </section>
+
+  <!-- SECTION 5: IMPLEMENTATION & SCALE -->
+  <div class="implementation-wrap">
+    <div class="implementation">
+      <div class="section-label">Deployment &amp; Scale</div>
+      <h2 class="section-heading">How We Deploy<br>and Scale.</h2>
+      <p class="section-subtext">A structured rollout that works with your existing infrastructure — from day one to full-site coverage.</p>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-num">1</div>
+          <div class="timeline-content">
+            <h3>Connect Existing Infrastructure</h3>
+            <p>Use your current cameras, sensors, and plant systems. No major hardware replacement needed.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-num">2</div>
+          <div class="timeline-content">
+            <h3>Build a Unified Intelligence Layer</h3>
+            <p>Yantrai Labs combines video, sensor, and operational data into one decision-ready interface.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-num">3</div>
+          <div class="timeline-content">
+            <h3>Deploy and Scale Fast</h3>
+            <p>Standardize intelligence across lines, plants, and sites with a system built for expansion.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 6: HARDWARE COMPATIBILITY -->
+  <div class="hardware-wrap">
+    <div class="hardware">
+      <div class="hw-label">Built to work with your current tools</div>
+      <p class="hw-sub">Plug into your existing camera infrastructure — no rip-and-replace required.</p>
+      <div class="logo-grid">
+        <div class="logo-card">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/a/ad/Hikvision_logo.svg" alt="Hikvision">
+          <span class="brand-name">IP Cameras</span>
+        </div>
+        <div class="logo-card">
+          <img src="https://www.allegion.com/content/dam/allegion-corp/migration/brands/doc_logo_ALLE-H_000.png" alt="Allegion">
+          <span class="brand-name">Access Control</span>
+        </div>
+        <div class="logo-card">
+          <img src="https://www.swhouse.com/-/media/project/jci-global/security/software-house/jci_software-house_blue_rgb.png" alt="Software House">
+          <span class="brand-name">Access Control</span>
+        </div>
+        <div class="logo-card">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/d/da/Avigilon_logo.svg" alt="Avigilon">
+          <span class="brand-name">AI Cameras</span>
+        </div>
+        <div class="logo-card">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Honeywell_logo.svg" alt="Honeywell">
+          <span class="brand-name">Video Systems</span>
+        </div>
+        <div class="logo-card">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/f/fb/Brivo-Web-Logo.svg" alt="Brivo">
+          <span class="brand-name">Cloud Access</span>
+        </div>
+        <div class="logo-card">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/9/9c/Samsung_logo_wordmark.svg" alt="Samsung">
+          <span class="brand-name">Smart Cameras</span>
+        </div>
+        <div class="logo-card">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/3/32/Hanwha_Vision_Logo.svg" alt="Hanwha Vision">
+          <span class="brand-name">Smart Cameras</span>
+        </div>
+        <div class="logo-card">
+          <img src="https://www.genetec.com/binaries/content/gallery/genetecweb/ie/genetec_logo.svg" alt="Genetec">
+          <span class="brand-name">VMS Platform</span>
+        </div>
+        <div class="logo-card">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/1/16/Bosch-logo.svg" alt="Bosch">
+          <span class="brand-name">Video Systems</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 7: CORE BENEFITS -->
+  <div class="benefits-wrap">
+    <div class="benefits">
+      <div class="section-label">Core Benefits</div>
+      <h2 class="benefits-statement">24×7 Active Security Agent for your physical security.</h2>
+      <div class="stats-row">
+        <div class="stat-block">
+          <div class="stat-num">95%</div>
+          <div class="stat-label">Reduction in false alarms</div>
+        </div>
+        <div class="stat-block">
+          <div class="stat-num">10×</div>
+          <div class="stat-label">Faster incident response</div>
+        </div>
+        <div class="stat-block">
+          <div class="stat-num">24/7</div>
+          <div class="stat-label">Continuous AI monitoring</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 8: USE CASES -->
+  <section class="use-case-section">
+    <div class="use-case-media">
+      <!-- ADD: use-case-monitoring.gif -->
+      <div class="use-case-placeholder">
+        <span>Add use-case-1 media to assets/use-case/</span>
+      </div>
+    </div>
+    <div class="use-case-text">
+      <div class="uc-num">Use Case 01</div>
+      <h2>24/7 Intelligent Security Monitoring.</h2>
+      <p>Maintain continuous awareness across your entire site with AI-powered monitoring. Instantly detect emerging threats — from firearms and perimeter breaches to suspicious exits — and respond before incidents escalate.</p>
+    </div>
+  </section>
+
+  <section class="use-case-section reverse">
+    <div class="use-case-media">
+      <!-- ADD: use-case-efficiency.gif -->
+      <div class="use-case-placeholder">
+        <span>Add use-case-2 media to assets/use-case/</span>
+      </div>
+    </div>
+    <div class="use-case-text">
+      <div class="uc-num">Use Case 02</div>
+      <h2>Operational Efficiency at Scale.</h2>
+      <p>Automate routine security workflows and maximize operational productivity. AI filters out 95% of false alarms, allowing teams to focus on real incidents. Intelligent video analysis speeds up investigations and delivers answers in minutes, not hours.</p>
+    </div>
+  </section>
+
+  <section class="use-case-section">
+    <div class="use-case-media">
+      <!-- ADD: use-case-threat.gif -->
+      <div class="use-case-placeholder">
+        <span>Add use-case-3 media to assets/use-case/</span>
+      </div>
+    </div>
+    <div class="use-case-text">
+      <div class="uc-num">Use Case 03</div>
+      <h2>Proactive Threat Response.</h2>
+      <p>Detect early indicators of risk — including sudden egress, tailgating, and unusual activity — in real time. AI eliminates low-priority alerts and highlights genuine threats so security teams can act 10× faster and stop incidents before they unfold.</p>
+    </div>
+  </section>
+
+  <section class="use-case-section reverse">
+    <div class="use-case-media">
+      <!-- ADD: use-case-analytics.gif -->
+      <div class="use-case-placeholder">
+        <span>Add use-case-4 media to assets/use-case/</span>
+      </div>
+    </div>
+    <div class="use-case-text">
+      <div class="uc-num">Use Case 04</div>
+      <h2>Data-Driven Security Decisions.</h2>
+      <p>Unlock operational insights across your security infrastructure. Use analytics on tailgating incidents, camera coverage gaps, and access control violations to refine processes, improve coverage, and strategically deploy teams.</p>
+    </div>
+  </section>
+
+  <!-- CORE TEAM SECTION -->
+  <div class="core-team-wrap">
+    <div class="core-team">
+      <div class="section-label">Our Core Team</div>
+      <h2 class="section-heading">The Minds Behind<br>the Platform.</h2>
+      <p class="section-subtext">Engineers, operators, and founders who have built and scaled deep-tech products across security, AI, and enterprise software.</p>
+      <div class="team-img-wrap">
+        <img src="./assets/Team/Untitled design (1).png" alt="Yantra AI Labs Core Team — Rakesh, Rohit, Mohit">
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 9: TEAM -->
+  <section class="team-section">
+    <img src="./assets/Team/Screenshot 2026-03-11 at 2.23.01 PM.png" alt="Yantra AI Labs Team">
+  </section>
+
+  <!-- SECTION 10: FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-logo">
+        <img src="./assets/Logo/yantrai_labs_logo.png" alt="Yantra AI Labs">
+      </div>
+      <div class="footer-links">
+        <a href="contact.html">Contact Team</a>
+        <a href="#platform">Platform</a>
+        <a href="#benefits">Benefits</a>
+      </div>
+      <div class="footer-contact">
+        <p>📱 <a href="tel:+919123102267">+91 91231 02267</a></p>
+        <p>✉️ <a href="mailto:rohit@yantrailabs.com">rohit@yantrailabs.com</a></p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Yantra AI Labs. All rights reserved.</p>
+      <p>Vision AI for Physical Security</p>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -64,22 +64,18 @@ Examples:
    Read any file in ./[domain]/assets/Scale/ for Section 5 content.
 
 6. BUILD ./[domain]/index.html
-   - All 11 sections per SKILL.md spec
+   - All 9 sections per SKILL.md spec (Nav + 9 content sections)
    - Use canonical reference: construction/index.html for exact HTML/CSS patterns
    - Replace content variables with domain-specific data
+   - Contact form is EMBEDDED in the footer (Section 9), not a separate page
    - Asset-optional: every section works without assets (see SKILL.md placeholders)
    - All paths relative to the [domain]/ folder root
+   - Load Chart.js in <head> for interactive workflow charts
 
-7. BUILD ./[domain]/contact.html
-   - Same visual language as main page
-   - Contact details from CONTEXT.md
-   - "← Back to [Domain] Solutions" links to ./index.html
+7. RUN POST-BUILD VERIFICATION HOOK (see HOOKS.md)
 
-8. RUN POST-BUILD VERIFICATION HOOK (see HOOKS.md)
-
-9. PRINT BUILD SUMMARY:
-   ✅ [domain]/index.html — 11 sections built
-   ✅ [domain]/contact.html — form ready
+8. PRINT BUILD SUMMARY:
+   ✅ [domain]/index.html — 9 sections built (contact form embedded in footer)
    ⚠️  Missing assets: [list or "none — page works with placeholders"]
    📁 Output: ./[domain]/index.html
 
@@ -119,12 +115,14 @@ This is command 2 of 3.
    ├────────────────────────────────────────────────────────────┤
    │ Sora + Inter fonts loaded     │                            │
    │ .reactive has red strikethrough│                           │
-   │ Section 5 is horizontal row   │                            │
-   │ Section 6 is 5-column grid    │                            │
-   │ Section 8 bg = #0a0a0a        │                            │
-   │ Section 9 is padded (not full-bleed) │                     │
-   │ Hero CTA → contact.html       │                            │
-   │ Footer → contact.html         │                            │
+   │ Section 4 is horizontal row   │                            │
+   │ Section 5 is 5-column grid    │                            │
+   │ Section 6 bg = #0a0a0a        │                            │
+   │ Section 7 is 2×2 results grid │                            │
+   │ Section 8 is padded (not full-bleed) │                     │
+   │ Section 9 has embedded form   │                            │
+   │ Hero CTA → #contact           │                            │
+   │ Nav CTA → #contact            │                            │
    │ No purple anywhere            │                            │
    │ No gradients in brand elements│                            │
    │ Mobile breakpoint present     │                            │
@@ -261,7 +259,7 @@ Lists every file in assets/ subfolders, which section each maps to, and flags em
 ---
 
 ### `/scale-content`
-Re-read `assets/Scale/` and update Section 5 with the latest deployment step content.
+Re-read `assets/Scale/` and update Section 4 with the latest deployment step content.
 ```
 /scale-content
 ```
@@ -269,7 +267,7 @@ Re-read `assets/Scale/` and update Section 5 with the latest deployment step con
 ---
 
 ### `/partner-logos [optional: company list]`
-Find real logo URLs and update Section 6.
+Find real logo URLs and update Section 5.
 ```
 /partner-logos
 /partner-logos "Oracle, Procore, Bentley, Trimble, Hexagon"

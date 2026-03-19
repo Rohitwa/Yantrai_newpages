@@ -44,34 +44,35 @@ At the start of every session, before executing any command:
 
 ---
 
-## The 11 Sections (Fixed Architecture)
+## The 9 Sections (Fixed Architecture)
 
-| # | Name | Background | Core Purpose |
-|---|------|-----------|--------------|
-| 1 | Hero | White | Stakes the transformation claim. Reactive word + insight stat. |
-| 2 | Video | White | Silent proof. Show, don't tell. |
-| 3 | Platform Overview | White | 8-card breadth. Answers: "what exactly does this do?" |
-| 4 | Intelligence Layer | Black | The wow moment. AI brain visualization. |
-| 5 | Deployment & Scale | Light gray | Removes implementation risk. 3-step timeline. |
-| 6 | Partner Logos | Light gray | "Works with what I already use." 5×2 grid. |
-| 7 | Core Benefits | White | Give them the numbers. 3 stat blocks. |
-| 8 | Use Cases | Black `#0a0a0a` | "This is exactly our problem." 4 alternating sections. |
-| 9 | Core Team | White | Trust. Who built this? 3-card design. |
-| 10 | Full-width Photo | — | Humanise the company. Edge-to-edge. |
-| 11 | Footer | Black | Always-present contact anchor. |
+> Derived from the canonical `construction/index.html`. Every new domain copies this exact structure.
+
+| # | ID / Class | Name | Background | Core Purpose |
+|---|-----------|------|-----------|--------------|
+| — | `nav` | Sticky Nav | White (frosted blur) | Logo + domain label + CTA. Always visible. |
+| 1 | `#hero` | Hero | White | Stakes the transformation claim. Reactive word + insight stat modal + CTA to `#contact`. |
+| 2 | `#benefits` | Platform Benefits | Light gray `#f5f5f5` | Video proof + problem areas grid (10 cards, 2-column). Shows breadth of capability. |
+| 3 | `#intelligence` | Intelligence Layer | White | "How It Works" — analogy box + interactive AI brain iframe. The wow moment. |
+| 4 | `.implementation-wrap` | Deployment & Scale | Light gray `#f5f5f5` | 3-step horizontal timeline. Removes implementation risk. |
+| 5 | `.hardware-wrap` | Partner Logos | Light gray `#f5f5f5` | "Works with what I already use." 5×2 seamless grid, grayscale→colour. |
+| 6 | `.workflow-intro-wrap` + `.workflow-section`×3 | Core Workflows | Black `#0a0a0a` | 3 workflows with before/after panels + trusted source links. Alternating layout. |
+| 7 | `#results` | Social Proof | White | 4 stat cards with sources in 2×2 grid. Give them numbers for the internal slide. |
+| 8 | `#team` | Core Team | White | Trust. Who built this? 3-card design with credential chips. |
+| 9 | `#contact` (footer) | Footer + Contact Form | Black `#0a0a0a` | Brand/address (left) + embedded demo request form (right) + bottom bar. |
 
 ---
 
 ## Brand Rules (Non-Negotiable)
 
 - **Fonts**: `Sora` (headings, 700/800) + `Inter` (body, 400/500) via Google Fonts
-- **Palette**: White bg + Black text (main) · Black `#0a0a0a` bg + White text (Sections 8, 11)
+- **Palette**: White bg + Black text (main) · Black `#0a0a0a` bg + White text (Sections 6, 9)
 - **Accent**: Red `#e63030` — only on `.reactive` strikethrough word in hero heading
-- **Blue `#2563EB`** — CTA buttons, section labels, links only
-- **Amber `#d97706`** — team credential chips only
+- **Amber `#d97706`** — hero eyebrow, workflow tags, team credential chips, chart accents
 - **No gradients. No purple. No rounded hero cards.**
-- Hero CTA + Footer always link to `contact.html`
-- Logo: dark version in header, light/white version in footer
+- Hero CTA links to `#contact` (embedded footer form). Nav CTA links to `#contact`.
+- Logo: dark version in header, inverted (brightness(0) invert(1)) in footer
+- Hero insight stat opens a **modal popup** with source chart image
 
 If any rule fails → fix automatically before saving.
 
@@ -84,20 +85,20 @@ When assets exist they replace placeholders — no rebuild needed.
 
 ```
 assets/
-├── Logo/       Favicon + header logo + footer logo
-├── video/      Section 2 hero video (.mp4 preferred)
-├── IAAS/       Section 4 intelligence visualization (.html preferred, .gif fallback)
-├── use-case/   Section 8 media (4 files, matched by keyword)
-├── Scale/      Section 5 deployment step copy (.txt/.md/.rtf)
-└── Team/       Section 9 team card photos + Section 10 landscape photo
+├── Logo/       Favicon + header logo + footer logo (inverted for dark bg)
+├── video/      Section 2 platform video + Section 6 workflow videos (.mp4 preferred)
+├── IAAS/       Section 3 intelligence visualization (.html preferred, .gif fallback)
+├── use-case/   Section 6 workflow media (3 files, matched by keyword)
+├── Scale/      Section 4 deployment step copy (.txt/.md/.rtf)
+└── Team/       Section 8 team card photos (portraits only)
 ```
 
 **Priority rules:**
 - `Logo/`: `.svg` > `.png` > `.jpg`
 - `video/`: `.mp4` > `.webm`
 - `IAAS/`: first `.html` → fallback `.gif`
-- `use-case/`: match keyword (monitor / efficiency / threat / data) → fallback alphabetical
-- `Team/`: portrait photos for Section 9 cards · landscape photo for Section 10
+- `use-case/`: match by workflow keyword → alphabetical fallback
+- `Team/`: portrait photos for team cards (no separate full-width photo section)
 
 Always `ls ./assets/[folder]/` before writing any `src=` attribute.
 
@@ -105,7 +106,7 @@ Always `ls ./assets/[folder]/` before writing any `src=` attribute.
 
 ## Key CSS Patterns (Do Not Break)
 
-### Section 5 — Horizontal Timeline
+### Section 4 — Horizontal Timeline
 ```css
 .timeline { display: flex; flex-direction: row; align-items: stretch; }
 .timeline-item { flex: 1; padding: 48px 40px; border-right: 1px solid var(--border); }
@@ -113,7 +114,7 @@ Always `ls ./assets/[folder]/` before writing any `src=` attribute.
 @media (max-width: 768px) { .timeline { flex-direction: column; } }
 ```
 
-### Section 6 — 5×2 Logo Grid
+### Section 5 — 5×2 Logo Grid
 ```css
 .logo-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; border: 1px solid #e0e0e0; }
 .logo-card:nth-child(5n) { border-right: none; }
@@ -122,10 +123,31 @@ Always `ls ./assets/[folder]/` before writing any `src=` attribute.
 .logo-card:hover img { filter: grayscale(0%); opacity: 1; }
 ```
 
-### Section 9 — Team Cards (3-column)
+### Section 6 — Workflow Sections (Alternating 2-column)
+```css
+.workflow-section { display: grid; grid-template-columns: 1fr 1fr; min-height: 75vh; background: #0a0a0a; }
+.workflow-section.flip { direction: rtl; }
+.workflow-section.flip > * { direction: ltr; }
+/* Before/After comparison panels inside each workflow */
+.wf-before-after { display: flex; gap: 0; }
+.wf-col { flex: 1; padding: 20px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); }
+```
+
+### Section 7 — Social Proof (2×2 Results Grid)
+```css
+.results-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+.result-card { background: var(--bg); padding: 48px 44px; }
+```
+
+### Section 8 — Team Cards (3-column)
 ```css
 .team-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-.team-inner { max-width: 1200px; margin: 0 auto; padding: 100px 72px; }
+.team-inner { max-width: 1100px; margin: 0 auto; padding: 100px 60px; }
+```
+
+### Section 9 — Footer with Embedded Contact Form
+```css
+.footer-top { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; } /* brand left, form right */
 ```
 
 ---
@@ -147,8 +169,12 @@ Always `ls ./assets/[folder]/` before writing any `src=` attribute.
 
 After every `/sb` or `/p&c`:
 1. Every `src=` path has a matching file in assets (or is a valid external URL)
-2. Section 5 is horizontal row on desktop
-3. Section 6 is 5-column grid
-4. Section 9 uses padded container (not full-bleed)
-5. No brand rule violations
-6. Missing assets listed with clear `<!-- ADD: filename -->` comments
+2. Section 4 timeline is horizontal row on desktop
+3. Section 5 logo grid is 5 columns on desktop
+4. Section 6 workflows alternate layout (normal → flip → normal)
+5. Section 7 results grid is 2×2 on desktop
+6. Section 8 team uses padded container (not full-bleed)
+7. Section 9 footer has embedded contact form (not just links)
+8. No brand rule violations
+9. Missing assets listed with clear `<!-- ADD: filename -->` comments
+10. Chart.js loaded for interactive workflow charts (if applicable)
