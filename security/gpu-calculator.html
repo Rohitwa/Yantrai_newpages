@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GPU Cost Calculator — Yantra AI Labs</title>
+  <link rel="icon" type="image/png" href="./assets/Logo/yantrai_favicon_new.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #ffffff;
+      --bg-card: #f5f6f8;
+      --dark: #0a0a0a;
+      --blue: #2563EB;
+      --amber: #d97706;
+      --gray: #666666;
+      --gray-dim: #999999;
+      --border: rgba(0, 0, 0, 0.09);
+      --green: #16a34a;
+      --mono: 'SF Mono', 'Cascadia Code', 'Consolas', 'Monaco', monospace;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--dark);
+      background: var(--bg);
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 60px;
+      border-bottom: 1px solid #e8e8e8;
+    }
+    nav img { height: 32px; }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .nav-sep { color: #d0d0d0; user-select: none; }
+    nav a {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--dark);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+    nav a:hover { opacity: 0.6; }
+
+    /* PAGE */
+    .calc-page {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+    }
+
+    /* HEADER */
+    .calc-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .calc-eyebrow {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gray-dim);
+      margin-bottom: 16px;
+    }
+    .calc-header h1 {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 10px;
+    }
+    .calc-subtitle {
+      font-size: 14px;
+      color: var(--gray);
+      line-height: 1.5;
+    }
+
+    /* GPU SELECTOR */
+    .gpu-selector {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+    .gpu-btn {
+      flex: 1;
+      text-align: left;
+      padding: 20px 24px;
+      background: var(--bg-card);
+      border: 2px solid var(--border);
+      border-radius: 14px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .gpu-btn:hover { border-color: rgba(0,0,0,0.15); }
+    .gpu-btn.active-t4 { border-color: var(--blue); background: rgba(37,99,235,0.04); }
+    .gpu-btn.active-l4 { border-color: var(--amber); background: rgba(217,119,6,0.04); }
+    .gpu-btn .gpu-accent {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+    .gpu-btn.active-t4 .gpu-accent { background: var(--blue); opacity: 1; }
+    .gpu-btn.active-l4 .gpu-accent { background: var(--amber); opacity: 1; }
+    .gpu-name {
+      display: block;
+      font-family: var(--mono);
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 10px;
+    }
+    .gpu-btn:not([class*="active"]) .gpu-name { color: var(--gray); }
+    .gpu-specs {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .gpu-spec {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--gray);
+    }
+    .gpu-btn:not([class*="active"]) .gpu-spec { color: var(--gray-dim); }
+
+    /* INPUTS */
+    .input-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+    .input-group label {
+      display: block;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 8px;
+    }
+    .input-group input {
+      width: 100%;
+      padding: 12px 14px;
+      background: var(--bg-card);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-family: var(--mono);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--dark);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .input-group input:focus { border-color: var(--dark); }
+    .model-toggle {
+      display: flex;
+      gap: 8px;
+    }
+    .toggle-btn {
+      flex: 1;
+      padding: 12px 0;
+      background: var(--bg-card);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      font-family: var(--mono);
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--gray);
+      transition: all 0.2s;
+    }
+    .toggle-btn.active {
+      background: var(--dark);
+      border-color: var(--dark);
+      color: #fff;
+    }
+
+    /* INFO STRIP */
+    .info-strip {
+      display: flex;
+      justify-content: space-around;
+      padding: 18px 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 10px;
+    }
+    .info-item { text-align: center; }
+    .info-label {
+      display: block;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--gray-dim);
+      margin-bottom: 6px;
+    }
+    .info-value {
+      font-family: var(--mono);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--dark);
+    }
+
+    /* PRICING NOTE */
+    .pricing-note {
+      text-align: center;
+      padding: 8px 16px;
+      margin-bottom: 28px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--gray);
+      background: var(--bg-card);
+      border: 1px dashed var(--border);
+      border-radius: 8px;
+    }
+    .pricing-note strong { color: var(--dark); font-weight: 600; }
+
+    /* COST CARDS */
+    .cost-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .cost-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .cost-card.onprem { border-color: rgba(22,163,74,0.25); }
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 20px;
+      background: rgba(0,0,0,0.02);
+      border-bottom: 1px solid var(--border);
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--gray);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .cost-card.onprem .card-header {
+      background: rgba(22,163,74,0.05);
+      border-color: rgba(22,163,74,0.12);
+    }
+    .card-body { padding: 16px 20px; }
+    .provider-row {
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .provider-row:last-child { border-bottom: none; }
+    .provider-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 6px;
+    }
+    .provider-name { font-size: 12px; color: var(--dark); }
+    .provider-detail {
+      font-size: 10px;
+      color: var(--gray-dim);
+      margin-top: 2px;
+    }
+    .pill {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--gray);
+      background: rgba(0,0,0,0.04);
+      padding: 2px 8px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+    .provider-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    .provider-calc {
+      font-size: 10px;
+      color: var(--gray-dim);
+    }
+    .provider-total {
+      font-family: var(--mono);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--dark);
+    }
+    .onprem-total {
+      font-family: var(--mono);
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--green);
+    }
+    .savings-badge {
+      margin-top: 12px;
+      padding: 10px 14px;
+      background: rgba(22,163,74,0.06);
+      border: 1px solid rgba(22,163,74,0.12);
+      border-radius: 8px;
+      text-align: center;
+    }
+    .savings-label {
+      font-size: 10px;
+      color: var(--gray);
+      margin-bottom: 6px;
+    }
+    .savings-value {
+      font-family: var(--mono);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--green);
+    }
+    .savings-pct {
+      font-size: 11px;
+      color: var(--gray);
+      margin-left: 8px;
+    }
+    .card-footer {
+      padding: 10px 20px;
+      border-top: 1px solid var(--border);
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--gray-dim);
+      text-align: center;
+    }
+    .cost-card.onprem .card-footer { border-color: rgba(22,163,74,0.1); }
+
+    /* CAPEX FOOTER */
+    .capex-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .capex-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 22px;
+    }
+    .capex-card.selected-t4 { border-color: rgba(37,99,235,0.3); }
+    .capex-card.selected-l4 { border-color: rgba(217,119,6,0.3); }
+    .capex-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+    .capex-gpu-name {
+      font-family: var(--mono);
+      font-weight: 600;
+      font-size: 15px;
+    }
+    .capex-gpu-name.t4 { color: var(--blue); }
+    .capex-gpu-name.l4 { color: var(--amber); }
+    .capex-selected {
+      font-family: var(--mono);
+      font-size: 9px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 20px;
+    }
+    .capex-selected.t4 { background: rgba(37,99,235,0.1); color: var(--blue); }
+    .capex-selected.l4 { background: rgba(217,119,6,0.1); color: var(--amber); }
+    .capex-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+    }
+    .stat-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--gray-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    .stat-value {
+      font-family: var(--mono);
+      font-size: 15px;
+      font-weight: 700;
+    }
+    .stat-sub {
+      font-size: 9px;
+      color: var(--gray-dim);
+      margin-top: 2px;
+    }
+
+    /* TIMESTAMP */
+    .calc-timestamp {
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--gray-dim);
+      letter-spacing: 0.5px;
+      margin-bottom: 32px;
+    }
+
+    /* CTA */
+    .calc-cta {
+      text-align: center;
+    }
+    .calc-cta a {
+      display: inline-block;
+      padding: 16px 44px;
+      border: 1.5px solid var(--dark);
+      background: var(--dark);
+      color: #fff;
+      font-family: 'Sora', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .calc-cta a:hover {
+      background: transparent;
+      color: var(--dark);
+    }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+      .nav-links { gap: 16px; }
+      nav a { font-size: 12px; }
+      .calc-page { padding: 40px 20px 60px; }
+      .gpu-selector { flex-direction: column; }
+      .input-row { grid-template-columns: 1fr; }
+      .info-strip { flex-direction: column; gap: 16px; }
+      .cost-grid { grid-template-columns: 1fr; }
+      .capex-grid { grid-template-columns: 1fr; }
+      .capex-stats { grid-template-columns: 1fr 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <img src="./assets/Logo/yantrai_labs_logo.png" alt="Yantra AI Labs">
+    <div class="nav-links">
+      <a href="index.html">&larr; Security Solutions</a>
+      <span class="nav-sep">|</span>
+      <a href="contact.html">Request Demo &rarr;</a>
+    </div>
+  </nav>
+
+  <main class="calc-page">
+
+    <!-- HEADER -->
+    <div class="calc-header">
+      <div class="calc-eyebrow">GPU Inference Costs</div>
+      <h1>GPU Cost Calculator</h1>
+      <p class="calc-subtitle">Per-camera proportional pricing &middot; pay only for capacity used</p>
+    </div>
+
+    <!-- GPU SELECTOR -->
+    <div class="gpu-selector">
+      <button class="gpu-btn active-t4" data-gpu="T4" onclick="selectGPU('T4')">
+        <div class="gpu-accent"></div>
+        <span class="gpu-name">NVIDIA T4</span>
+        <div class="gpu-specs">
+          <span class="gpu-spec">16 GB GDDR6</span>
+          <span class="gpu-spec">Turing</span>
+          <span class="gpu-spec">70W</span>
+        </div>
+      </button>
+      <button class="gpu-btn" data-gpu="L4" onclick="selectGPU('L4')">
+        <div class="gpu-accent"></div>
+        <span class="gpu-name">NVIDIA L4</span>
+        <div class="gpu-specs">
+          <span class="gpu-spec">24 GB GDDR6</span>
+          <span class="gpu-spec">Ada Lovelace</span>
+          <span class="gpu-spec">72W</span>
+        </div>
+      </button>
+    </div>
+
+    <!-- INPUTS -->
+    <div class="input-row">
+      <div class="input-group">
+        <label>Number of Cameras</label>
+        <input type="text" id="camerasInput" value="1" placeholder="e.g. 10" oninput="onCamerasInput(this)">
+      </div>
+      <div class="input-group">
+        <label>Hours / Day</label>
+        <input type="text" id="hoursInput" value="12" placeholder="e.g. 12" oninput="onHoursInput(this)">
+      </div>
+      <div class="input-group">
+        <label>Qwen VL Model</label>
+        <div class="model-toggle">
+          <button class="toggle-btn active" data-model="2B" onclick="selectModel('2B')">2B</button>
+          <button class="toggle-btn" data-model="4B" onclick="selectModel('4B')">4B</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- INFO STRIP -->
+    <div class="info-strip">
+      <div class="info-item">
+        <span class="info-label">Inference Time</span>
+        <span class="info-value" id="infoInfTime">10s / chunk</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">GPU Capacity</span>
+        <span class="info-value" id="infoCapacity">6 cameras</span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Utilization</span>
+        <span class="info-value" id="infoUtil">17%</span>
+      </div>
+    </div>
+
+    <!-- PRICING NOTE -->
+    <div class="pricing-note" id="pricingNote">
+      Customer pays per camera &mdash; <strong>1</strong> of <strong>6</strong> slots = <strong>16.7%</strong> of GPU cost
+    </div>
+
+    <!-- COST CARDS -->
+    <div class="cost-grid">
+      <!-- Cloud -->
+      <div class="cost-card" id="cloudCard">
+        <div class="card-header">
+          <span>&#9729;</span><span>Cloud GPU</span>
+        </div>
+        <div class="card-body" id="cloudBody">
+          <!-- Populated by JS -->
+        </div>
+        <div class="card-footer">Monthly total &middot; proportional billing</div>
+      </div>
+
+      <!-- On-Prem -->
+      <div class="cost-card onprem">
+        <div class="card-header">
+          <span>&#128421;</span><span>On-Premise</span>
+        </div>
+        <div class="card-body" id="onpremBody">
+          <!-- Populated by JS -->
+        </div>
+        <div class="card-footer">Opex only &middot; one-time capex below</div>
+      </div>
+    </div>
+
+    <!-- CAPEX FOOTER -->
+    <div class="capex-grid" id="capexGrid">
+      <!-- Populated by JS -->
+    </div>
+
+    <!-- TIMESTAMP -->
+    <div class="calc-timestamp">
+      March 2026 &middot; 1 inference/min/camera &middot; 15s chunks &middot; proportional per-camera billing
+    </div>
+
+    <!-- CTA -->
+    <div class="calc-cta">
+      <a href="contact.html">Get a Custom Quote &rarr;</a>
+    </div>
+
+  </main>
+
+  <script>
+    /* ── DATA ── */
+    var GPUS = {
+      T4: { name: 'NVIDIA T4', vram: '16 GB GDDR6', arch: 'Turing', tdp: '70W', capex: 216750, opex: 1752, inference: { '2B': 10, '4B': 20 } },
+      L4: { name: 'NVIDIA L4', vram: '24 GB GDDR6', arch: 'Ada Lovelace', tdp: '72W', capex: 376000, opex: 1752, inference: { '2B': 4, '4B': 7 } }
+    };
+
+    var CLOUD_PROVIDERS = {
+      T4: [
+        { name: 'Google Cloud T4', rate: 30 },
+        { name: 'RunPod T4', rate: 23 }
+      ],
+      L4: [
+        { name: 'Google Cloud L4 (Mumbai)', rate: 63 },
+        { name: 'E2E Networks L4', rate: 50 },
+        { name: 'AceCloud L4', rate: 42 }
+      ]
+    };
+
+    /* ── STATE ── */
+    var gpu = 'T4';
+    var cameras = 1;
+    var hours = 12;
+    var model = '2B';
+
+    /* ── FORMAT ── */
+    function fmt(n) {
+      return '\u20B9' + Math.round(n).toLocaleString('en-IN');
+    }
+
+    /* ── SELECTORS ── */
+    function selectGPU(key) {
+      gpu = key;
+      var btns = document.querySelectorAll('.gpu-btn');
+      btns.forEach(function(btn) {
+        btn.className = 'gpu-btn';
+        if (btn.getAttribute('data-gpu') === key) {
+          btn.classList.add(key === 'T4' ? 'active-t4' : 'active-l4');
+        }
+      });
+      calculate();
+    }
+
+    function selectModel(m) {
+      model = m;
+      var btns = document.querySelectorAll('.toggle-btn');
+      btns.forEach(function(btn) {
+        btn.classList.toggle('active', btn.getAttribute('data-model') === m);
+      });
+      calculate();
+    }
+
+    function onCamerasInput(el) {
+      el.value = el.value.replace(/[^0-9]/g, '');
+      cameras = parseInt(el.value) || 0;
+      calculate();
+    }
+
+    function onHoursInput(el) {
+      el.value = el.value.replace(/[^0-9.]/g, '');
+      hours = parseFloat(el.value) || 0;
+      calculate();
+    }
+
+    /* ── CALCULATE ── */
+    function calculate() {
+      var g = GPUS[gpu];
+      var numCams = cameras;
+      var numHours = hours;
+      var infTime = g.inference[model];
+      var maxCamsPerGPU = Math.floor(60 / infTime);
+      var utilizationFraction = maxCamsPerGPU > 0 ? numCams / maxCamsPerGPU : 0;
+
+      /* Info strip */
+      document.getElementById('infoInfTime').textContent = infTime + 's / chunk';
+      document.getElementById('infoCapacity').textContent = maxCamsPerGPU + ' cameras';
+      document.getElementById('infoUtil').textContent = Math.min(utilizationFraction * 100, 999).toFixed(0) + '%';
+
+      /* Pricing note */
+      var utilPct = Math.min(utilizationFraction * 100, 100).toFixed(1);
+      document.getElementById('pricingNote').innerHTML =
+        'Customer pays per camera &mdash; <strong>' + numCams + '</strong> of <strong>' + maxCamsPerGPU + '</strong> slots = <strong>' + utilPct + '%</strong> of GPU cost';
+
+      /* Cloud costs */
+      var providers = CLOUD_PROVIDERS[gpu];
+      var cloudHTML = '';
+      var cloudTotals = [];
+      providers.forEach(function(p, i) {
+        var fullGPUMonthly = p.rate * numHours * 30;
+        var perCam = maxCamsPerGPU > 0 ? fullGPUMonthly / maxCamsPerGPU : 0;
+        var customerTotal = perCam * numCams;
+        cloudTotals.push(customerTotal);
+        var isLast = i === providers.length - 1;
+        cloudHTML += '<div class="provider-row"' + (isLast ? ' style="border-bottom:none;"' : '') + '>' +
+          '<div class="provider-top">' +
+            '<div>' +
+              '<div class="provider-name">' + p.name + '</div>' +
+              '<div class="provider-detail">Full GPU: ' + fmt(fullGPUMonthly) + '/mo &middot; \u20B9' + p.rate + '/hr</div>' +
+            '</div>' +
+            '<div class="pill">' + fmt(perCam) + '/cam</div>' +
+          '</div>' +
+          '<div class="provider-bottom">' +
+            '<span class="provider-calc">' + numCams + ' &times; ' + fmt(perCam) + '</span>' +
+            '<span class="provider-total">' + fmt(customerTotal) + '</span>' +
+          '</div>' +
+        '</div>';
+      });
+      document.getElementById('cloudBody').innerHTML = cloudHTML;
+
+      /* On-prem costs */
+      var fullOnpremMonthly = g.opex;
+      var onpremPerCam = maxCamsPerGPU > 0 ? fullOnpremMonthly / maxCamsPerGPU : 0;
+      var onpremCustomerTotal = onpremPerCam * numCams;
+
+      var onpremHTML = '<div style="margin-bottom:16px;">' +
+        '<div style="display:flex;justify-content:space-between;margin-bottom:4px;">' +
+          '<span style="font-size:12px;color:var(--gray);">Full GPU Opex</span>' +
+          '<span style="font-size:12px;color:var(--gray);font-family:var(--mono);">' + fmt(fullOnpremMonthly) + '/mo</span>' +
+        '</div>' +
+        '<div style="display:flex;justify-content:space-between;margin-bottom:6px;">' +
+          '<span style="font-size:10px;color:var(--gray-dim);">Per camera rate</span>' +
+          '<div class="pill">' + fmt(onpremPerCam) + '/cam</div>' +
+        '</div>' +
+      '</div>' +
+      '<div style="display:flex;justify-content:space-between;align-items:baseline;padding:14px 0;border-top:1px solid var(--border);">' +
+        '<span style="font-size:10px;color:var(--gray-dim);">' + numCams + ' &times; ' + fmt(onpremPerCam) + '</span>' +
+        '<span class="onprem-total">' + fmt(onpremCustomerTotal) + '</span>' +
+      '</div>';
+
+      /* Savings */
+      if (cloudTotals.length > 0 && numCams > 0) {
+        var cheapestCloud = Math.min.apply(null, cloudTotals);
+        var saving = cheapestCloud - onpremCustomerTotal;
+        var savingPct = cheapestCloud > 0 ? Math.round((1 - onpremCustomerTotal / cheapestCloud) * 100) : 0;
+        onpremHTML += '<div class="savings-badge">' +
+          '<div class="savings-label">Saving vs cheapest cloud</div>' +
+          '<span class="savings-value">' + fmt(saving) + '</span>' +
+          '<span class="savings-pct">(' + savingPct + '% less)</span>' +
+        '</div>';
+      }
+
+      document.getElementById('onpremBody').innerHTML = onpremHTML;
+
+      /* Capex footer */
+      var capexHTML = '';
+      ['T4', 'L4'].forEach(function(key) {
+        var gData = GPUS[key];
+        var accent = key === 'T4' ? 't4' : 'l4';
+        var maxCams = Math.floor(60 / gData.inference[model]);
+        var perCamOpex = maxCams > 0 ? gData.opex / maxCams : 0;
+        var isSelected = gpu === key;
+        capexHTML += '<div class="capex-card' + (isSelected ? ' selected-' + accent : '') + '">' +
+          '<div class="capex-top">' +
+            '<div class="capex-gpu-name ' + accent + '">' + gData.name + '</div>' +
+            (isSelected ? '<span class="capex-selected ' + accent + '">SELECTED</span>' : '') +
+          '</div>' +
+          '<div class="capex-stats">' +
+            '<div>' +
+              '<div class="stat-label">Server Capex</div>' +
+              '<div class="stat-value" style="color:var(--dark);">' + fmt(gData.capex) + '</div>' +
+              '<div class="stat-sub">One-time</div>' +
+            '</div>' +
+            '<div>' +
+              '<div class="stat-label">Max Capacity</div>' +
+              '<div class="stat-value" style="color:var(--' + (key === 'T4' ? 'blue' : 'amber') + ');">' + maxCams + ' cam</div>' +
+              '<div class="stat-sub">per GPU &middot; Qwen ' + model + '</div>' +
+            '</div>' +
+            '<div>' +
+              '<div class="stat-label">Opex / Camera</div>' +
+              '<div class="stat-value" style="color:var(--green);">' + fmt(perCamOpex) + '</div>' +
+              '<div class="stat-sub">monthly</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+      });
+      document.getElementById('capexGrid').innerHTML = capexHTML;
+    }
+
+    /* ── INIT ── */
+    calculate();
+  </script>
+
+</body>
+</html>
