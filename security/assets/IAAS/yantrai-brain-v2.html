@@ -520,6 +520,41 @@
     0%, 100% { opacity: 1; }
     50% { opacity: 0.3; }
   }
+
+  /* ── MOBILE: stack flow vertically ── */
+  @media (max-width: 600px) {
+    body { overflow-x: hidden; min-height: unset; }
+    .page { padding: 16px 20px; }
+    .flow { flex-direction: column; align-items: center; gap: 10px; }
+
+    /* Inputs: horizontal icon row */
+    .inputs { flex-direction: row; gap: 8px; justify-content: center; opacity: 1; animation: none; }
+    .input-icon { width: 36px; height: 36px; border-radius: 9px; }
+
+    /* Hide horizontal connectors */
+    .connector { display: none; }
+
+    /* Brain: scale down */
+    .brain-wrap { opacity: 1; animation: none; }
+    .brain { width: 110px; height: 110px; }
+    .brain-ring.spin { inset: -2px; }
+    .brain-ring.spin2 { inset: -7px; }
+    .brain-label { font-size: 10px; }
+    .brain-sub { font-size: 7px; letter-spacing: 0.03em; }
+    .brain-stat { display: none; }
+
+    /* Outputs: full-width stacked steps */
+    .outputs { width: 100%; gap: 0; opacity: 1; animation: none; }
+    .output-step { width: 100%; }
+    .step-card { padding: 6px 10px; border-radius: 9px; gap: 8px; }
+    .step-card .s-icon { width: 28px; height: 28px; border-radius: 7px; }
+    .step-card .s-text { font-size: 10px; }
+    .step-card .s-sub { font-size: 7px; }
+    .seq-arrow .seq-line { height: 12px; }
+
+    /* Background glow */
+    .bg-glow { width: 120px; height: 120px; }
+  }
 </style>
 </head>
 <body>

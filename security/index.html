@@ -246,8 +246,15 @@
       border: none;
       display: block;
     }
+    @media (max-width: 1024px) {
+      .intel-frame-wrap iframe { height: 380px; }
+    }
     @media (max-width: 768px) {
       .intel-frame-wrap { width: 100%; border-radius: 8px; }
+      .intel-frame-wrap iframe { height: 420px; }
+    }
+    @media (max-width: 480px) {
+      .intel-frame-wrap iframe { height: 400px; }
     }
 
     /* ─── SECTION 5: IMPLEMENTATION ─── */
@@ -1084,8 +1091,6 @@
 
       /* Intelligence Layer */
       .intel-intro { padding: 64px 24px 48px; }
-      .intel-frame-wrap { width: 100%; border-radius: 8px; }
-      .intel-frame-wrap iframe { height: 380px; }
 
       /* Use case */
       .use-case-placeholder { min-height: 280px; }
@@ -1112,8 +1117,6 @@
       nav { padding: 20px 40px; }
       .hero { padding: 110px 40px 90px; }
       .platform { padding: 80px 40px; }
-      .intel-frame-wrap { width: 80%; }
-      .intel-frame-wrap iframe { height: 420px; }
       .implementation { padding: 80px 40px; }
       .hardware { padding: 80px 40px; }
       .benefits { padding: 80px 40px; }
@@ -1144,7 +1147,6 @@
       .platform-card { padding: 24px 16px; }
 
       .intel-intro { padding: 48px 20px 40px; }
-      .intel-frame-wrap iframe { height: 400px; }
 
       .implementation { padding: 48px 20px; }
       .timeline-num { font-size: 40px; }
