@@ -467,6 +467,50 @@
       .tc-body { padding: 16px 16px 20px; }
       .tc-name { font-size: 1.2rem; }
     }
+
+    /* ─── TRACK RECORD / PAST PROJECTS ─── */
+    .track-record-wrap { background: var(--bg); border-top: 1px solid var(--border); }
+    .tr-inner { max-width: 1200px; margin: 0 auto; padding: 110px 60px; }
+    .tr-header { text-align: center; margin-bottom: 64px; }
+    .tr-header .section-sub { max-width: 520px; margin: 0 auto; }
+    .tr-gradient { background: linear-gradient(135deg, var(--blue, #2563eb), var(--amber, #d97706), var(--red, #e63030)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .tr-cards { display: flex; gap: 14px; width: 100%; }
+    .tr-card {
+      flex: 1; display: flex; flex-direction: column; align-items: center;
+      padding: 36px 14px 32px; border-radius: 16px; background: var(--bg-card, #fff);
+      border: 1px solid var(--border); position: relative; overflow: hidden; cursor: default;
+      transition: transform 0.35s cubic-bezier(.22,1,.36,1), box-shadow 0.35s cubic-bezier(.22,1,.36,1), border-color 0.35s ease;
+      opacity: 0; transform: translateY(40px);
+    }
+    .tr-card.visible { opacity: 1; transform: translateY(0); }
+    .tr-card:hover { transform: translateY(-5px); box-shadow: 0 16px 48px rgba(0,0,0,0.08); border-color: rgba(0,0,0,0.15); }
+    .tr-logo { width: 68px; height: 68px; flex-shrink: 0; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.12)); transition: transform 0.35s cubic-bezier(.22,1,.36,1); }
+    .tr-card:hover .tr-logo { transform: scale(1.06); }
+    .tr-logo svg { width: 100%; height: 100%; }
+    .tr-company { font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gray-dim, #999); margin-top: 14px; text-align: center; white-space: nowrap; }
+    .tr-metric { display: flex; flex-direction: column; align-items: center; justify-content: center; margin-top: 16px; height: 56px; }
+    .tr-metric-value { font-family: 'Sora', sans-serif; font-size: 24px; font-weight: 800; color: var(--dark, #111); line-height: 1; text-align: center; white-space: nowrap; transition: transform 0.3s ease; }
+    .tr-card:hover .tr-metric-value { transform: scale(1.05); }
+    .tr-metric-label { font-family: 'Inter', sans-serif; font-size: 9px; font-weight: 500; color: var(--gray-dim, #999); margin-top: 6px; letter-spacing: 0.12em; text-transform: uppercase; text-align: center; white-space: nowrap; }
+    .tr-divider { width: 32px; height: 1px; background: var(--border); margin: 16px 0; }
+    .tr-title { font-family: 'Sora', sans-serif; font-size: 13px; font-weight: 700; color: var(--dark, #111); text-align: center; line-height: 1.5; letter-spacing: -0.01em; word-break: break-word; overflow-wrap: break-word; padding: 0 4px; }
+    .tr-cta-wrap { text-align: center; margin-top: 56px; }
+    .tr-cta { display: inline-block; padding: 13px 36px; border-radius: 50px; border: 1px solid var(--border); font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; color: var(--gray, #666); letter-spacing: 0.02em; text-decoration: none; transition: all 0.3s ease; background: transparent; }
+    .tr-cta:hover { border-color: var(--dark, #111); color: var(--dark, #111); background: var(--bg-card, #fff); }
+
+    @media (max-width: 1024px) {
+      .tr-cards { flex-wrap: wrap; }
+      .tr-card { flex: 1 1 calc(33.33% - 10px); min-width: 180px; }
+    }
+    @media (max-width: 768px) {
+      .tr-inner { padding: 80px 32px; }
+      .tr-cards { flex-direction: column; gap: 12px; }
+      .tr-card { flex: 1 1 100%; padding: 28px 14px 24px; }
+      .tr-metric-value { font-size: 20px; }
+    }
+    @media (max-width: 480px) {
+      .tr-inner { padding: 56px 20px; }
+    }
   </style>
 </head>
 <body>
@@ -923,6 +967,129 @@
     </div>
   </section>
 
+  <!-- PAST PROJECTS / TRACK RECORD -->
+  <section id="track-record" class="track-record-wrap">
+    <div class="tr-inner">
+      <div class="tr-header">
+        <div class="section-label">Track Record</div>
+        <h2 class="section-heading">Projects That <span class="tr-gradient">Shipped</span></h2>
+        <p class="section-sub">Every camera is a sensor. Every frame is data. Here's where we turned existing CCTV into production-grade Vision AI.</p>
+      </div>
+      <div class="tr-cards">
+
+        <!-- Caterpillar -->
+        <div class="tr-card" data-accent="#FFCB05">
+          <div class="tr-logo">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="100" height="100" rx="16" fill="#FFCB05"/>
+              <path d="M28 62 L42 32 L56 62 Z" fill="#000" stroke-linejoin="round"/>
+              <rect x="34" y="42" width="16" height="3" fill="#FFCB05"/>
+              <text x="50" y="78" font-family="'Arial Black', sans-serif" font-size="8.5" font-weight="900" fill="#000" text-anchor="middle" letter-spacing="1.5">CATERPILLAR</text>
+            </svg>
+          </div>
+          <div class="tr-company">Caterpillar</div>
+          <div class="tr-metric">
+            <span class="tr-metric-value">$10M+</span>
+            <span class="tr-metric-label">Saved / Year</span>
+          </div>
+          <div class="tr-divider"></div>
+          <h3 class="tr-title">Predictive Maintenance for Heavy Machinery</h3>
+        </div>
+
+        <!-- Dwara Dairy -->
+        <div class="tr-card" data-accent="#43A047">
+          <div class="tr-logo">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="100" height="100" rx="16" fill="#1B5E20"/>
+              <ellipse cx="50" cy="44" rx="18" ry="15" stroke="#fff" stroke-width="2.5" fill="none"/>
+              <circle cx="44" cy="40" r="2" fill="#fff"/>
+              <circle cx="56" cy="40" r="2" fill="#fff"/>
+              <path d="M43 49 Q50 54 57 49" stroke="#fff" stroke-width="2" fill="none"/>
+              <path d="M38 32 Q34 24 40 27" stroke="#fff" stroke-width="2" fill="none"/>
+              <path d="M62 32 Q66 24 60 27" stroke="#fff" stroke-width="2" fill="none"/>
+              <text x="50" y="78" font-family="'Georgia', serif" font-size="8" font-weight="700" fill="#A5D6A7" text-anchor="middle" letter-spacing="1">DWARA DAIRY</text>
+            </svg>
+          </div>
+          <div class="tr-company">Dwara Dairy</div>
+          <div class="tr-metric">
+            <span class="tr-metric-value">99%+</span>
+            <span class="tr-metric-label">ID Accuracy</span>
+          </div>
+          <div class="tr-divider"></div>
+          <h3 class="tr-title">Vision AI Cattle Fingerprinting</h3>
+        </div>
+
+        <!-- AI Monk -->
+        <div class="tr-card" data-accent="#E94560">
+          <div class="tr-logo">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="100" height="100" rx="16" fill="#1A1A2E"/>
+              <circle cx="50" cy="40" r="14" stroke="#E94560" stroke-width="2.5" fill="none"/>
+              <circle cx="44" cy="37" r="2" fill="#E94560"/>
+              <circle cx="56" cy="37" r="2" fill="#E94560"/>
+              <path d="M44 45 Q50 50 56 45" stroke="#E94560" stroke-width="2" fill="none"/>
+              <ellipse cx="50" cy="24" rx="4" ry="3" fill="#E94560" opacity="0.35"/>
+              <text x="50" y="76" font-family="'Courier New', monospace" font-size="10" font-weight="700" fill="#E94560" text-anchor="middle" letter-spacing="1.5">AI MONK</text>
+            </svg>
+          </div>
+          <div class="tr-company">AI Monk</div>
+          <div class="tr-metric">
+            <span class="tr-metric-value">Zero</span>
+            <span class="tr-metric-label">Hardware Added</span>
+          </div>
+          <div class="tr-divider"></div>
+          <h3 class="tr-title">Smart Parking via Vehicle Re-ID</h3>
+        </div>
+
+        <!-- EY -->
+        <div class="tr-card" data-accent="#FFE600">
+          <div class="tr-logo">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="100" height="100" rx="16" fill="#2E2E38"/>
+              <text x="50" y="56" font-family="'Arial Black', sans-serif" font-size="38" font-weight="900" fill="#FFE600" text-anchor="middle">EY</text>
+              <rect x="22" y="62" width="56" height="3" rx="1.5" fill="#FFE600"/>
+            </svg>
+          </div>
+          <div class="tr-company">EY</div>
+          <div class="tr-metric">
+            <span class="tr-metric-value">60%</span>
+            <span class="tr-metric-label">Faster Reviews</span>
+          </div>
+          <div class="tr-divider"></div>
+          <h3 class="tr-title">Gen AI for Document Intelligence</h3>
+        </div>
+
+        <!-- One Godown -->
+        <div class="tr-card" data-accent="#00E5FF">
+          <div class="tr-logo">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="100" height="100" rx="16" fill="#0D1117"/>
+              <rect x="30" y="28" width="26" height="30" rx="3" stroke="#00E5FF" stroke-width="2.5" fill="none"/>
+              <line x1="38" y1="58" x2="38" y2="66" stroke="#00E5FF" stroke-width="2.5"/>
+              <line x1="48" y1="58" x2="48" y2="66" stroke="#00E5FF" stroke-width="2.5"/>
+              <circle cx="43" cy="43" r="5" stroke="#00E5FF" stroke-width="2" fill="none"/>
+              <circle cx="43" cy="43" r="1.5" fill="#00E5FF"/>
+              <text x="50" y="80" font-family="'Courier New', monospace" font-size="7.5" font-weight="700" fill="#00E5FF" text-anchor="middle" letter-spacing="1">ONE GODOWN</text>
+            </svg>
+          </div>
+          <div class="tr-company">One Godown</div>
+          <div class="tr-metric">
+            <span class="tr-metric-value">Live</span>
+            <span class="tr-metric-label">Sales Visibility</span>
+          </div>
+          <div class="tr-divider"></div>
+          <h3 class="tr-title">Vision AI Sales Tracker for Retail</h3>
+        </div>
+
+      </div>
+
+      <!-- CTA -->
+      <div class="tr-cta-wrap">
+        <a href="#contact" class="tr-cta">Let's Build Yours →</a>
+      </div>
+    </div>
+  </section>
+
   <!-- SECTION 11: FOOTER (CONSTRUCTION STYLE) -->
   <footer id="contact">
     <div class="footer-top">
@@ -976,6 +1143,7 @@
       <p>© 2025 Yantra AI Labs. All rights reserved.</p>
       <div style="display:flex;gap:24px;">
         <a href="../">All Domains</a>
+        <a href="gpu-calculator.html">GPU Calculator</a>
         <a href="#hero">Back to Top ↑</a>
       </div>
     </div>
@@ -987,6 +1155,25 @@
       document.getElementById('demoForm').style.display = 'none';
       document.getElementById('formSuccess').style.display = 'block';
     }
+
+    /* Track Record — staggered reveal on scroll */
+    (function() {
+      var cards = document.querySelectorAll('.tr-card');
+      if (!cards.length) return;
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            var card = entry.target;
+            var idx = Array.prototype.indexOf.call(cards, card);
+            setTimeout(function() {
+              card.classList.add('visible');
+            }, idx * 90);
+            observer.unobserve(card);
+          }
+        });
+      }, { threshold: 0.15 });
+      cards.forEach(function(card) { observer.observe(card); });
+    })();
   </script>
 
 </body>
